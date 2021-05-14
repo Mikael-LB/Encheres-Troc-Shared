@@ -1,0 +1,4 @@
+This project need the jars :
+- jaxb-api-2.3.1.jar
+- jstl-1.2.jar
+- mssql-jdbc-9.2.1.jre8.jar
