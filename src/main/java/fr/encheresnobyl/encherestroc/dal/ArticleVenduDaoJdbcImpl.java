@@ -9,8 +9,15 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-
+import fr.encheresnobyl.encherestroc.bll.CategorieManagerImpl;
+import fr.encheresnobyl.encherestroc.bll.CategorieManagerInt;
+import fr.encheresnobyl.encherestroc.bll.RetraitManagerImpl;
+import fr.encheresnobyl.encherestroc.bll.RetraitManagerInt;
+import fr.encheresnobyl.encherestroc.bll.UtilisateurManagerImpl;
+import fr.encheresnobyl.encherestroc.bll.UtilisateurManagerInt;
 import fr.encheresnobyl.encherestroc.bo.ArticleVendu;
+import fr.encheresnobyl.encherestroc.bo.Retrait;
+import fr.encheresnobyl.encherestroc.bo.Utilisateur;
 
 /**
  * Classe en charge
@@ -24,100 +31,13 @@ public class ArticleVenduDaoJdbcImpl implements ArticleVenduDao {
 	private static final String PARAM_ENCHERES_UTILISATEUR = "enchereUtilisateur";
 	private static final String PARAM_ENCHERES_OUVERTES = "enchereOuverte";
 	
-	private static final String SELECT_ALL_DISPO = "SELECT * FROM ARTICLES_VENDUS WHERE date_debut_encheres<GETDATE() AND date_fin_encheres>GETDATE()";
-	private static final String SELECT_BY_NOM_DISPO = "SELECT * FROM ARTICLES_VENDUS WHERE nom_article LIKE ? AND date_debut_encheres<GETDATE() AND date_fin_encheres>GETDATE()";
-	private static final String SELECT_BY_NOM_AND_CATEGORIE_DISPO = "SELECT * FROM ARTICLES_VENDUS WHERE no_categorie = ? AND nom_article LIKE ? AND date_debut_encheres<GETDATE() AND date_fin_encheres>GETDATE()";
+	private static final String PARAM_VENTE_EN_COURS = "enchereRemporte";
+	private static final String PARAM_VENTE_TERMINEES = "enchereUtilisateur";
+	private static final String PARAM_VENTE_NON_DEBUTEES = "enchereOuverte";
 	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public List<ArticleVendu> selectAllDispo() {
-		
-		List<ArticleVendu> listeArticleVendus=new ArrayList<ArticleVendu>();
-		
-		try (Connection cnx = ConnectionProvider.getConnection()){
-			
-			PreparedStatement pStmt = cnx.prepareStatement(SELECT_ALL_DISPO);
-			
-			ResultSet rs = pStmt.executeQuery();
-			
-			while (rs.next()) {
-				ArticleVendu article = new ArticleVendu(rs.getInt("no_article"),rs.getString("nom_article"),rs.getString("description"),
-														rs.getDate("date_debut_encheres").toLocalDate(), rs.getDate("date_fin_encheres").toLocalDate(), 
-														rs.getInt("prix_initial"));
-				
-				listeArticleVendus.add(article);
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return listeArticleVendus;
-	}
+	private static final String SELECT_ARTICLE_BY_ID="SELECT * FROM ARTICLES_VENDUS WHERE no_article = ?";
+
 	
-	/**
-	* {@inheritDoc}
-	*/
-	@Override
-	public List<ArticleVendu> selectDispoByNom(String nom) {
-		
-		List<ArticleVendu> listeArticleVendus=new ArrayList<ArticleVendu>();
-		
-		try (Connection cnx = ConnectionProvider.getConnection()){
-			
-			PreparedStatement pStmt = cnx.prepareStatement(SELECT_BY_NOM_DISPO);
-			pStmt.setString(1, "%"+nom+"%");
-			
-			ResultSet rs = pStmt.executeQuery();
-			
-			while (rs.next()) {
-				ArticleVendu article = new ArticleVendu(rs.getInt("no_article"),rs.getString("nom_article"),rs.getString("description"),
-														rs.getDate("date_debut_encheres").toLocalDate(), rs.getDate("date_fin_encheres").toLocalDate(), 
-														rs.getInt("prix_initial"));
-				
-				listeArticleVendus.add(article);
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return listeArticleVendus;
-	}
-
-	/**
-	* {@inheritDoc}
-	*/
-	@Override
-	public List<ArticleVendu> selectDispoByNomAndCategorie(String nom, int noCategorie) {
-		
-		List<ArticleVendu> listeArticleVendus=new ArrayList<ArticleVendu>();
-		
-		try (Connection cnx = ConnectionProvider.getConnection()){
-			
-			PreparedStatement pStmt = cnx.prepareStatement(SELECT_BY_NOM_AND_CATEGORIE_DISPO);
-			pStmt.setInt(1, noCategorie);
-			pStmt.setString(2, "%"+nom+"%");
-			
-			ResultSet rs = pStmt.executeQuery();
-			
-			while (rs.next()) {
-				ArticleVendu article = new ArticleVendu(rs.getInt("no_article"),rs.getString("nom_article"),rs.getString("description"),
-														rs.getDate("date_debut_encheres").toLocalDate(), rs.getDate("date_fin_encheres").toLocalDate(), 
-														rs.getInt("prix_initial"));
-				
-				listeArticleVendus.add(article);
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return listeArticleVendus;
-	}
-
 	/**
 	* {@inheritDoc}
 	*/
@@ -188,7 +108,7 @@ public class ArticleVenduDaoJdbcImpl implements ArticleVenduDao {
 			while (rs.next()) {
 				ArticleVendu article = new ArticleVendu(rs.getInt("no_article"),rs.getString("nom_article"),rs.getString("description"),
 														rs.getDate("date_debut_encheres").toLocalDate(), rs.getDate("date_fin_encheres").toLocalDate(), 
-														rs.getInt("prix_initial"));
+														rs.getInt("prix_initial"), rs.getInt("prix_vente"));
 				
 			listeArticleVendus.add(article);
 			}
@@ -201,6 +121,115 @@ public class ArticleVenduDaoJdbcImpl implements ArticleVenduDao {
 		
 		
 		return listeArticleVendus;
+	}
+
+
+	/**
+	* {@inheritDoc}
+	*/
+	@Override
+	public List<ArticleVendu> selectVentes(String motCle, int noCategorie, int noUtilisateur, List<String> parametres) {
+		StringBuilder requeteBuilder = new StringBuilder("SELECT * FROM ARTICLES_VENDUS WHERE no_utilisateur=? AND nom_article LIKE ?");
+		List<ArticleVendu> listeArticleVendus = new ArrayList<ArticleVendu>();
+		boolean multichoice = false;
+		
+		if(noCategorie!=0) {
+			requeteBuilder.append(" AND no_categorie= ?");
+		}
+		
+		if(!parametres.isEmpty()) {
+			requeteBuilder.append(" AND (");
+			
+			if (parametres.contains(PARAM_VENTE_EN_COURS)) {
+				requeteBuilder.append(" date_debut_encheres<GETDATE() AND date_fin_encheres>GETDATE()");
+				multichoice=true;
+			}
+			if (parametres.contains(PARAM_VENTE_NON_DEBUTEES)) {
+				if (multichoice) {
+					requeteBuilder.append(" OR");
+				}
+				requeteBuilder.append(" date_debut_encheres>GETDATE()");
+				multichoice=true;
+			}
+			if (parametres.contains(PARAM_VENTE_TERMINEES)) {
+				if (multichoice) {
+					requeteBuilder.append(" OR");
+				}
+				requeteBuilder.append(" date_fin_encheres<GETDATE()");
+			}
+			
+			requeteBuilder.append(")");
+		}
+		
+		String requete = requeteBuilder.toString();
+		
+		System.out.println(requete);
+			
+		
+		
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			PreparedStatement pStmt = cnx.prepareStatement(requete);
+			int IndexStmt=1;
+			
+			pStmt.setInt(IndexStmt++, noUtilisateur);
+			pStmt.setString(IndexStmt++, "%"+motCle+"%");
+			
+			if(noCategorie!=0) {
+				pStmt.setInt(IndexStmt++, noCategorie);
+			}
+			
+			ResultSet rs = pStmt.executeQuery();
+			
+			while (rs.next()) {
+				ArticleVendu article = new ArticleVendu(rs.getInt("no_article"),rs.getString("nom_article"),rs.getString("description"),
+														rs.getDate("date_debut_encheres").toLocalDate(), rs.getDate("date_fin_encheres").toLocalDate(), 
+														rs.getInt("prix_initial"), rs.getInt("prix_vente"));
+				
+			listeArticleVendus.add(article);
+			}
+			
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		return listeArticleVendus;
+	}
+	
+	
+	public ArticleVendu selectArticleById(int id) {
+		
+		ArticleVendu articleVendu = null;
+		
+		try (Connection cnx = ConnectionProvider.getConnection()){
+			
+			PreparedStatement pStmt = cnx.prepareStatement(SELECT_ARTICLE_BY_ID);
+			pStmt.setInt(1, id);
+			
+			ResultSet rs = pStmt.executeQuery();
+			
+			if (rs.next()) {
+				articleVendu = new ArticleVendu(rs.getInt("no_article"),rs.getString("nom_article"),rs.getString("description"),
+						rs.getDate("date_debut_encheres").toLocalDate(), rs.getDate("date_fin_encheres").toLocalDate(), 
+						rs.getInt("prix_initial"), rs.getInt("prix_vente"));
+			}
+			
+			CategorieManagerInt categorieManager = new CategorieManagerImpl();
+			articleVendu.setCategorie(categorieManager.selectById(rs.getInt("no_categorie")));
+			
+			RetraitManagerInt retraitManager = new RetraitManagerImpl();
+			articleVendu.setPointRetrait(retraitManager.selectByIdArticle(id));
+			
+			UtilisateurManagerInt utilisateurManager = new UtilisateurManagerImpl();
+			articleVendu.setUtilisateur(utilisateurManager.selectById(rs.getInt("no_utilisateur")));
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return articleVendu;
 	}
 
 }

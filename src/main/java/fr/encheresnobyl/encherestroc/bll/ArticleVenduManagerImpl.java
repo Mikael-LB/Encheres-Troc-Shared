@@ -18,43 +18,23 @@ import fr.encheresnobyl.encherestroc.dal.DAOFactory;
 public class ArticleVenduManagerImpl implements ArticleVenduManagerInt{
 	
 	private ArticleVenduDao articleVenduDao = DAOFactory.getArticleVenduDAO();
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public List<ArticleVendu> getEncheresEnCours(String nom, int noCategorie) {
-		
-		if ((nom==null || nom=="") && noCategorie==0) {
-			return articleVenduDao.selectAllDispo();			
-		}else if (nom==null || nom=="") {
-			return articleVenduDao.selectDispoByNom(nom);
-		}else {
-			return articleVenduDao.selectDispoByNomAndCategorie(nom, noCategorie);
-		}
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public List<ArticleVendu> getEncheresUtilisateur(String nom, int noCategorie, int noUtilisateur) {
-		return null;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public List<ArticleVendu> getEncheresRemporteesUtilisateur(String nom, int noCategorie, int noUtilisateur) {
-		return null;
-	}
 	
 	public List<ArticleVendu> getEncheres(String motCle, int noCategorie, int noUtilisateur, List<String> Parametres){
 		return articleVenduDao.selectEncheres(motCle, noCategorie, noUtilisateur, Parametres);
 		
 	}
+	
+	public List<ArticleVendu> getVentes(String motCle, int noCategorie, int noUtilisateur, List<String> Parametres){
+		return articleVenduDao.selectVentes(motCle, noCategorie, noUtilisateur, Parametres);
+		
+	}
+	
 
+	public ArticleVendu getArticleById(int id) {
+		ArticleVendu articleVendu = articleVenduDao.selectArticleById(id);
+		
+		return articleVendu;
+	}
 
 
 }

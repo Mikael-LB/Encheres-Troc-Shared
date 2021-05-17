@@ -16,33 +16,11 @@ import fr.encheresnobyl.encherestroc.bo.ArticleVendu;
  */
 public interface ArticleVenduManagerInt {
 
-
-	/**
-	 * Méthode en charge de
-	 * @param nom
-	 * @param noCategorie
-	 * @return
-	 */
-	List<ArticleVendu> getEncheresEnCours(String nom, int noCategorie);
-
-	/**
-	 * Méthode en charge de
-	 * @param nom
-	 * @param noCategorie
-	 * @param noUtilisateur
-	 * @return
-	 */
-	List<ArticleVendu> getEncheresUtilisateur(String nom, int noCategorie, int noUtilisateur);
-
-	/**
-	 * Méthode en charge de
-	 * @param nom
-	 * @param noCategorie
-	 * @param noUtilisateur
-	 * @return
-	 */
-	List<ArticleVendu> getEncheresRemporteesUtilisateur(String nom, int noCategorie, int noUtilisateur); 
 	
 	public List<ArticleVendu> getEncheres(String motCle, int noCategorie, int noUtilisateur, List<String> Parametres);
+	
+	public List<ArticleVendu> getVentes(String motCle, int noCategorie, int noUtilisateur, List<String> Parametres);
+	
+	public ArticleVendu getArticleById(int id);
 	
 }

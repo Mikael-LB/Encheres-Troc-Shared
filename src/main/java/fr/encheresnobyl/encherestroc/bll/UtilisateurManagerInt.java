@@ -42,5 +42,7 @@ public interface UtilisateurManagerInt {
 	 */
 	public Utilisateur selectByIdentifiant(String identifiant);
 	
+	public Utilisateur selectById(int id);
+	
 	
 }

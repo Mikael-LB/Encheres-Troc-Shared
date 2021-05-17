@@ -44,4 +44,12 @@ public class UtilisateurManagerImpl implements UtilisateurManagerInt {
 		return DAOFactory.getUtilisateurDAO().selectByIdentifiant(identifiant);
 	}
 
+	/**
+	* {@inheritDoc}
+	*/
+	@Override
+	public Utilisateur selectById(int id) {
+		return DAOFactory.getUtilisateurDAO().selectById(id);
+	}
+
 }

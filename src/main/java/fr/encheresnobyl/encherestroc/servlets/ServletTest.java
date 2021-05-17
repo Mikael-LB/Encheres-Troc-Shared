@@ -81,11 +81,27 @@ public class ServletTest extends HttpServlet {
 		int noCategorie = 0;
 		int noUtilisateur = 2;
 		
-		
+		System.out.println("Liste Encheres");
 		List<ArticleVendu> listArticleVendus = articleVenduManager.getEncheres(motCle, noCategorie, noUtilisateur, parametres);
 		for (ArticleVendu articleVendu : listArticleVendus) {
 		System.out.println(articleVendu);
 		}
+		
+		System.out.println("Liste Ventes");
+		List<ArticleVendu> listArticleEnVente = articleVenduManager.getVentes(motCle, noCategorie, noUtilisateur, parametres);
+		for (ArticleVendu articleVendu : listArticleEnVente) {
+			System.out.println(articleVendu);
+		}
+		
+		
+		System.out.println("Article détaillé");
+		ArticleVendu articleTest = articleVenduManager.getArticleById(1);
+		System.out.println(articleTest);
+		System.out.println(articleTest.getPointRetrait());
+		System.out.println(articleTest.getCategorie());
+		System.out.println(articleTest.getUtilisateur());
+		
+		
 		
 		
 	}

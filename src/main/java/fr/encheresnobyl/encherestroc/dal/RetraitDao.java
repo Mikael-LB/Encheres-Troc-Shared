@@ -2,6 +2,9 @@
  * 
  */
 package fr.encheresnobyl.encherestroc.dal;
+
+import fr.encheresnobyl.encherestroc.bo.Retrait;
+
 /**
  * Interface en charge de définir les méthodes du DAO Retrait
  * @author Pierre
@@ -9,6 +12,12 @@ package fr.encheresnobyl.encherestroc.dal;
  * @date 11 mai 2021 - 10:25:48
  */
 public interface RetraitDao {
-	
+
+	/**
+	 * Méthode en charge de
+	 * @param id
+	 * @return
+	 */
+	Retrait selectByIdArticle(int id);
 
 }

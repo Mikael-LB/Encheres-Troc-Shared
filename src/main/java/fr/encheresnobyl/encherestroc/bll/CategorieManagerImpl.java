@@ -32,4 +32,12 @@ public class CategorieManagerImpl implements CategorieManagerInt {
 		return lstCategorie;
 	}
 
+	/**
+	* {@inheritDoc}
+	*/
+	@Override
+	public Categorie selectById(int id) {
+		return categorieDAO.selectById(id);
+	}
+
 }
