@@ -28,8 +28,9 @@ import fr.encheresnobyl.encherestroc.bo.Utilisateur;
 
 public class VendreArticle extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	 public static final String IMAGES_FOLDER = "/";
-	 public String uploadPath;
+	//TODO upload
+	 //public static final String IMAGES_FOLDER = "/";
+	 //public String uploadPath;
        
 	 
 
@@ -38,9 +39,10 @@ public class VendreArticle extends HttpServlet {
      */ 
     @Override
     public void init() throws ServletException {
-        uploadPath = getServletContext().getRealPath( IMAGES_FOLDER );
-        File uploadDir = new File( uploadPath );
-        if ( ! uploadDir.exists() ) uploadDir.mkdir();
+    	//TODO upload
+        //uploadPath = getServletContext().getRealPath( IMAGES_FOLDER );
+        //File uploadDir = new File( uploadPath );
+        //if ( ! uploadDir.exists() ) uploadDir.mkdir();
     }
     
     /**
@@ -85,12 +87,13 @@ public class VendreArticle extends HttpServlet {
 		//TODO mise en base de donnée 
 		//TODO renvoi vers page article avec numero article
 		
-		
+		//TODO upload
+		/*
 		for ( Part part : request.getParts() ) {
             String fileName = getFileName( part );
             String fullPath = uploadPath + File.separator + fileName;
             part.write( fullPath );
-        }
+        }*/
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/front-office-user/vendreArticle.jsp");
 		rd.forward(request, response);
@@ -99,13 +102,15 @@ public class VendreArticle extends HttpServlet {
 	/*
      * Récupération du nom du fichier dans la requête.
      */
+	//TODO upload
+	/*
     private String getFileName( Part part ) {
         for ( String content : part.getHeader( "content-disposition" ).split( ";" ) ) {
             if ( content.trim().startsWith( "filename" ) )
                 return content.substring( content.indexOf( "=" ) + 2, content.length() - 1 );
         }
         return "Default.file";
-    }
+    }*/
 
 
 }
