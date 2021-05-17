@@ -33,7 +33,7 @@
 							<option value=${ categorie.noCategorie } selected>${categorie.libelle }</option>>
 						</c:when>
 						<c:otherwise>
-							<option value=${ categorie.noCategorie }>${categorie.libelle }</option>
+							<option value=${ categorie.noCategorie }>${categorie.libelle }</ option>
 						</c:otherwise>
 					</c:choose>
 					
