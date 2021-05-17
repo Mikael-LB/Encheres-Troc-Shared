@@ -26,7 +26,13 @@
 				<br>
 			    <select name="categorie" id="categorie">
 					<c:forEach items="${ categories }" var="categorie" varStatus="status">
-				    	<option value=${ categorie.noCategorie }>${categorie.libelle }</option>
+					<c:if test="${ categorie.noCategorie }==${ancienCat }))"> 
+						<c:set var="selected" value="selected" scope="page" />
+					</c:if>
+					<c:if test="${ categorie.noCategorie }!=${ancienCat }))"> 
+						<c:set var="selected" value="" scope="page" />
+					</c:if>
+				    	<option value=${ categorie.noCategorie } ${selected }	>${categorie.libelle }</option>
 					</c:forEach>
 			    </select>
 		    </div>
