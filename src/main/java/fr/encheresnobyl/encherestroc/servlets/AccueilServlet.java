@@ -52,6 +52,7 @@ public class AccueilServlet extends HttpServlet {
 			request.setAttribute("sessionId", "bla");
 		request.setAttribute("categories", categories);
 		request.setAttribute("articles", listeArticles);
+		request.setAttribute("ancienCat", 0);
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/front-office-user/accueil.jsp");
 		rd.forward(request, response);
@@ -117,7 +118,7 @@ public class AccueilServlet extends HttpServlet {
 		request.setAttribute("sessionId", sessionId);
 		request.setAttribute("categories", categories);
 		request.setAttribute("articles", listeArticles);
-		request.setAttribute("coche", achatVente);
+		request.setAttribute("ancienCat", idCategorie);
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/front-office-user/accueil.jsp");
 		rd.forward(request, response);
