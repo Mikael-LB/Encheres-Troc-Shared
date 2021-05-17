@@ -27,13 +27,13 @@ import fr.encheresnobyl.encherestroc.bo.Utilisateur;
  */
 public class ArticleVenduDaoJdbcImpl implements ArticleVenduDao {
 
-	private static final String PARAM_ENCHERES_REMPORTEES = "enchereRemporte";
-	private static final String PARAM_ENCHERES_UTILISATEUR = "enchereUtilisateur";
-	private static final String PARAM_ENCHERES_OUVERTES = "enchereOuverte";
+	private static final String PARAM_ENCHERES_REMPORTEES = "encheresRemportees";
+	private static final String PARAM_ENCHERES_UTILISATEUR = "encheresUtilisateur";
+	private static final String PARAM_ENCHERES_OUVERTES = "encheresOuvertes";
 	
-	private static final String PARAM_VENTE_EN_COURS = "enchereRemporte";
-	private static final String PARAM_VENTE_TERMINEES = "enchereUtilisateur";
-	private static final String PARAM_VENTE_NON_DEBUTEES = "enchereOuverte";
+	private static final String PARAM_VENTE_EN_COURS = "ventesEnCours";
+	private static final String PARAM_VENTE_TERMINEES = "ventesNonDebutees";
+	private static final String PARAM_VENTE_NON_DEBUTEES = "ventesTerminees";
 	
 	private static final String SELECT_ARTICLE_BY_ID="SELECT * FROM ARTICLES_VENDUS WHERE no_article = ?";
 

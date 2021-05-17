@@ -17,6 +17,7 @@
 	<div class="contnair-fluid" >
 		<form action="" method="POST">
 			<label>filtres :</label>
+			<p>${coche }</p>
 			<br>
 			<br>
 			<br>
@@ -25,7 +26,7 @@
 				<br>
 			    <select name="categorie" id="categorie">
 					<c:forEach items="${ categories }" var="categorie" varStatus="status">
-				    	<option value=${ categorie.noCategorie } >${categorie.libelle }</option>
+				    	<option value=${ categorie.noCategorie }>${categorie.libelle }</option>
 					</c:forEach>
 			    </select>
 		    </div>
@@ -34,11 +35,11 @@
 		    		<input type="radio" name="achatVente" value="achats">
 		    		<label>Mes achats</label>
 		    		<div align="left">
-		    			<input type="checkbox" name="enchereOuverte" value="enchereOuverte">
+		    			<input type="checkbox" name="encheresOuvertes" value="encheresOuvertes">
 		    			<label>Enchères ouvertes</label><br>
-		    			<input type="checkbox" name="enchereUtilisateur" value="enchereUtilisateur">
+		    			<input type="checkbox" name="encheresUtilisateur" value="encheresUtilisateur">
 		    			<label>Mes enchères</label><br>
-		    			<input type="checkbox" name="enchereRemporte" value="enchereRemporte">
+		    			<input type="checkbox" name="encheresRemportees" value="encheresRemportees">
 		    			<label>Enchères remportées</label><br>
 		    		</div>
 		    	</div >
@@ -48,9 +49,9 @@
 		    		<div >
 			    		<input type="checkbox" name="ventesEnCours" value="ventesEnCours">
 		    			<label>Mes ventes en cours</label><br>
-		    			<input type="checkbox" name="ventesNonDebute" value="ventesNonDebute">
+		    			<input type="checkbox" name="ventesNonDebutees" value="ventesNonDebutees">
 		    			<label>Ventes non debuté</label><br>
-		    			<input type="checkbox" name="ventesTermine" value="ventesTermine">
+		    			<input type="checkbox" name="ventesTerminees" value="ventesTerminees">
 		    			<label>Ventes terminé</label>
 	    			</div>
 		    	</div>

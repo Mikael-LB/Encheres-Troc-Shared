@@ -68,46 +68,46 @@ public class AccueilServlet extends HttpServlet {
 		String recherche = request.getParameter("recherche");
 		String categorie = request.getParameter("categorie");
 		int idCategorie = Integer.parseInt(categorie);
-		String achatVente = request.getParameter("achatvente");
-		String enchereOuverte = request.getParameter("enchereOuverte");
-		String enchereUtilisateur = request.getParameter("enchereUtilisateur");
-		String enchereRemporte = request.getParameter("enchereRemporte");
+		String achatVente = request.getParameter("achatVente");
+		String enchereOuverte = request.getParameter("encheresOuvertes");
+		String enchereUtilisateur = request.getParameter("encheresUtilisateur");
+		String enchereRemporte = request.getParameter("encheresRemportees");
 		String ventesEnCours = request.getParameter("ventesEnCours");
-		String ventesNonDebute = request.getParameter("ventesNonDebute");
-		String ventesTermine = request.getParameter("ventesTermine");
+		String ventesNonDebute = request.getParameter("ventesNonDebutees");
+		String ventesTermine = request.getParameter("ventesTerminees");
 		List<ArticleVendu> listeArticles =new ArrayList<ArticleVendu>();
+		List<String> coche =new ArrayList<String>();
 		ArticleVenduManagerInt articleManager= new ArticleVenduManagerImpl();
 		// TODO recuperation sessionId
-			int sessionId = 1;
+		int sessionId = 1;
 		
 		if(achatVente!=null) {
-			List<String> coche =new ArrayList<String>();
 			if(achatVente.equals("achats")) {
-				if(!enchereOuverte.isEmpty()) {
+				if(enchereOuverte!=null) {
 					coche.add(enchereOuverte);
 				}
-				if(!enchereUtilisateur.isEmpty()) {
+				if(enchereUtilisateur!=null) {
 					coche.add(enchereUtilisateur);
 				}
-				if(!enchereRemporte.isEmpty()) {
+				if(enchereRemporte!=null) {
 					coche.add(enchereRemporte);
 				}
-				//TODO listeArticles = articleManager.getEncheres(recherche, categorie, sessionId, coche)
-			}
-			if(achatVente.equals("ventes")) {
-				if(!ventesEnCours.isEmpty()) {
+				listeArticles = articleManager.getEncheres(recherche, idCategorie, sessionId, coche);
+			
+			}else if(achatVente.equals("ventes")) {
+				if(ventesEnCours!=null) {
 					coche.add(ventesEnCours);
 				}
-				if(!ventesNonDebute.isEmpty()) {
+				if(ventesNonDebute!=null) {
 					coche.add(ventesNonDebute);
 				}
-				if(!ventesTermine.isEmpty()) {
+				if(ventesTermine!=null) {
 					coche.add(ventesTermine);
 				}
+				listeArticles = articleManager.getVentes(recherche, idCategorie, sessionId, coche);
 			}
-			//TODO listeArticles = articleManager.getEncheres(recherche, categorie, sessionId, coche)
 		}else {
-			//TODO listeArticles = articleManager.getEncheresEnCours(recherche, categorie)
+			listeArticles = articleManager.getEncheres(recherche, idCategorie);
 		}
 		CategorieManagerInt categorieManager =new CategorieManagerImpl() ;
 		List<Categorie> categories = categorieManager.getAllCategorie();
@@ -117,6 +117,7 @@ public class AccueilServlet extends HttpServlet {
 		request.setAttribute("sessionId", sessionId);
 		request.setAttribute("categories", categories);
 		request.setAttribute("articles", listeArticles);
+		request.setAttribute("coche", achatVente);
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/front-office-user/accueil.jsp");
 		rd.forward(request, response);
