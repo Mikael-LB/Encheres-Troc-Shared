@@ -50,6 +50,7 @@ public class CategorieDaoJdbcImpl implements CategorieDao {
 		}
 		return lstCategorie;
 	}
+	
 
 	/**
 	* {@inheritDoc}

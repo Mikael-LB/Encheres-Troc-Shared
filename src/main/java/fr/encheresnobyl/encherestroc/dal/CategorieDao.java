@@ -27,5 +27,7 @@ public interface CategorieDao {
 	 * @return 
 	 */
 	Categorie selectById(int id);
-
+	
 }
+
+

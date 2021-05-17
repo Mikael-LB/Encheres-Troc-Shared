@@ -2,6 +2,13 @@ package fr.encheresnobyl.encherestroc.servlets;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +23,9 @@ import javax.servlet.http.Part;
 
 import fr.encheresnobyl.encherestroc.bll.CategorieManagerImpl;
 import fr.encheresnobyl.encherestroc.bll.CategorieManagerInt;
+import fr.encheresnobyl.encherestroc.bo.ArticleVendu;
 import fr.encheresnobyl.encherestroc.bo.Categorie;
+import fr.encheresnobyl.encherestroc.bo.Retrait;
 import fr.encheresnobyl.encherestroc.bo.Utilisateur;
 
 /**
@@ -83,7 +92,28 @@ public class VendreArticle extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		//TODO recuperation des parametres
+		String article = request.getParameter("article");
+		String description = request.getParameter("description");
+		String categorie = request.getParameter("categorie");
+		int idCategorie = Integer.parseInt(categorie);
+		String miseAPrix = request.getParameter("categorie");
+		int miseAPrixInt = Integer.parseInt(miseAPrix);		
+		LocalDate dateDebut = LocalDate.parse(request.getParameter("dateDebut"));
+		LocalDate dateFinDate = LocalDate.parse(request.getParameter("dateFin"));
+		String retraitRue = request.getParameter("retraitRue");
+		String retraitCP = request.getParameter("retraitCP");
+		String retraitVille = request.getParameter("retraitVille");
+		/*
+		List listParam = new ArrayList<String>();
+		listParam.add(retraitVille);
+		listParam.add(retraitCP);
+		listParam.add(dateDebut.toString());
+		request.setAttribute("listParam", listParam);
+		*/
 		//TODO creation d'un article / retrait 
+		
+		Retrait retrait =new Retrait(retraitRue, retraitCP, retraitVille);
+		ArticleVendu articleVendu =new ArticleVendu(article, description, dateDebut, dateFinDate, miseAPrixInt, retrait, idCategorie);
 		//TODO mise en base de donnée 
 		//TODO renvoi vers page article avec numero article
 		
@@ -95,7 +125,7 @@ public class VendreArticle extends HttpServlet {
             part.write( fullPath );
         }*/
 		
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/front-office-user/vendreArticle.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/front-office-user/affichageParam.jsp");
 		rd.forward(request, response);
 	}
 	
