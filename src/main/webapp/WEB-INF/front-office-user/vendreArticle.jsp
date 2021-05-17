@@ -65,7 +65,7 @@
 			<label>
 			Rue :  
 			</label>
-			<input  type="text"  id="retraitRue" name="RetraitRue" value="${utilisateur.getRue()}" />
+			<input  type="text"  id="retraitRue" name="retraitRue" value="${utilisateur.getRue()}" />
 			<br>
 			<label>
 			Code Postal :  

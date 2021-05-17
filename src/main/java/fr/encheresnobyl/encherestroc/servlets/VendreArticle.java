@@ -2,6 +2,13 @@ package fr.encheresnobyl.encherestroc.servlets;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,6 +90,23 @@ public class VendreArticle extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		//TODO recuperation des parametres
+		String article = request.getParameter("article");
+		String description = request.getParameter("description");
+		String categorie = request.getParameter("categorie");
+		int idCategorie = Integer.parseInt(categorie);
+		String miseAPrix = request.getParameter("categorie");
+		int miseAPrixInt = Integer.parseInt(miseAPrix);		
+		//LocalDate dateDebutDate =dateParam(request.getParameter("dateDebut"));
+		LocalDate dateDebut = LocalDate.parse(request.getParameter("dateDebut"));
+		//LocalDate dateFinDate = dateParam(request.getParameter("dateFin"));
+		String retraitRue = request.getParameter("retraitRue");
+		String retraitCP = request.getParameter("retraitCP");
+		String retraitVille = request.getParameter("retraitVille");
+		List listParam = new ArrayList<String>();
+		listParam.add(retraitVille);
+		listParam.add(retraitCP);
+		listParam.add(dateDebut.toString());
+		request.setAttribute("listParam", listParam);
 		//TODO creation d'un article / retrait 
 		//TODO mise en base de donnée 
 		//TODO renvoi vers page article avec numero article
@@ -95,7 +119,7 @@ public class VendreArticle extends HttpServlet {
             part.write( fullPath );
         }*/
 		
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/front-office-user/vendreArticle.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/front-office-user/affichageParam.jsp");
 		rd.forward(request, response);
 	}
 	
@@ -112,5 +136,17 @@ public class VendreArticle extends HttpServlet {
         return "Default.file";
     }*/
 
-
+	private LocalDate dateParam(String date) {
+		
+		DateFormat df=new SimpleDateFormat("yyyy-mm-dd");		
+		Date dateD = null;
+		try {
+			dateD = (Date) df.parse(date);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		LocalDate localDate = dateD.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		return localDate;
+	}
 }
