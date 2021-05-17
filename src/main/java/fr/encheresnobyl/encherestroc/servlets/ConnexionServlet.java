@@ -2,11 +2,13 @@ package fr.encheresnobyl.encherestroc.servlets;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import fr.encheresnobyl.encherestroc.bll.BusinessException;
 import fr.encheresnobyl.encherestroc.bll.UtilisateurManagerImpl;
@@ -22,10 +24,13 @@ import fr.encheresnobyl.encherestroc.bo.Utilisateur;
 public class ConnexionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final String CONNECTION_PAGE = "/WEB-INF/front-office-user/connexion.jsp";
-
+	private static final String ACCUEIL_PAGE = "/WEB-INF/front-office-user/accueil.jsp";
+	
 	private static final String LOGIN = "login";
 	private static final String PASSWD = "password";
 	private static final String REMEMBER_ME = "remember";
+	
+	private static final String ATT_UTILISATEUR = "utilisateur";
 	
 	private UtilisateurManagerInt userManager = new UtilisateurManagerImpl();
 
@@ -47,14 +52,26 @@ public class ConnexionServlet extends HttpServlet {
 		String login = request.getParameter(LOGIN);
 		String passwd = request.getParameter(PASSWD);
 		String rememberMe = request.getParameter(REMEMBER_ME);
+		String url = request.getContextPath() + ACCUEIL_PAGE;
+		RequestDispatcher rd = request.getRequestDispatcher(ACCUEIL_PAGE);
 		
 		try {
-			user = this.userManager.selectByIdentifiant(login);
-			
+			user = userManager.selectByIdentifiant(login);
+			if (null != user && passwd.equals(user.getMotDePasse())) {
+				HttpSession session = request.getSession();
+				session.setAttribute(ATT_UTILISATEUR, user);
+				//without cookies need torewrite url
+				response.encodeURL(url);
+				rd = request.getRequestDispatcher(ACCUEIL_PAGE);
+			} else {
+				request.setAttribute(ATT_UTILISATEUR, null);
+				rd = request.getRequestDispatcher(CONNECTION_PAGE);
+			}
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
-		doGet(request, response);
+		
+		rd.forward(request, response);
 	}
 
 }
