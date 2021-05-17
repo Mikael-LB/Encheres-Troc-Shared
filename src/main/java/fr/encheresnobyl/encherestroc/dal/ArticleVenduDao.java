@@ -25,10 +25,19 @@ public interface ArticleVenduDao {
 	 */
 	List<ArticleVendu> selectEncheres(String motCle, int noCategorie, int noUtilisateur, List<String> parametres);
 
+	/**
+	 * Méthode en charge de
+	 * @param string
+	 * @param i
+	 * @return
+	 */
+	List<ArticleVendu> selectEncheres(String motCle, int noCategorie);
 	
 	List<ArticleVendu> selectVentes(String motCle, int noCategorie, int noUtilisateur, List<String> parametres);
 	
 	ArticleVendu selectArticleById(int id);
+
+
 	
 }
 

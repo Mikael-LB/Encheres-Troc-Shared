@@ -19,6 +19,8 @@ public interface ArticleVenduManagerInt {
 	
 	public List<ArticleVendu> getEncheres(String motCle, int noCategorie, int noUtilisateur, List<String> Parametres);
 	
+	public List<ArticleVendu> getEncheres(String string, int i);
+
 	public List<ArticleVendu> getVentes(String motCle, int noCategorie, int noUtilisateur, List<String> Parametres);
 	
 	public ArticleVendu getArticleById(int id);

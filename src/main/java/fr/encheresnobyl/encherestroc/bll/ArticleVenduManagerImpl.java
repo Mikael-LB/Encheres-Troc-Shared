@@ -24,6 +24,14 @@ public class ArticleVenduManagerImpl implements ArticleVenduManagerInt{
 		
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<ArticleVendu> getEncheres(String motCle, int noCategorie) {
+		return articleVenduDao.selectEncheres(motCle, noCategorie);
+	}
+	
 	public List<ArticleVendu> getVentes(String motCle, int noCategorie, int noUtilisateur, List<String> Parametres){
 		return articleVenduDao.selectVentes(motCle, noCategorie, noUtilisateur, Parametres);
 		
@@ -31,10 +39,9 @@ public class ArticleVenduManagerImpl implements ArticleVenduManagerInt{
 	
 
 	public ArticleVendu getArticleById(int id) {
-		ArticleVendu articleVendu = articleVenduDao.selectArticleById(id);
-		
-		return articleVendu;
+		return articleVenduDao.selectArticleById(id);
 	}
+
 
 
 }

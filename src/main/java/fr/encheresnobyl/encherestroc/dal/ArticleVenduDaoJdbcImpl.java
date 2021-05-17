@@ -38,6 +38,46 @@ public class ArticleVenduDaoJdbcImpl implements ArticleVenduDao {
 	private static final String SELECT_ARTICLE_BY_ID="SELECT * FROM ARTICLES_VENDUS WHERE no_article = ?";
 
 	
+	
+	public List<ArticleVendu> selectEncheres(String motCle, int noCategorie){
+		
+		StringBuilder requeteBuilder = new StringBuilder("SELECT * FROM ARTICLES_VENDUS WHERE date_debut_encheres<GETDATE() AND date_fin_encheres>GETDATE() AND nom_article LIKE ?");
+		List<ArticleVendu> listeArticleVendus = new ArrayList<ArticleVendu>();
+		
+		if(noCategorie!=0) {
+			requeteBuilder.append(" AND no_categorie= ?");
+		}
+		String requete = requeteBuilder.toString();
+		
+
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			PreparedStatement pStmt = cnx.prepareStatement(requete);
+			int IndexStmt=1;
+			
+			pStmt.setString(IndexStmt++, "%"+motCle+"%");
+			
+			if(noCategorie!=0) {
+				pStmt.setInt(IndexStmt++, noCategorie);
+			}
+			
+			ResultSet rs = pStmt.executeQuery();
+			
+			while (rs.next()) {
+				ArticleVendu article = new ArticleVendu(rs.getInt("no_article"),rs.getString("nom_article"),rs.getString("description"),
+														rs.getDate("date_debut_encheres").toLocalDate(), rs.getDate("date_fin_encheres").toLocalDate(), 
+														rs.getInt("prix_initial"), rs.getInt("prix_vente"));
+				
+			listeArticleVendus.add(article);
+			}		
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+				
+		return listeArticleVendus;
+	}
+	
+	
 	/**
 	* {@inheritDoc}
 	*/

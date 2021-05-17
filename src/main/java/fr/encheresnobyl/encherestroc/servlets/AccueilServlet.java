@@ -44,7 +44,7 @@ public class AccueilServlet extends HttpServlet {
 		List<ArticleVendu> listeArticles =new ArrayList<ArticleVendu>();
 		
 		ArticleVenduManagerInt articleManager= new ArticleVenduManagerImpl();
-		listeArticles=articleManager.getEncheresEnCours("", 0);	
+		listeArticles=articleManager.getEncheres("", 0);
 		CategorieManagerInt categorieManager =new CategorieManagerImpl() ;
 		List<Categorie> categories = categorieManager.getAllCategorie();
 		categories.add(new Categorie(0,"Toutes"));
