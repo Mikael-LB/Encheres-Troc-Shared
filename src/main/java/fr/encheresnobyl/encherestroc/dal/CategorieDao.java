@@ -20,5 +20,12 @@ public interface CategorieDao {
 	 * @throws SQLException 
 	 */
 	List<Categorie> getAllCategorie() throws SQLException;
-
+	
+	
+	/**
+	 * Method to get a Categorie from the db by id
+	 * @return  Categorie
+	 * @throws SQLException 
+	 */
+	Categorie selectCategorieById(int no_categorie)throws SQLException;
 }

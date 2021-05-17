@@ -113,7 +113,7 @@ public class VendreArticle extends HttpServlet {
 		//TODO creation d'un article / retrait 
 		
 		Retrait retrait =new Retrait(retraitRue, retraitCP, retraitVille);
-		ArticleVendu articleVendu =new ArticleVendu(article, description, dateDebut, dateFinDate, miseAPrixInt, retrait);
+		ArticleVendu articleVendu =new ArticleVendu(article, description, dateDebut, dateFinDate, miseAPrixInt, retrait, idCategorie);
 		//TODO mise en base de donnée 
 		//TODO renvoi vers page article avec numero article
 		

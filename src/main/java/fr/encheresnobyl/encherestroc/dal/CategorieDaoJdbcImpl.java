@@ -19,6 +19,7 @@ import fr.encheresnobyl.encherestroc.bo.Categorie;
 public class CategorieDaoJdbcImpl implements CategorieDao {
 	
 	private static final String SELECT_ALL_CATEGORIE = "SELECT * FROM categories;";
+	private static final String SELECT_CATEGORIE_BY_ID = "SELECT * FROM categories WHERE no_categorie=? ;";
 
 	/**
 	 * {@inheritDoc}
@@ -47,6 +48,28 @@ public class CategorieDaoJdbcImpl implements CategorieDao {
 			e.printStackTrace();
 		}
 		return lstCategorie;
+	}
+	
+	public Categorie selectCategorieById(int no_categorie)throws SQLException {
+		
+		Categorie cat = new Categorie();
+		
+		try (Connection cnx = ConnectionProvider.getConnection()){
+			
+			PreparedStatement pStmt = cnx.prepareStatement(SELECT_CATEGORIE_BY_ID);
+			pStmt.setInt(1, no_categorie);
+			
+			ResultSet rs = pStmt.executeQuery();
+			
+			if (rs.next()) {
+				cat = new Categorie(rs.getInt("no_categorie"),rs.getString("libelle"));
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return cat;
 	}
 
 }

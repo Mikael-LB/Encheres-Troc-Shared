@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import fr.encheresnobyl.encherestroc.bll.CategorieManagerImpl;
+import fr.encheresnobyl.encherestroc.bll.CategorieManagerInt;
+
 /**
  * Classe en charge
  * @author Pierre
@@ -70,9 +73,11 @@ public class ArticleVendu implements Serializable{
 	}
 	
 	public ArticleVendu( String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres,
-			int miseAPrix, Retrait retrait) {
+			int miseAPrix, Retrait retrait, int idCategorie) {
 		this(nomArticle, description, dateDebutEncheres, dateFinEncheres, miseAPrix);
 		this.pointRetrait=retrait;
+		CategorieManagerInt categorieManager =new CategorieManagerImpl() ;
+		this.categorie =categorieManager.selectCategorieById(idCategorie);
 	}
 	
 	public int getPrixArticle() {

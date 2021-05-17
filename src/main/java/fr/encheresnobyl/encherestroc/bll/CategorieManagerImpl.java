@@ -32,4 +32,16 @@ public class CategorieManagerImpl implements CategorieManagerInt {
 		return lstCategorie;
 	}
 
+	@Override
+	public Categorie selectCategorieById(int no_categorie) {
+		Categorie cat = new Categorie();
+		try {
+			cat = categorieDAO.selectCategorieById(no_categorie);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return cat;
+	}
+
 }
