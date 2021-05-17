@@ -24,15 +24,19 @@
 			<div class="col-1">
 				<input type="search" name="recherche" placeholder="le nom de l'article contient " size=50 spellcheck=false >
 				<br>
+				<p>${ancienCat }
 			    <select name="categorie" id="categorie">
 					<c:forEach items="${ categories }" var="categorie" varStatus="status">
-					<c:if test="${ categorie.noCategorie }==${ancienCat }))"> 
-						<c:set var="selected" value="selected" scope="page" />
-					</c:if>
-					<c:if test="${ categorie.noCategorie }!=${ancienCat }))"> 
-						<c:set var="selected" value="" scope="page" />
-					</c:if>
-				    	<option value=${ categorie.noCategorie } ${selected }	>${categorie.libelle }</option>
+					
+					<c:choose>
+						<c:when test="${categorie.noCategorie == ancienCat }">
+							<option value=${ categorie.noCategorie } selected>${categorie.libelle }</option>>
+						</c:when>
+						<c:otherwise>
+							<option value=${ categorie.noCategorie }>${categorie.libelle }</option>
+						</c:otherwise>
+					</c:choose>
+					
 					</c:forEach>
 			    </select>
 		    </div>
