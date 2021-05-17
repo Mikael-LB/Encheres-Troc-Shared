@@ -5,6 +5,12 @@ package fr.encheresnobyl.encherestroc.bo;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import fr.encheresnobyl.encherestroc.bll.CategorieManagerImpl;
+import fr.encheresnobyl.encherestroc.bll.CategorieManagerInt;
 
 /**
  * Classe en charge
@@ -30,6 +36,10 @@ public class ArticleVendu implements Serializable{
 	LocalDate dateFinEncheres;
 	int miseAPrix;
 	int prixVente;
+	Retrait pointRetrait;
+	List<Enchere> listeEncheres;
+	Utilisateur utilisateur;
+	Categorie categorie;
 	boolean etatVente;
 	
 	/**
@@ -53,6 +63,35 @@ public class ArticleVendu implements Serializable{
 		this.dateDebutEncheres = dateDebutEncheres;
 		this.dateFinEncheres = dateFinEncheres;
 		this.miseAPrix = miseAPrix;
+	}
+	
+	public ArticleVendu(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres,
+			int miseAPrix, int prixVente) {
+		this(nomArticle, description, dateDebutEncheres, dateFinEncheres, miseAPrix);
+		this.noArticle=noArticle;
+		this.prixVente=prixVente;
+	}
+	
+	public ArticleVendu( String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres,
+			int miseAPrix, Retrait retrait, int idCategorie) {
+		this(nomArticle, description, dateDebutEncheres, dateFinEncheres, miseAPrix);
+		this.pointRetrait=retrait;
+		CategorieManagerInt categorieManager =new CategorieManagerImpl() ;
+		this.categorie =categorieManager.selectById(idCategorie);
+	}
+	
+	public int getPrixArticle() {
+		
+		int prixArticle=this.miseAPrix;
+		
+		if (this.listeEncheres!=null) {
+			for (Enchere enchere : this.listeEncheres) {
+				if (enchere.getMontantEnchere()>prixArticle) {
+					prixArticle=enchere.getMontantEnchere();
+				}
+			}
+		}	
+		return prixArticle;	
 	}
 	
 	// -- GETTERS --
@@ -89,6 +128,18 @@ public class ArticleVendu implements Serializable{
 	public boolean isEtatVente() {
 		return etatVente;
 	}
+	public Retrait getPointRetrait() {
+		return pointRetrait;
+	}
+	public Utilisateur getUtilisateur() {
+		return utilisateur;
+	}
+	public List<Enchere> getListeEncheres() {
+		return listeEncheres;
+	}
+	public Categorie getCategorie() {
+		return categorie;
+	}
 	
 	// -- SETTERS --
 	
@@ -116,8 +167,24 @@ public class ArticleVendu implements Serializable{
 	public void setEtatVente(boolean etatVente) {
 		this.etatVente = etatVente;
 	}
-	
-	
-	
+	public void setPointRetrait(Retrait pointRetrait) {
+		this.pointRetrait = pointRetrait;
+	}
+	public void setUtilisateur(Utilisateur utilisateur) {
+		this.utilisateur = utilisateur;
+	}
+	public void setListeEncheres(List<Enchere> listeEncheres) {
+		this.listeEncheres = listeEncheres;
+	}
+	public void setCategorie(Categorie categorie) {
+		this.categorie = categorie;
+	}
+
+	@Override
+	public String toString() {
+		return "ArticleVendu [noArticle=" + noArticle + ", nomArticle=" + nomArticle + ", description=" + description
+				+ ", dateDebutEncheres=" + dateDebutEncheres + ", dateFinEncheres=" + dateFinEncheres + ", miseAPrix="
+				+ miseAPrix + ", prixVente=" + prixVente + ", etatVente=" + etatVente + "]";
+	}
 	
 }

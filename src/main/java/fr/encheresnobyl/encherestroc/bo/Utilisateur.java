@@ -32,7 +32,6 @@ public class Utilisateur implements Serializable{
 	private int credit;
 	private boolean administrateur;
 	
-	
 	/**
 	 * @param administrateur
 	 * @param numeroUtilisateur

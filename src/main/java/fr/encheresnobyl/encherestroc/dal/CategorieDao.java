@@ -21,4 +21,13 @@ public interface CategorieDao {
 	 */
 	List<Categorie> getAllCategorie() throws SQLException;
 
+	/**
+	 * Méthode en charge de
+	 * @param id
+	 * @return 
+	 */
+	Categorie selectById(int id);
+	
 }
+
+

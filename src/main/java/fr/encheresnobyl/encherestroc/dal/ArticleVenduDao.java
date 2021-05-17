@@ -16,19 +16,30 @@ import fr.encheresnobyl.encherestroc.bo.ArticleVendu;
 public interface ArticleVenduDao {
 
 	/**
-	 * Méthode en charge de récupérer une liste d'articles en fonction du nom des articles
-	 * @param nom
+	 * Méthode en charge de
+	 * @param motCle
+	 * @param noCategorie
+	 * @param noUtilisateur
+	 * @param parametres
 	 * @return
 	 */
-	List<ArticleVendu> selectByNom(String nom);
-	
+	List<ArticleVendu> selectEncheres(String motCle, int noCategorie, int noUtilisateur, List<String> parametres);
 
 	/**
-	 * Méthode en charge de récupérer une liste d'articles en fonction du nom des articles et de leur catégorie
-	 * @param nom
-	 * @param noCategorie
+	 * Méthode en charge de
+	 * @param string
+	 * @param i
 	 * @return
 	 */
-	List<ArticleVendu> selectByNomAndCategorie(String nom, int noCategorie);
+	List<ArticleVendu> selectEncheres(String motCle, int noCategorie);
+	
+	List<ArticleVendu> selectVentes(String motCle, int noCategorie, int noUtilisateur, List<String> parametres);
+	
+	ArticleVendu selectArticleById(int id);
+
+
 	
 }
+
+
+

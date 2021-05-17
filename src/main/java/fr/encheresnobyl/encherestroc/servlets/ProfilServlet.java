@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.tomcat.util.buf.Utf8Decoder;
 
+import fr.encheresnobyl.encherestroc.bll.UtilisateurManagerImpl;
+import fr.encheresnobyl.encherestroc.bll.UtilisateurManagerInt;
 import fr.encheresnobyl.encherestroc.bo.Utilisateur;
 
 /**
@@ -18,7 +20,7 @@ import fr.encheresnobyl.encherestroc.bo.Utilisateur;
  */
 @WebServlet(urlPatterns = {"/ProfilServlet","/Profil","/Mon-Profil"})
 public class ProfilServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+	private static final long  serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -32,11 +34,12 @@ public class ProfilServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Utilisateur utilisateur =new Utilisateur(1,"Rk","renan","kerhir","kerenan@hotmail.fr","0662856060"
-				,"rue du champ dolent", "35131","chartres","caVaPas",1000000,true);
-		// TODO recuperation utilisateur
+		//Utilisateur utilisateur =new Utilisateur(1,"Rk","renan","kerhir","kerenan@hotmail.fr","0662856060"
+		//		,"rue du champ dolent", "35131","chartres","caVaPas",1000000,true);
+		UtilisateurManagerInt utilisateurManager= new UtilisateurManagerImpl();
+		// TODO
+		Utilisateur utilisateur = utilisateurManager.selectByIdentifiant("1");
 		request.setAttribute("utilisateur", utilisateur);
-		//TODO verifier l'accet servlet
 		if(request.getRequestURI().contains("Mon-Profil")) {
 			request.setAttribute("modifier", "modifier");
 		}
@@ -49,8 +52,12 @@ public class ProfilServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		UtilisateurManagerInt utilisateurManager= new UtilisateurManagerImpl();
+		//TODO
+		Utilisateur utilisateur = utilisateurManager.selectByIdentifiant("1");
+		request.setAttribute("utilisateur", utilisateur);
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/front-office-user/profilUser.jsp");
+		rd.forward(request, response);
 	}
 
 }

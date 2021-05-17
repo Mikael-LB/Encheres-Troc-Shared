@@ -18,4 +18,6 @@ public interface CategorieManagerInt {
 	 * @return
 	 */
 	List<Categorie> getAllCategorie();
+	
+	Categorie selectById(int id);
 }
