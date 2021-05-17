@@ -23,7 +23,9 @@ import javax.servlet.http.Part;
 
 import fr.encheresnobyl.encherestroc.bll.CategorieManagerImpl;
 import fr.encheresnobyl.encherestroc.bll.CategorieManagerInt;
+import fr.encheresnobyl.encherestroc.bo.ArticleVendu;
 import fr.encheresnobyl.encherestroc.bo.Categorie;
+import fr.encheresnobyl.encherestroc.bo.Retrait;
 import fr.encheresnobyl.encherestroc.bo.Utilisateur;
 
 /**
@@ -96,18 +98,22 @@ public class VendreArticle extends HttpServlet {
 		int idCategorie = Integer.parseInt(categorie);
 		String miseAPrix = request.getParameter("categorie");
 		int miseAPrixInt = Integer.parseInt(miseAPrix);		
-		//LocalDate dateDebutDate =dateParam(request.getParameter("dateDebut"));
 		LocalDate dateDebut = LocalDate.parse(request.getParameter("dateDebut"));
-		//LocalDate dateFinDate = dateParam(request.getParameter("dateFin"));
+		LocalDate dateFinDate = LocalDate.parse(request.getParameter("dateFin"));
 		String retraitRue = request.getParameter("retraitRue");
 		String retraitCP = request.getParameter("retraitCP");
 		String retraitVille = request.getParameter("retraitVille");
+		/*
 		List listParam = new ArrayList<String>();
 		listParam.add(retraitVille);
 		listParam.add(retraitCP);
 		listParam.add(dateDebut.toString());
 		request.setAttribute("listParam", listParam);
+		*/
 		//TODO creation d'un article / retrait 
+		
+		Retrait retrait =new Retrait(retraitRue, retraitCP, retraitVille);
+		ArticleVendu articleVendu =new ArticleVendu(article, description, dateDebut, dateFinDate, miseAPrixInt, retrait);
 		//TODO mise en base de donnée 
 		//TODO renvoi vers page article avec numero article
 		
@@ -136,17 +142,5 @@ public class VendreArticle extends HttpServlet {
         return "Default.file";
     }*/
 
-	private LocalDate dateParam(String date) {
-		
-		DateFormat df=new SimpleDateFormat("yyyy-mm-dd");		
-		Date dateD = null;
-		try {
-			dateD = (Date) df.parse(date);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
-		LocalDate localDate = dateD.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-		return localDate;
-	}
+
 }

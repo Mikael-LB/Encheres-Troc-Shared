@@ -67,6 +67,12 @@ public class ArticleVendu implements Serializable{
 		this.noArticle=noArticle;
 	}
 	
+	public ArticleVendu( String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres,
+			int miseAPrix, Retrait retrait) {
+		this(nomArticle, description, dateDebutEncheres, dateFinEncheres, miseAPrix);
+		this.pointRetrait=retrait;
+	}
+	
 	public int getPrixArticle() {
 		
 		int prixArticle=this.miseAPrix;
