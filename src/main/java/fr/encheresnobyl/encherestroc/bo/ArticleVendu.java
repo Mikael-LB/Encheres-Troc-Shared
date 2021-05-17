@@ -5,6 +5,9 @@ package fr.encheresnobyl.encherestroc.bo;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Classe en charge
@@ -30,6 +33,9 @@ public class ArticleVendu implements Serializable{
 	LocalDate dateFinEncheres;
 	int miseAPrix;
 	int prixVente;
+	Retrait pointRetrait;
+	List<Enchere> listeEncheres;
+	Utilisateur utilisateur;
 	boolean etatVente;
 	
 	/**
@@ -53,6 +59,26 @@ public class ArticleVendu implements Serializable{
 		this.dateDebutEncheres = dateDebutEncheres;
 		this.dateFinEncheres = dateFinEncheres;
 		this.miseAPrix = miseAPrix;
+	}
+	
+	public ArticleVendu(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres,
+			int miseAPrix) {
+		this(nomArticle, description, dateDebutEncheres, dateFinEncheres, miseAPrix);
+		this.noArticle=noArticle;
+	}
+	
+	public int getPrixArticle() {
+		
+		int prixArticle=this.miseAPrix;
+		
+		if (this.listeEncheres!=null) {
+			for (Enchere enchere : this.listeEncheres) {
+				if (enchere.getMontantEnchere()>prixArticle) {
+					prixArticle=enchere.getMontantEnchere();
+				}
+			}
+		}	
+		return prixArticle;	
 	}
 	
 	// -- GETTERS --
@@ -116,8 +142,12 @@ public class ArticleVendu implements Serializable{
 	public void setEtatVente(boolean etatVente) {
 		this.etatVente = etatVente;
 	}
-	
-	
-	
+
+	@Override
+	public String toString() {
+		return "ArticleVendu [noArticle=" + noArticle + ", nomArticle=" + nomArticle + ", description=" + description
+				+ ", dateDebutEncheres=" + dateDebutEncheres + ", dateFinEncheres=" + dateFinEncheres + ", miseAPrix="
+				+ miseAPrix + ", prixVente=" + prixVente + ", etatVente=" + etatVente + "]";
+	}
 	
 }

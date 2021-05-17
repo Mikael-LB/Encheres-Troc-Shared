@@ -8,25 +8,41 @@ import java.util.List;
 import fr.encheresnobyl.encherestroc.bo.ArticleVendu;
 
 /**
- * @author mlebris2021
- * Interface which define the method available for ArticleVenduManager
+<<<<<<< HEAD
+ * Classe en charge
+ * @author Pierre
+ * @version Encheres-Troc - v1.0
+ * @date 11 mai 2021 - 16:46:17
  */
 public interface ArticleVenduManagerInt {
-	
+
+
 	/**
-	 * Method to ask the DAO to get a List of ArticleVendu
-	 * which name is like the parameter String nom
-	 * @param nom:String
-	 * @return List<ArticleVendu>
+	 * Méthode en charge de
+	 * @param nom
+	 * @param noCategorie
+	 * @return
 	 */
-	List<ArticleVendu> getByNom(String nom);
-	
+	List<ArticleVendu> getEncheresEnCours(String nom, int noCategorie);
+
 	/**
-	 * Method to ask the DAO to get a List of ArticleVendu
-	 * whose match with the 2 parameters
-	 * @param nom:String
-	 * @param noCategorie:int
-	 * @return List<ArticleVendu>
+	 * Méthode en charge de
+	 * @param nom
+	 * @param noCategorie
+	 * @param noUtilisateur
+	 * @return
 	 */
-	List<ArticleVendu> getByNomAndCategorie(String nom, String noCategorie);
+	List<ArticleVendu> getEncheresUtilisateur(String nom, int noCategorie, int noUtilisateur);
+
+	/**
+	 * Méthode en charge de
+	 * @param nom
+	 * @param noCategorie
+	 * @param noUtilisateur
+	 * @return
+	 */
+	List<ArticleVendu> getEncheresRemporteesUtilisateur(String nom, int noCategorie, int noUtilisateur); 
+	
+	public List<ArticleVendu> getEncheres(String motCle, int noCategorie, int noUtilisateur, List<String> Parametres);
+	
 }

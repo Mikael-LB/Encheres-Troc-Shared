@@ -3,7 +3,6 @@
  */
 package fr.encheresnobyl.encherestroc.bll;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import fr.encheresnobyl.encherestroc.bo.ArticleVendu;
@@ -11,43 +10,51 @@ import fr.encheresnobyl.encherestroc.dal.ArticleVenduDao;
 import fr.encheresnobyl.encherestroc.dal.DAOFactory;
 
 /**
- * @author mlebris2021 Class which implements the method of
- *         ArticleVenduManagerInt
+ * Classe en charge
+ * @author Pierre
+ * @version Encheres-Troc - v1.0
+ * @date 11 mai 2021 - 16:46:29
  */
-public class ArticleVenduManagerImpl implements ArticleVenduManagerInt {
-	private ArticleVenduDao articleVenduDAO = DAOFactory.getArticleVenduDAO();
+public class ArticleVenduManagerImpl implements ArticleVenduManagerInt{
+	
+	private ArticleVenduDao articleVenduDao = DAOFactory.getArticleVenduDAO();
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<ArticleVendu> getByNom(String nom) {
-		List<ArticleVendu> lstArticleVendu = new ArrayList<>();
-		try {
-			lstArticleVendu = articleVenduDAO.selectByNom(nom);
-		} catch (Exception e) {
-			e.printStackTrace();
-			//TODO throw BusinessException
+	public List<ArticleVendu> getEncheresEnCours(String nom, int noCategorie) {
+		
+		if ((nom==null || nom=="") && noCategorie==0) {
+			return articleVenduDao.selectAllDispo();			
+		}else if (nom==null || nom=="") {
+			return articleVenduDao.selectDispoByNom(nom);
+		}else {
+			return articleVenduDao.selectDispoByNomAndCategorie(nom, noCategorie);
 		}
-		return lstArticleVendu;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<ArticleVendu> getEncheresUtilisateur(String nom, int noCategorie, int noUtilisateur) {
+		return null;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<ArticleVendu> getByNomAndCategorie(String nom, String noCategorie) {
-		List<ArticleVendu> lstArticleVendu = new ArrayList<>();
-		try {
-			int noCategorieInt = Integer.parseInt(noCategorie);
-			lstArticleVendu = articleVenduDAO.selectByNomAndCategorie(nom, noCategorieInt);
-		} catch (NumberFormatException nfe) {
-			nfe.printStackTrace();
-			//TODO throw BusinessException
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return lstArticleVendu;
+	public List<ArticleVendu> getEncheresRemporteesUtilisateur(String nom, int noCategorie, int noUtilisateur) {
+		return null;
 	}
+	
+	public List<ArticleVendu> getEncheres(String motCle, int noCategorie, int noUtilisateur, List<String> Parametres){
+		return articleVenduDao.selectEncheres(motCle, noCategorie, noUtilisateur, Parametres);
+		
+	}
+
+
 
 }
