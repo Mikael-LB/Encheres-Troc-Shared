@@ -41,4 +41,6 @@ public interface UtilisateurManagerInt {
 	 * @return
 	 */
 	public Utilisateur selectByIdentifiant(String identifiant);
+	
+	
 }
