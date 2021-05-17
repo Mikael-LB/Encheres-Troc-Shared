@@ -36,6 +36,7 @@ public class ArticleVendu implements Serializable{
 	Retrait pointRetrait;
 	List<Enchere> listeEncheres;
 	Utilisateur utilisateur;
+	Categorie categorie;
 	boolean etatVente;
 	
 	/**
@@ -62,9 +63,10 @@ public class ArticleVendu implements Serializable{
 	}
 	
 	public ArticleVendu(int noArticle, String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres,
-			int miseAPrix) {
+			int miseAPrix, int prixVente) {
 		this(nomArticle, description, dateDebutEncheres, dateFinEncheres, miseAPrix);
 		this.noArticle=noArticle;
+		this.prixVente=prixVente;
 	}
 	
 	public ArticleVendu( String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres,
@@ -121,6 +123,18 @@ public class ArticleVendu implements Serializable{
 	public boolean isEtatVente() {
 		return etatVente;
 	}
+	public Retrait getPointRetrait() {
+		return pointRetrait;
+	}
+	public Utilisateur getUtilisateur() {
+		return utilisateur;
+	}
+	public List<Enchere> getListeEncheres() {
+		return listeEncheres;
+	}
+	public Categorie getCategorie() {
+		return categorie;
+	}
 	
 	// -- SETTERS --
 	
@@ -147,6 +161,18 @@ public class ArticleVendu implements Serializable{
 	}
 	public void setEtatVente(boolean etatVente) {
 		this.etatVente = etatVente;
+	}
+	public void setPointRetrait(Retrait pointRetrait) {
+		this.pointRetrait = pointRetrait;
+	}
+	public void setUtilisateur(Utilisateur utilisateur) {
+		this.utilisateur = utilisateur;
+	}
+	public void setListeEncheres(List<Enchere> listeEncheres) {
+		this.listeEncheres = listeEncheres;
+	}
+	public void setCategorie(Categorie categorie) {
+		this.categorie = categorie;
 	}
 
 	@Override

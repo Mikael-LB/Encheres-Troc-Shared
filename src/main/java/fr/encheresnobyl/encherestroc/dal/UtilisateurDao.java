@@ -42,4 +42,11 @@ public interface UtilisateurDao {
 	 */
 	Utilisateur selectByIdentifiant(String identifiant);
 
+	/**
+	 * Méthode en charge de récupérer un utilisateur en fonction de son id (no_utilisateur)
+	 * @param id
+	 * @return
+	 */
+	Utilisateur selectById(int id);
+
 }
