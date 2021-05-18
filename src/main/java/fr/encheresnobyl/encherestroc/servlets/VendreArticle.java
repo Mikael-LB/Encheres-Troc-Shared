@@ -73,13 +73,11 @@ public class VendreArticle extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession session = request.getSession();
-		//TODO recuperer l'utilisateur en session
-		UtilisateurManagerInt utilisateurManager = new UtilisateurManagerImpl();
-		Utilisateur utilisateur = utilisateurManager.selectByIdentifiant(session.getId());
+		Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
 		CategorieManagerInt categorieManager =new CategorieManagerImpl() ;
 		List<Categorie> categories = categorieManager.getAllCategorie();
 
-		request.setAttribute("sessionUtilisateur", session.getAttribute("utilisateur"));
+		request.setAttribute("sessionUtilisateur",utilisateur );
 		request.setAttribute("categories", categories);
 		request.setAttribute("utilisateur", utilisateur);
 		
@@ -105,10 +103,8 @@ public class VendreArticle extends HttpServlet {
 		String retraitCP = request.getParameter("retraitCP");
 		String retraitVille = request.getParameter("retraitVille");
 		
-		//TODO Récupérer un utilisateur à partir de la session
-		UtilisateurManagerInt utilisateurManager = new UtilisateurManagerImpl();
-		Utilisateur utilisateur = utilisateurManager.selectByIdentifiant(session.getId());
-		//
+		Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
+		
 
 
 		

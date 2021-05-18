@@ -37,18 +37,18 @@ public class ProfilServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		
-		String noUser;
+		int noUser;
 		
 		if(request.getRequestURI().contains("Mon-Profil")) {
 			request.setAttribute("modifier", "modifier");
 			Utilisateur sessionUtilisateur =  (Utilisateur) session.getAttribute("utilisateur");
-			noUser = String.valueOf(sessionUtilisateur.getNumeroUtilisateur());
+			noUser = sessionUtilisateur.getNumeroUtilisateur();
 		}else {
 			System.out.println("t'es la !!!!!");
-			noUser = request.getParameter( "user" );
+			noUser = Integer.parseInt(request.getParameter( "user" ));
 		}
 		UtilisateurManagerInt utilisateurManager= new UtilisateurManagerImpl();
-		Utilisateur utilisateur = utilisateurManager.selectByIdentifiant(noUser);
+		Utilisateur utilisateur = utilisateurManager.selectById(noUser);
 		
 		request.setAttribute("sessionUtilisateur", session.getAttribute("utilisateur"));
 		request.setAttribute("user", utilisateur);
