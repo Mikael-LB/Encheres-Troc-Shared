@@ -18,7 +18,7 @@ import fr.encheresnobyl.encherestroc.bo.Utilisateur;
 /**
  * Servlet implementation class ProfilServlet
  */
-@WebServlet(urlPatterns = {"/ProfilServlet","/Profil","/Mon-Profil"})
+@WebServlet( urlPatterns = {"/ProfilServlet","/Profil","/Mon-Profil"})
 public class ProfilServlet extends HttpServlet {
 	private static final long  serialVersionUID = 1L;
        
