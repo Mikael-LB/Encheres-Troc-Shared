@@ -16,11 +16,6 @@
 	<h1 align="center" >Liste des enchères</h1>
 	<div class="contnair-fluid" >
 		<form action="" method="POST">
-			<label>filtres :</label>
-			<p>${coche }</p>
-			<br>
-			<br>
-			<br>
 			<div  align="center">
 				<input type="search" name="recherche" placeholder="le nom de l'article contient " size=50 spellcheck=false >
 				<br>
@@ -42,10 +37,10 @@
 		    </div >
 		    <div class="row" align="center">
 			    <c:if test="${!empty sessionId}">
-			    	<div class="col" align="right" >
+			    	<div class="col " align="right" >
 			    		<input type="radio" name="achatVente" value="achats" id="achats" onchange="achat();">
 			    		<label>Mes achats</label>
-			    		<div >
+			    		<div>
 			    			<input  type="checkbox" name="encheresOuvertes" id="encheresOuvertes" value="encheresOuvertes" disabled="disabled">
 			    			<label>Enchères ouvertes</label><br>
 			    			<input  type="checkbox" name="encheresUtilisateur" id="encheresUtilisateur" value="encheresUtilisateur" disabled="disabled">
@@ -73,18 +68,21 @@
 		    </div>
 		</form>
 	</div>
-	<div>
+	<br>
+	<div class="card-group mb-4">
 		<c:forEach items="${ articles }" var="article" varStatus="status">
-				<div class="card">					
-					<div>
+				<div class="card flex-row flex-wrap"	>
+					<div  class="card-header border-0">					
 						<img class="card-img-left" src="https://via.placeholder.com/150">
 					</div>
+					<div class="card-block px-2">
 						<a class="card-title" href="#">${article.getNomArticle()}</a><br>
-					<div class="card-text">
-						<p>Prix : ${article.getPrixArticle()}</p><br>
-						<p>Fin de l'enchère ${article.getDateFinEncheres()}</p><br>
-						<p>Vendeur : <a href="#">${article.getUtilisateur().getPseudo}</a><br>
-					</div>					
+						<p class="card-body">	
+								Prix : ${article.getPrixArticle()}<br>
+								Fin de l'enchère : ${article.getDateFinEncheres()}<br>
+								Vendeur : <a href="<c:url value="/Profil?user=${article.getUtilisateur().getNumeroUtilisateur()}"/>">${article.getUtilisateur().getPseudo()}</a>
+						</p>
+					</div>			
 				</div>    	
 		</c:forEach>
 	</div>
