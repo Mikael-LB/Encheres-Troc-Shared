@@ -153,6 +153,8 @@ public class ArticleVenduDaoJdbcImpl implements ArticleVenduDao {
 														rs.getDate("date_debut_encheres").toLocalDate(), rs.getDate("date_fin_encheres").toLocalDate(), 
 														rs.getInt("prix_initial"), rs.getInt("prix_vente"));
 				
+				UtilisateurManagerInt utilisateurManager = new UtilisateurManagerImpl();
+				article.setUtilisateur(utilisateurManager.selectById(rs.getInt("no_utilisateur")));
 			listeArticleVendus.add(article);
 			}
 			
@@ -226,6 +228,8 @@ public class ArticleVenduDaoJdbcImpl implements ArticleVenduDao {
 				ArticleVendu article = new ArticleVendu(rs.getInt("no_article"),rs.getString("nom_article"),rs.getString("description"),
 														rs.getDate("date_debut_encheres").toLocalDate(), rs.getDate("date_fin_encheres").toLocalDate(), 
 														rs.getInt("prix_initial"), rs.getInt("prix_vente"));
+				UtilisateurManagerInt utilisateurManager = new UtilisateurManagerImpl();
+				article.setUtilisateur(utilisateurManager.selectById(rs.getInt("no_utilisateur")));
 				
 			listeArticleVendus.add(article);
 			}
