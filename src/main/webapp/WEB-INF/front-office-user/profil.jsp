@@ -18,19 +18,19 @@
 		<c:if test="${!empty modifier }" ><h1>Mon Profil</h1></c:if>
 	</div>
 	<div align="center">
-	<p>${user.toString() }</p>
+
 		<table>
 			<tr>
 				<td>Pseudo : </td>
 				<td>${ user.getPseudo() }</td>
 			</tr>
 			<tr>
-				<td>Nom : </td>
-				<td>${ user.getNom() }</td>
-			</tr>
-			<tr>
 				<td>Prenom : </td>
 				<td>${ user.getPrenom() }</td>
+			</tr>
+			<tr>
+				<td>Nom : </td>
+				<td>${ user.getNom() }</td>
 			</tr>
 			<tr>
 				<td>Email : </td>
