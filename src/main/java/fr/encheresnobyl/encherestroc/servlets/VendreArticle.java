@@ -21,8 +21,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
+import fr.encheresnobyl.encherestroc.bll.ArticleVenduManagerImpl;
+import fr.encheresnobyl.encherestroc.bll.ArticleVenduManagerInt;
 import fr.encheresnobyl.encherestroc.bll.CategorieManagerImpl;
 import fr.encheresnobyl.encherestroc.bll.CategorieManagerInt;
+import fr.encheresnobyl.encherestroc.bll.UtilisateurManagerImpl;
+import fr.encheresnobyl.encherestroc.bll.UtilisateurManagerInt;
 import fr.encheresnobyl.encherestroc.bo.ArticleVendu;
 import fr.encheresnobyl.encherestroc.bo.Categorie;
 import fr.encheresnobyl.encherestroc.bo.Retrait;
@@ -39,9 +43,7 @@ public class VendreArticle extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	//TODO upload
 	 //public static final String IMAGES_FOLDER = "/";
-	 //public String uploadPath;
-       
-	 
+	 //public String uploadPath; 
 
     /*
      * Si le dossier de sauvegarde de l'image n'existe pas, on demande sa création.
@@ -68,19 +70,14 @@ public class VendreArticle extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		
-		//TODO recuperer l'utilisateurs
-			Utilisateur utilisateur= new Utilisateur(1,"Rk","renan","kerhir","kerenan@hotmail.fr","0662856060"
-				,"rue du champ dolent", "35131","chartres","caVaPas",1000000,true);
-		//CategorieManagerInt categorieManager =new CategorieManagerImpl() ;
-		//List<Categorie> categories = categorieManager.getAllCategorie();
-			List<Categorie> categories = new ArrayList<Categorie>();
-			Categorie categorie1 = new Categorie(1, "immobilier");
-			Categorie categorie2 = new Categorie(2, "voiture");
-			categories.add(categorie1);
-			categories.add(categorie2);
+		//TODO recuperer l'utilisateur en session
+		UtilisateurManagerInt utilisateurManager = new UtilisateurManagerImpl();
+		Utilisateur utilisateur = utilisateurManager.selectByIdentifiant("Rico");
+		CategorieManagerInt categorieManager =new CategorieManagerImpl() ;
+		List<Categorie> categories = categorieManager.getAllCategorie();
+
 		request.setAttribute("categories", categories);
 		request.setAttribute("utilisateur", utilisateur);
-		
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/front-office-user/vendreArticle.jsp");
 		rd.forward(request, response);
@@ -96,26 +93,26 @@ public class VendreArticle extends HttpServlet {
 		String description = request.getParameter("description");
 		String categorie = request.getParameter("categorie");
 		int idCategorie = Integer.parseInt(categorie);
-		String miseAPrix = request.getParameter("categorie");
+		String miseAPrix = request.getParameter("miseAPrix");
 		int miseAPrixInt = Integer.parseInt(miseAPrix);		
 		LocalDate dateDebut = LocalDate.parse(request.getParameter("dateDebut"));
 		LocalDate dateFinDate = LocalDate.parse(request.getParameter("dateFin"));
 		String retraitRue = request.getParameter("retraitRue");
 		String retraitCP = request.getParameter("retraitCP");
 		String retraitVille = request.getParameter("retraitVille");
-		/*
-		List listParam = new ArrayList<String>();
-		listParam.add(retraitVille);
-		listParam.add(retraitCP);
-		listParam.add(dateDebut.toString());
-		request.setAttribute("listParam", listParam);
-		*/
-		//TODO creation d'un article / retrait 
+		
+		//TODO Récupérer un utilisateur à partir de la session
+		UtilisateurManagerInt utilisateurManager = new UtilisateurManagerImpl();
+		Utilisateur utilisateur = utilisateurManager.selectByIdentifiant("Rico");
+		//
+
+
 		
 		Retrait retrait =new Retrait(retraitRue, retraitCP, retraitVille);
 		ArticleVendu articleVendu =new ArticleVendu(article, description, dateDebut, dateFinDate, miseAPrixInt, retrait, idCategorie);
-		//TODO mise en base de donnée 
-		//TODO renvoi vers page article avec numero article
+		
+		ArticleVenduManagerInt articleVenduManager = new ArticleVenduManagerImpl();
+		ArticleVendu artVendu = articleVenduManager.insertNewArticle(articleVendu, utilisateur.getNumeroUtilisateur(), retrait);
 		
 		//TODO upload
 		/*

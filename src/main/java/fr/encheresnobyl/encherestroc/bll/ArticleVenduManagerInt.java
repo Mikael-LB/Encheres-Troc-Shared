@@ -6,6 +6,7 @@ package fr.encheresnobyl.encherestroc.bll;
 import java.util.List;
 
 import fr.encheresnobyl.encherestroc.bo.ArticleVendu;
+import fr.encheresnobyl.encherestroc.bo.Retrait;
 
 /**
 <<<<<<< HEAD
@@ -24,5 +25,7 @@ public interface ArticleVenduManagerInt {
 	public List<ArticleVendu> getVentes(String motCle, int noCategorie, int noUtilisateur, List<String> Parametres);
 	
 	public ArticleVendu getArticleById(int id);
+	
+	public ArticleVendu insertNewArticle(ArticleVendu article, int noUtilisateur, Retrait retrait);
 	
 }
