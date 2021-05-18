@@ -69,8 +69,10 @@
 		</form>
 	</div>
 	<br>
-	<div class="card-group mb-4 container">
-		<div class="row">
+ 
+
+	<div class="card-group mb-4 container-fluid">
+		<div class="row d-flex flex-wrap">
 			<c:forEach items="${ articles }" var="article" varStatus="status">
 				<div class="col-3">
 					<div class="card flex-row flex-wrap"	>
@@ -90,6 +92,8 @@
 			</c:forEach>
 		</div>
 	</div>
+
+
 	<script>
 	function achat(){
 		var ach = document.getElementById("achats");
