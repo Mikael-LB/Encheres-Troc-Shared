@@ -19,6 +19,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import fr.encheresnobyl.encherestroc.bll.ArticleVenduManagerImpl;
@@ -71,13 +72,14 @@ public class VendreArticle extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		
+		HttpSession session = request.getSession();
 		//TODO recuperer l'utilisateur en session
 		UtilisateurManagerInt utilisateurManager = new UtilisateurManagerImpl();
-		Utilisateur utilisateur = utilisateurManager.selectByIdentifiant("Rico");
+		Utilisateur utilisateur = utilisateurManager.selectByIdentifiant(session.getId());
 		CategorieManagerInt categorieManager =new CategorieManagerImpl() ;
 		List<Categorie> categories = categorieManager.getAllCategorie();
 
+		request.setAttribute("sessionUtilisateur", session.getAttribute("utilisateur"));
 		request.setAttribute("categories", categories);
 		request.setAttribute("utilisateur", utilisateur);
 		
@@ -89,7 +91,7 @@ public class VendreArticle extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		HttpSession session = request.getSession();
 		//TODO recuperation des parametres
 		String article = request.getParameter("article");
 		String description = request.getParameter("description");
@@ -105,7 +107,7 @@ public class VendreArticle extends HttpServlet {
 		
 		//TODO Récupérer un utilisateur à partir de la session
 		UtilisateurManagerInt utilisateurManager = new UtilisateurManagerImpl();
-		Utilisateur utilisateur = utilisateurManager.selectByIdentifiant("Rico");
+		Utilisateur utilisateur = utilisateurManager.selectByIdentifiant(session.getId());
 		//
 
 
@@ -130,7 +132,7 @@ public class VendreArticle extends HttpServlet {
             String fullPath = uploadPath + File.separator + fileName;
             part.write( fullPath );
         }*/
-		
+		request.setAttribute("sessionUtilisateur", session.getAttribute("utilisateur"));
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/front-office-user/affichageParam.jsp");
 		rd.forward(request, response);
 	}

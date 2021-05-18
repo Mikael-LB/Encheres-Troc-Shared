@@ -8,14 +8,14 @@
 			<div class="navbar-brand">ENI Enchères</div>
 			<div class="d-flex" id="navbarText">
 				<c:if test="${empty sessionId}">
-					<a class="nav-link active" href="${request.getContextPath() }/inscription">Inscription</a>
-					<a class="nav-link active" href="${request.getContextPath() }/connexion">Connexion</a>
+					<a class="nav-link active" href="<c:url value="/inscription"/>">Inscription</a>
+					<a class="nav-link active" href="<c:url value="/connexion"/>">Connexion</a>
 				</c:if>
-				<c:if test="${!empty sessionId }">
-					<a class="nav-link active" href="${request.getContextPath() }//Mon-Profil"> ${ sessionPseudo } </a> 
-					<a class="nav-link active" href="${request.getContextPath() }/accueil"> Enchère  </a> 
-					<a class="nav-link active" href="${request.getContextPath() }/vendre"> Vendre un article  </a> 
-					<a class="nav-link active" href="${request.getContextPath() }/deconnexion"> Déconnexion  </a> 
+				<c:if test="${!empty sessionUtilisateur }">
+					<a class="nav-link active" href="<c:url value="/Mon-Profil"/>"> ${ sessionUtilisateur.getPseudo() } </a> 
+					<a class="nav-link active" href="<c:url value="/accueil"/>"> Enchère  </a> 
+					<a class="nav-link active" href="<c:url value="/VendreArticle"/>"> Vendre un article  </a> 
+					<a class="nav-link active" href="<c:url value="/deconnexion"/>"> Déconnexion  </a> 
 				</c:if>
 			</div>
 		</div>

@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.tomcat.util.buf.Utf8Decoder;
 
@@ -18,7 +19,7 @@ import fr.encheresnobyl.encherestroc.bo.Utilisateur;
 /**
  * Servlet implementation class ProfilServlet
  */
-@WebServlet(urlPatterns = {"/ProfilServlet","/Profil","/Mon-Profil"})
+@WebServlet( urlPatterns = {"/ProfilServlet","/Profil","/Mon-Profil"})
 public class ProfilServlet extends HttpServlet {
 	private static final long  serialVersionUID = 1L;
        
@@ -34,15 +35,24 @@ public class ProfilServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//Utilisateur utilisateur =new Utilisateur(1,"Rk","renan","kerhir","kerenan@hotmail.fr","0662856060"
-		//		,"rue du champ dolent", "35131","chartres","caVaPas",1000000,true);
-		UtilisateurManagerInt utilisateurManager= new UtilisateurManagerImpl();
-		// TODO
-		Utilisateur utilisateur = utilisateurManager.selectByIdentifiant("1");
-		request.setAttribute("utilisateur", utilisateur);
+		HttpSession session = request.getSession();
+		
+		String noUser;
+		
 		if(request.getRequestURI().contains("Mon-Profil")) {
 			request.setAttribute("modifier", "modifier");
+			Utilisateur sessionUtilisateur =  (Utilisateur) session.getAttribute("utilisateur");
+			noUser = String.valueOf(sessionUtilisateur.getNumeroUtilisateur());
+		}else {
+			System.out.println("t'es la !!!!!");
+			noUser = request.getParameter( "user" );
 		}
+		UtilisateurManagerInt utilisateurManager= new UtilisateurManagerImpl();
+		Utilisateur utilisateur = utilisateurManager.selectByIdentifiant(noUser);
+		
+		request.setAttribute("sessionUtilisateur", session.getAttribute("utilisateur"));
+		request.setAttribute("user", utilisateur);
+		request.setAttribute("no", noUser);
 
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/front-office-user/profil.jsp");
 		rd.forward(request, response);
@@ -52,10 +62,13 @@ public class ProfilServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		UtilisateurManagerInt utilisateurManager= new UtilisateurManagerImpl();
-		//TODO
-		Utilisateur utilisateur = utilisateurManager.selectByIdentifiant("1");
-		request.setAttribute("utilisateur", utilisateur);
+		HttpSession session = request.getSession();
+
+		Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
+		
+		request.setAttribute("sessionUtilisateur", session.getAttribute("utilisateur"));
+		request.setAttribute("user", utilisateur);
+		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/front-office-user/profilUser.jsp");
 		rd.forward(request, response);
 	}

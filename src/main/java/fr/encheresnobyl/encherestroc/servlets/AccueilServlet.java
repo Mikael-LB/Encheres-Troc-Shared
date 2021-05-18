@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import fr.encheresnobyl.encherestroc.bll.ArticleVenduManagerImpl;
 import fr.encheresnobyl.encherestroc.bll.ArticleVenduManagerInt;
@@ -17,6 +18,7 @@ import fr.encheresnobyl.encherestroc.bll.CategorieManagerImpl;
 import fr.encheresnobyl.encherestroc.bll.CategorieManagerInt;
 import fr.encheresnobyl.encherestroc.bo.ArticleVendu;
 import fr.encheresnobyl.encherestroc.bo.Categorie;
+import fr.encheresnobyl.encherestroc.bo.Utilisateur;
 
 /**
  * Servlet implementation class AccueilServlet
@@ -41,6 +43,7 @@ public class AccueilServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
 		List<ArticleVendu> listeArticles =new ArrayList<ArticleVendu>();
 		
 		ArticleVenduManagerInt articleManager= new ArticleVenduManagerImpl();
@@ -49,7 +52,7 @@ public class AccueilServlet extends HttpServlet {
 		List<Categorie> categories = categorieManager.getAllCategorie();
 		categories.add(new Categorie(0,"Toutes"));
 		//TODO  recuperation sessionId
-			request.setAttribute("sessionId", "bla");
+		request.setAttribute("sessionUtilisateur", session.getAttribute("utilisateur"));
 		request.setAttribute("categories", categories);
 		request.setAttribute("articles", listeArticles);
 		request.setAttribute("ancienCat", 0);
@@ -66,6 +69,7 @@ public class AccueilServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//recuperation des donné parametre
+		HttpSession session = request.getSession();
 		String recherche = request.getParameter("recherche");
 		String categorie = request.getParameter("categorie");
 		int idCategorie = Integer.parseInt(categorie);
@@ -79,8 +83,7 @@ public class AccueilServlet extends HttpServlet {
 		List<ArticleVendu> listeArticles =new ArrayList<ArticleVendu>();
 		List<String> coche =new ArrayList<String>();
 		ArticleVenduManagerInt articleManager= new ArticleVenduManagerImpl();
-		// TODO recuperation sessionId
-		int sessionId = 1;
+		Utilisateur sessionUtilisateur = (Utilisateur) session.getAttribute("utilisateur");
 		
 		if(achatVente!=null) {
 			if(achatVente.equals("achats")) {
@@ -93,7 +96,7 @@ public class AccueilServlet extends HttpServlet {
 				if(enchereRemporte!=null) {
 					coche.add(enchereRemporte);
 				}
-				listeArticles = articleManager.getEncheres(recherche, idCategorie, sessionId, coche);
+				listeArticles = articleManager.getEncheres(recherche, idCategorie, sessionUtilisateur.getNumeroUtilisateur(), coche);
 			
 			}else if(achatVente.equals("ventes")) {
 				if(ventesEnCours!=null) {
@@ -105,7 +108,7 @@ public class AccueilServlet extends HttpServlet {
 				if(ventesTermine!=null) {
 					coche.add(ventesTermine);
 				}
-				listeArticles = articleManager.getVentes(recherche, idCategorie, sessionId, coche);
+				listeArticles = articleManager.getVentes(recherche, idCategorie, sessionUtilisateur.getNumeroUtilisateur(), coche);
 			}
 		}else {
 			listeArticles = articleManager.getEncheres(recherche, idCategorie);
@@ -115,7 +118,7 @@ public class AccueilServlet extends HttpServlet {
 		categories.add(new Categorie(0,"Toutes"));
 			
 			
-		request.setAttribute("sessionId", sessionId);
+		request.setAttribute("sessionUtilisateur", session.getAttribute("utilisateur"));
 		request.setAttribute("categories", categories);
 		request.setAttribute("articles", listeArticles);
 		request.setAttribute("ancienCat", idCategorie);
