@@ -26,6 +26,6 @@ public interface ArticleVenduManagerInt {
 	
 	public ArticleVendu getArticleById(int id);
 	
-	public ArticleVendu insertNewArticle(ArticleVendu article, int noUtilisateur, Retrait retrait);
+	public ArticleVendu insertNewArticle(ArticleVendu article, int noUtilisateur, Retrait retrait) throws BusinessException;
 	
 }

@@ -26,8 +26,7 @@
 		<label>
 		Description :  
 		</label>
-		<textarea id="description" name="description">			
-		</textarea>
+		<textarea id="description" name="description"></textarea>
 		<br>
 		<label>
 		Catégorie :  
@@ -82,8 +81,18 @@
 		<input type="reset" name="reset" value="annuler">
 		</form>
 	</div>
-	
-	
+
+	<c:if test="${!empty errorList}">
+		<div class="form-group row">
+			<div class="col-sm-12 col-form-label">
+				<c:forEach var="error" items="${errorList }">
+					<p class="text-danger">${messageReader.getMessageErreur(error)}</p>
+				</c:forEach>
+			</div>
+		</div>
+	</c:if>
+
+
 </body>
 <script type="text/javascript">
 	photoArticle.onchange = evt => {

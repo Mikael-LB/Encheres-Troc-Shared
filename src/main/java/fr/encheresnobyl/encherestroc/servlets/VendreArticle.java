@@ -23,6 +23,7 @@ import javax.servlet.http.Part;
 
 import fr.encheresnobyl.encherestroc.bll.ArticleVenduManagerImpl;
 import fr.encheresnobyl.encherestroc.bll.ArticleVenduManagerInt;
+import fr.encheresnobyl.encherestroc.bll.BusinessException;
 import fr.encheresnobyl.encherestroc.bll.CategorieManagerImpl;
 import fr.encheresnobyl.encherestroc.bll.CategorieManagerInt;
 import fr.encheresnobyl.encherestroc.bll.UtilisateurManagerImpl;
@@ -31,6 +32,7 @@ import fr.encheresnobyl.encherestroc.bo.ArticleVendu;
 import fr.encheresnobyl.encherestroc.bo.Categorie;
 import fr.encheresnobyl.encherestroc.bo.Retrait;
 import fr.encheresnobyl.encherestroc.bo.Utilisateur;
+import fr.encheresnobyl.encherestroc.messages.LecteurMessage;
 
 /**
  * Servlet implementation class VendreArticle
@@ -112,7 +114,14 @@ public class VendreArticle extends HttpServlet {
 		ArticleVendu articleVendu =new ArticleVendu(article, description, dateDebut, dateFinDate, miseAPrixInt, retrait, idCategorie);
 		
 		ArticleVenduManagerInt articleVenduManager = new ArticleVenduManagerImpl();
-		ArticleVendu artVendu = articleVenduManager.insertNewArticle(articleVendu, utilisateur.getNumeroUtilisateur(), retrait);
+		try {
+			ArticleVendu artVendu = articleVenduManager.insertNewArticle(articleVendu, utilisateur.getNumeroUtilisateur(), retrait);
+		} catch (BusinessException be) {
+			request.setAttribute("errorList", be.getLstErrorCodes());
+			request.setAttribute("messageReader", new LecteurMessage());
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/front-office-user/vendreArticle.jsp");
+			rd.forward(request, response);
+		}
 		
 		//TODO upload
 		/*
