@@ -44,7 +44,6 @@ public class ProfilServlet extends HttpServlet {
 			Utilisateur sessionUtilisateur =  (Utilisateur) session.getAttribute("utilisateur");
 			noUser = sessionUtilisateur.getNumeroUtilisateur();
 		}else {
-			System.out.println("t'es la !!!!!");
 			noUser = Integer.parseInt(request.getParameter( "user" ));
 		}
 		UtilisateurManagerInt utilisateurManager= new UtilisateurManagerImpl();
