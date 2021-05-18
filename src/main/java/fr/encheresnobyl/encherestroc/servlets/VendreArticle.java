@@ -95,12 +95,12 @@ public class VendreArticle extends HttpServlet {
 		//TODO recuperation des parametres
 		String article = request.getParameter("article");
 		String description = request.getParameter("description");
-		String categorie = request.getParameter("categorie");
+		String categorie = request.getParameter("categorie"); //TODO Numberformatexception
 		int idCategorie = Integer.parseInt(categorie);
-		String miseAPrix = request.getParameter("miseAPrix");
+		String miseAPrix = request.getParameter("miseAPrix"); //TODO NumberformatException
 		int miseAPrixInt = Integer.parseInt(miseAPrix);		
-		LocalDate dateDebut = LocalDate.parse(request.getParameter("dateDebut"));
-		LocalDate dateFinDate = LocalDate.parse(request.getParameter("dateFin"));
+		LocalDate dateDebut = LocalDate.parse(request.getParameter("dateDebut")); //TODO parsedateexception
+		LocalDate dateFinDate = LocalDate.parse(request.getParameter("dateFin")); //TODO parsedateexception
 		String retraitRue = request.getParameter("retraitRue");
 		String retraitCP = request.getParameter("retraitCP");
 		String retraitVille = request.getParameter("retraitVille");
