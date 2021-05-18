@@ -1,11 +1,18 @@
 package fr.encheresnobyl.encherestroc.servlets;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Map;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import fr.encheresnobyl.encherestroc.bll.BusinessException;
+import fr.encheresnobyl.encherestroc.bll.UtilisateurManagerImpl;
+import fr.encheresnobyl.encherestroc.bll.UtilisateurManagerInt;
 
 /**
  * Servlet implementation class InscriptionServlet
@@ -26,11 +33,20 @@ public class InscriptionServlet extends HttpServlet {
 	}
 
 	/**
+	 * Method which get the form parameters from the request
+	 * then check them
+	 * if everything is ok, the method ask to create a new user to the manager
+	 * else the method return a list of errors to the user form so he can change it
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		UtilisateurManagerInt utilisateurManager = new UtilisateurManagerImpl();
+		Map<String, String[]> parameterMap = request.getParameterMap();
+		
+
+		for (Map.Entry<String, String[]> entry: parameterMap.entrySet()) {
+			System.out.println(entry.getKey()+ " "+ Arrays.toString(entry.getValue()));
+		}
 	}
 
 }

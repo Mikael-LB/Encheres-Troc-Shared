@@ -21,7 +21,7 @@
 			</div>
 		</div>
 		<form class="row g-3" method="post"
-			action="<c:url value="/connexion"/>">
+			action="<c:url value="/inscription"/>">
 			<div class="col-6">
 				<label for="pseudo" class="col-sm-2 col-form-label">Pseudo</label> <input
 					type="text" class="form-control" id="pseudo" name="pseudo"
