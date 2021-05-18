@@ -70,7 +70,27 @@
 	</div>
 	<br>
  
+  	<div class="d-flex justify-content-between container mt-3 flex-wrap mb-5">
 
+			<c:forEach items="${ articles }" var="article" varStatus="status">
+					<div class="card d-flex mt-4">
+						<div class="card-header border-0">
+							<img class="card-img-left" src="https://via.placeholder.com/150">
+						</div>
+						<div class="card-block px-2">
+							<a class="card-title" href="#">${article.getNomArticle()}</a><br>
+							<p class="card-body">
+								Prix : ${article.getPrixArticle()}<br> Fin de l'enchère :
+								${article.getDateFinEncheres()}<br> Vendeur : <a
+									href="<c:url value="/Profil?user=${article.getUtilisateur().getNumeroUtilisateur()}"/>">${article.getUtilisateur().getPseudo()}</a>
+							</p>
+						</div>
+					</div>
+			</c:forEach>
+	</div> 
+
+
+<!--	
 	<div class="card-group mb-4 container-fluid">
 		<div class="row d-flex flex-wrap">
 			<c:forEach items="${ articles }" var="article" varStatus="status">
@@ -92,7 +112,7 @@
 			</c:forEach>
 		</div>
 	</div>
-
+-->
 
 	<script>
 	function achat(){
