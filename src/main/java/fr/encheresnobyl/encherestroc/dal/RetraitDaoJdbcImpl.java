@@ -4,9 +4,11 @@
 package fr.encheresnobyl.encherestroc.dal;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import fr.encheresnobyl.encherestroc.bo.ArticleVendu;
 import fr.encheresnobyl.encherestroc.bo.Retrait;
 
 /**
@@ -18,6 +20,7 @@ import fr.encheresnobyl.encherestroc.bo.Retrait;
 public class RetraitDaoJdbcImpl implements RetraitDao {
 	
 	public final static String SELECT_BY_ID_ARTICLE = "SELECT * FROM RETRAITS WHERE no_article = ?";
+	public final static String INSERT = "INSERT INTO RETRAITS VALUES (?,?,?,?)";
 
 	/**
 	* {@inheritDoc}
@@ -43,6 +46,24 @@ public class RetraitDaoJdbcImpl implements RetraitDao {
 			}
 			
 		return retrait;
+	}
+	
+	public void insertNewRetrait(Retrait retrait, int idArticle) {
+		
+		try (Connection cnx = ConnectionProvider.getConnection()){
+			PreparedStatement pStmt = cnx.prepareStatement(INSERT);
+			pStmt.setInt(1, idArticle);
+			pStmt.setString(2, retrait.getRue());
+			pStmt.setString(3, retrait.getCodePostal());
+			pStmt.setString(4, retrait.getVille());
+			
+			pStmt.executeUpdate();
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 	

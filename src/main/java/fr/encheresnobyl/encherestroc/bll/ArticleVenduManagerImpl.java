@@ -6,6 +6,7 @@ package fr.encheresnobyl.encherestroc.bll;
 import java.util.List;
 
 import fr.encheresnobyl.encherestroc.bo.ArticleVendu;
+import fr.encheresnobyl.encherestroc.bo.Retrait;
 import fr.encheresnobyl.encherestroc.dal.ArticleVenduDao;
 import fr.encheresnobyl.encherestroc.dal.DAOFactory;
 
@@ -42,6 +43,9 @@ public class ArticleVenduManagerImpl implements ArticleVenduManagerInt{
 		return articleVenduDao.selectArticleById(id);
 	}
 
+	public ArticleVendu insertNewArticle(ArticleVendu article, int noUtilisateur, Retrait retrait) {
+		return articleVenduDao.insertNewArticle(article, noUtilisateur, retrait);
+	}
 
 
 }

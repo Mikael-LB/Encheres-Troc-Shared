@@ -4,8 +4,10 @@
 package fr.encheresnobyl.encherestroc.dal;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,12 +32,13 @@ public class ArticleVenduDaoJdbcImpl implements ArticleVenduDao {
 	private static final String PARAM_ENCHERES_REMPORTEES = "encheresRemportees";
 	private static final String PARAM_ENCHERES_UTILISATEUR = "encheresUtilisateur";
 	private static final String PARAM_ENCHERES_OUVERTES = "encheresOuvertes";
-	
 	private static final String PARAM_VENTE_EN_COURS = "ventesEnCours";
 	private static final String PARAM_VENTE_TERMINEES = "ventesNonDebutees";
 	private static final String PARAM_VENTE_NON_DEBUTEES = "ventesTerminees";
 	
 	private static final String SELECT_ARTICLE_BY_ID="SELECT * FROM ARTICLES_VENDUS WHERE no_article = ?";
+	private static final String INSERT_ARTICLE = "INSERT INTO ARTICLES_VENDUS VALUES (?,?,?,?,?, null, ?, ?)";
+	private static final String INSERT_RETRAIT = "INSERT INTO RETRAITS VALUES (?,?,?,?)";
 
 	
 	
@@ -163,7 +166,6 @@ public class ArticleVenduDaoJdbcImpl implements ArticleVenduDao {
 		return listeArticleVendus;
 	}
 
-
 	/**
 	* {@inheritDoc}
 	*/
@@ -270,6 +272,56 @@ public class ArticleVenduDaoJdbcImpl implements ArticleVenduDao {
 		}
 		
 		return articleVendu;
+	}
+
+
+	/**
+	* {@inheritDoc}
+	*/
+	@Override
+	public ArticleVendu insertNewArticle(ArticleVendu article, int noUtilisateur, Retrait retrait) {
+			
+		try (Connection cnx = ConnectionProvider.getConnection()){
+			
+			cnx.setAutoCommit(false);
+			
+			PreparedStatement pStmt = cnx.prepareStatement(INSERT_ARTICLE, PreparedStatement.RETURN_GENERATED_KEYS);
+			pStmt.setString(1, article.getNomArticle());
+			pStmt.setString(2, article.getDescription());
+			pStmt.setDate(3, Date.valueOf(article.getDateDebutEncheres()));
+			pStmt.setDate(4, Date.valueOf(article.getDateFinEncheres()));
+			pStmt.setInt(5, article.getPrixArticle());
+			pStmt.setInt(6, noUtilisateur);
+			pStmt.setInt(7, article.getCategorie().getNoCategorie());
+			
+			pStmt.executeUpdate();
+			ResultSet rs = pStmt.getGeneratedKeys();
+			
+			if (rs.next()) {
+				article.setNoArticle(rs.getInt(1));
+			}else {
+				throw new SQLException("L'article n'a pas été bien ajouté en bdd");
+			}
+			
+			
+			PreparedStatement pStmt2 = cnx.prepareStatement(INSERT_RETRAIT);
+			pStmt2.setInt(1, article.getNoArticle());
+			pStmt2.setString(2, retrait.getRue());
+			pStmt2.setString(3, retrait.getCodePostal());
+			pStmt2.setString(4, retrait.getVille());
+			
+			pStmt2.executeUpdate();
+			
+			cnx.commit();
+			cnx.setAutoCommit(true);
+			
+			
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
+		
+		return article;
 	}
 
 }

@@ -18,6 +18,8 @@ public interface RetraitDao {
 	 * @param id
 	 * @return
 	 */
-	Retrait selectByIdArticle(int id);
+	public Retrait selectByIdArticle(int id);
+	
+	public void insertNewRetrait(Retrait retrait, int idArticle);
 
 }
