@@ -18,6 +18,11 @@
 	<div class="container">
 		<div class="row">
 			<div class="col">
+				<h1>Connection</h1>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
 				<div class="col-6 col-sm-6 align-self-center">
 					<form method="post" action="<c:url value="/connexion"/>">
 						<div class="form-group row">
@@ -62,7 +67,8 @@
 							</div>
 						</div>
 					</form>
-					<a class="btn btn-primary" href="<c:url value="/inscription"/>">Créer un compte</a>
+					<a class="btn btn-primary" href="<c:url value="/inscription"/>">Créer
+						un compte</a>
 				</div>
 			</div>
 		</div>
