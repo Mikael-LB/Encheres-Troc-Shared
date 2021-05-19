@@ -6,6 +6,7 @@ package fr.encheresnobyl.encherestroc.dal;
 import java.util.List;
 
 import fr.encheresnobyl.encherestroc.bo.ArticleVendu;
+import fr.encheresnobyl.encherestroc.bo.Retrait;
 
 /**
  * Interface en charge de définir les méthodes du DAO ArticleVendu
@@ -36,6 +37,15 @@ public interface ArticleVenduDao {
 	List<ArticleVendu> selectVentes(String motCle, int noCategorie, int noUtilisateur, List<String> parametres);
 	
 	ArticleVendu selectArticleById(int id);
+ 
+
+	/**
+	 * Méthode en charge de
+	 * @param article
+	 * @param retrait 
+	 * @return 
+	 */
+	ArticleVendu insertNewArticle(ArticleVendu article, int noUtilisateur, Retrait retrait);
 
 
 	

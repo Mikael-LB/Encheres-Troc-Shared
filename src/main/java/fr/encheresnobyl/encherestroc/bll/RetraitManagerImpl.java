@@ -15,5 +15,9 @@ public class RetraitManagerImpl implements RetraitManagerInt {
 	public Retrait selectByIdArticle(int id) {
 		return DAOFactory.getRetraitDAO().selectByIdArticle(id);
 	}
+	
+	public void insertNewRetrait(Retrait retrait, int idArticle) {
+		DAOFactory.getRetraitDAO().insertNewRetrait(retrait, idArticle);
+	}
 
 }

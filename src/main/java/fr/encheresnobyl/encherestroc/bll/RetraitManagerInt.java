@@ -13,4 +13,5 @@ public interface RetraitManagerInt {
 	
 	Retrait selectByIdArticle(int id);
 
+	public void insertNewRetrait(Retrait retrait, int idArticle);
 }

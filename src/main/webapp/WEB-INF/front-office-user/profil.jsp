@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -18,38 +19,39 @@
 		<c:if test="${!empty modifier }" ><h1>Mon Profil</h1></c:if>
 	</div>
 	<div align="center">
+
 		<table>
 			<tr>
 				<td>Pseudo : </td>
-				<td>${ utilisateur.getPseudo() }</td>
-			</tr>
-			<tr>
-				<td>Nom : </td>
-				<td>${ utilisateur.getNom() }</td>
+				<td>${ user.getPseudo() }</td>
 			</tr>
 			<tr>
 				<td>Prenom : </td>
-				<td>${ utilisateur.getPrenom() }</td>
+				<td>${ user.getPrenom() }</td>
+			</tr>
+			<tr>
+				<td>Nom : </td>
+				<td>${ user.getNom() }</td>
 			</tr>
 			<tr>
 				<td>Email : </td>
-				<td>${ utilisateur.getEmail() }</td>
+				<td>${ user.getEmail() }</td>
 			</tr>
 			<tr>
 				<td>Telephone : </td>
-				<td>${ utilisateur.getTelephone() }</td>
+				<td>${ user.getTelephone() }</td>
 			</tr>
 			<tr>
 				<td>Rue : </td>
-				<td>${ utilisateur.getRue() }</td>
+				<td>${ user.getRue() }</td>
 			</tr>
 			<tr>
 				<td>Code Postal : </td>
-				<td>${ utilisateur.getCodePostal() }</td>
+				<td>${ user.getCodePostal() }</td>
 			</tr>
 			<tr>
 				<td>Ville : </td>
-				<td>${ utilisateur.getVille() }</td>
+				<td>${ user.getVille() }</td>
 			</tr>				
 		</table>
 	</div>

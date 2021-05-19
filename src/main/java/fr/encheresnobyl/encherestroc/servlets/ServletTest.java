@@ -73,9 +73,9 @@ public class ServletTest extends HttpServlet {
 //		}
 		
 		List<String> parametres = new ArrayList<String>();
-//		parametres.add("enchereOuverte");
-//		parametres.add("enchereUtilisateur");
-		parametres.add("enchereRemporte");
+		parametres.add("encheresOuvertes");
+		parametres.add("encheresUtilisateur");
+		parametres.add("encheresRemportees");
 		
 		String motCle = "";
 		int noCategorie = 0;
@@ -87,8 +87,13 @@ public class ServletTest extends HttpServlet {
 		System.out.println(articleVendu);
 		}
 		
+		List<String> parametres2 = new ArrayList<String>();
+		parametres.add("ventesEnCours");
+		parametres.add("ventesNonDebutees");
+		parametres.add("ventesTerminees");
+		
 		System.out.println("Liste Ventes");
-		List<ArticleVendu> listArticleEnVente = articleVenduManager.getVentes(motCle, noCategorie, noUtilisateur, parametres);
+		List<ArticleVendu> listArticleEnVente = articleVenduManager.getVentes(motCle, noCategorie, noUtilisateur, parametres2);
 		for (ArticleVendu articleVendu : listArticleEnVente) {
 			System.out.println(articleVendu);
 		}

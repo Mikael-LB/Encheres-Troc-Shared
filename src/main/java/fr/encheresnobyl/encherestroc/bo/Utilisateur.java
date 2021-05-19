@@ -78,6 +78,41 @@ public class Utilisateur implements Serializable{
 		setCredit(credit);
 	}
 	
+	public Utilisateur(int numeroUtilisateur, int credit) {
+		this.numeroUtilisateur=numeroUtilisateur;
+		this.credit=credit;
+	}
+	
+	/**
+	 * @author mlebris2021
+	 * Constructor to allow to create a new Utilisateur from inscription form
+	 * A new Utilisteur have a credit of 100 at the beginning
+	 * @param pseudo
+	 * @param nom
+	 * @param prenom
+	 * @param email
+	 * @param telephone
+	 * @param rue
+	 * @param codePostal
+	 * @param ville
+	 * @param motDePasse
+	 */
+	public Utilisateur(String pseudo, String nom, String prenom, String email, String telephone, String rue,
+			String codePostal, String ville, String motDePasse) {
+		this();
+		setPseudo(pseudo);
+		setNom(nom);
+		setPrenom(prenom);
+		setEmail(email);
+		setTelephone(telephone);
+		setRue(rue);
+		setCodePostal(codePostal);
+		setVille(ville);
+		setMotDePasse(motDePasse);
+		// credit of 100
+		setCredit(100);
+		setAdministrateur(false);
+	}
 	
 	
 	/**
