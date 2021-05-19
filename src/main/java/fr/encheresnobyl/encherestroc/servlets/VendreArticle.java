@@ -1,15 +1,10 @@
 package fr.encheresnobyl.encherestroc.servlets;
 
-import java.io.File;
+
 import java.io.IOException;
-import java.sql.Date;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
+
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -19,16 +14,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.servlet.http.Part;
-
 import fr.encheresnobyl.encherestroc.bll.ArticleVenduManagerImpl;
 import fr.encheresnobyl.encherestroc.bll.ArticleVenduManagerInt;
 import fr.encheresnobyl.encherestroc.bll.BusinessException;
 import fr.encheresnobyl.encherestroc.bll.CategorieManagerImpl;
 import fr.encheresnobyl.encherestroc.bll.CategorieManagerInt;
-import fr.encheresnobyl.encherestroc.bll.UtilisateurManagerImpl;
-import fr.encheresnobyl.encherestroc.bll.UtilisateurManagerInt;
 import fr.encheresnobyl.encherestroc.bo.ArticleVendu;
 import fr.encheresnobyl.encherestroc.bo.Categorie;
 import fr.encheresnobyl.encherestroc.bo.Retrait;
@@ -73,14 +63,13 @@ public class VendreArticle extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		HttpSession session = request.getSession();
-		Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
+
 		CategorieManagerInt categorieManager =new CategorieManagerImpl() ;
 		List<Categorie> categories = categorieManager.getAllCategorie();
 
-		request.setAttribute("sessionUtilisateur",utilisateur );
+
 		request.setAttribute("categories", categories);
-		request.setAttribute("utilisateur", utilisateur);
+
 
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/front-office-user/vendreArticle.jsp");
 		rd.forward(request, response);
@@ -90,7 +79,7 @@ public class VendreArticle extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
+		
 		try {
 			ValidateurParse vp = new ValidateurParse();
 			String categorie = request.getParameter("categorie"); 
@@ -118,7 +107,7 @@ public class VendreArticle extends HttpServlet {
 			String retraitCP = request.getParameter("retraitCP");
 			String retraitVille = request.getParameter("retraitVille");
 
-			Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
+			
 
 			Retrait retrait =new Retrait(retraitRue, retraitCP, retraitVille);
 			ArticleVendu articleVendu =new ArticleVendu(article, description, dateDebut, dateFinDate, miseAPrixInt, retrait, idCategorie);
@@ -126,21 +115,20 @@ public class VendreArticle extends HttpServlet {
 			ArticleVenduManagerInt articleVenduManager = new ArticleVenduManagerImpl();
 
 
-			ArticleVendu artVendu = articleVenduManager.insertNewArticle(articleVendu, utilisateur.getNumeroUtilisateur(), retrait);
+			ArticleVendu artVendu = articleVenduManager.insertNewArticle(articleVendu, ((Utilisateur) request.getSession().getAttribute("utilisateur")).getNumeroUtilisateur(), retrait);
 
 			request.setAttribute("article", artVendu);
 			request.setAttribute("titre", "article mis en vente");
 			request.setAttribute("message", "vous avez mis cet article en vente");
 			request.setAttribute("from", "miseEnVente");
 
-			request.setAttribute("sessionUtilisateur", session.getAttribute("utilisateur"));
+
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/front-office-user/article.jsp");
 			rd.forward(request, response);
 
 		} catch (BusinessException be) {
 			request.setAttribute("errorList", be.getLstErrorCodes());
 			request.setAttribute("messageReader", new LecteurMessage());
-			request.setAttribute("sessionUtilisateur", session.getAttribute("utilisateur"));
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/front-office-user/vendreArticle.jsp");
 			rd.forward(request, response);
 			return;

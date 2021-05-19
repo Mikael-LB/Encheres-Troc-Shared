@@ -24,75 +24,75 @@
 		<div class="col-8">
 			<h2 align="center">${ article.getNomArticle() }</h2>
 			<br>
-			<table>
+			<table class="row">
 				<tr>
-					<td>
+					<td class="col-4">
 						<label>Description : </label>
 					</td>
-					<td>
+					<td class="col-4">
 						${ article.getDescription() }
 					</td>
 				</tr>
 				<c:if test="${from=='aquisition'||from=='maVente'||from=='enCour'}">
 					<tr>
-						<td>
+						<td class="col-4">
 							<label>Meilleur offre : </label>
 						</td>
-						<td>
-							${ article.getPrixVente() }
+						<td class="col-4">
+							${ article.getPrixArticle() }
 						</td>
 					</tr>
 				</c:if> 
 				<tr>
-					<td>
+					<td class="col-4">
 						<label>Mise à prix : </label>
 					</td>
-					<td>
+					<td class="col-4">
 						${ article.getMiseAPrix() }
 					</td>
 				</tr>
 				<c:if test="${from=='miseEnVente'|| from=='maVente'|| from=='enCour' || from=='detail'}">
 					<tr>
-						<td>
+						<td class="col-4">
 							<label>Date de début d'enchère : </label>
 						</td>
-						<td>
+						<td class="col-4">
 							${article.getDateDebutEncheres()}
 						</td>
 					</tr>
 					<tr>
-						<td>
+						<td class="col-4">
 							<label>Date de fin d'enchère : </label>
 						</td>
-						<td>
+						<td class="col-4">
 							${article.getDateFinEncheres()}							
 						</td>
 					</tr>
 				</c:if>  
 				<tr>
-					<td>
+					<td class="col-4">
 						<label>Retrait : </label>
 					</td>
-					<td>
+					<td class="col-4">
 						${ article.getPointRetrait().getRue() }<br>
 						${ article.getPointRetrait().getCodePostal() } ${ article.getPointRetrait().getVille() }
 					</td>
 				</tr>
 				<tr>
-					<td>
+					<td class="col-4">
 						<label>Vendeur : </label>
 					</td>
-					<td>
+					<td class="col-4">
 						<a href="<c:url value='/Profil?user=${article.getUtilisateur().getNumeroUtilisateur()}'/>">
 						${article.getUtilisateur().getPseudo()}</a>
 					</td>
 				</tr> 
 				<c:if test="${from=='aquisition'}">
 					<tr>
-						<td>
+						<td class="col-4">
 							<label>Téléphone : </label>
 						</td>
-						<td>
+						<td class="col-4">
 							${ article.getUtilisateur().getTelephone() }
 						</td>
 					</tr>
@@ -112,7 +112,7 @@
 				<form action="/PageArticle" method="POST">				
 					<input type="hidden" name="noArticle" value="${article.getNoArticle()}"/>
 					<label>Votre Proposition :</label>
-					<input type="number" name="mise" min="${article.getPrixArticle()+1 }" max="${sessionUtilisateur.getCredit() }" value="${article.getPrixArticle()+1 }"> 
+					<input type="number" name="mise" min="${article.getPrixArticle()+1 }" max="${utilisateur.getCredit() }" value="${article.getPrixArticle()+1 }"> 
 					<input type="submit" name="encherir" value="Encherir">
 				</form>
 				<br>

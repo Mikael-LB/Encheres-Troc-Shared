@@ -9,12 +9,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
 
 import fr.encheresnobyl.encherestroc.bll.ArticleVenduManagerImpl;
 import fr.encheresnobyl.encherestroc.bll.ArticleVenduManagerInt;
 import fr.encheresnobyl.encherestroc.bo.ArticleVendu;
-import fr.encheresnobyl.encherestroc.bo.Utilisateur;
+
 
 /**
  * Servlet implementation class PageArticle
@@ -35,18 +35,12 @@ public class PageArticle extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		Utilisateur sessionUtilisateur = new Utilisateur();
-		if(session!=null) {
-			sessionUtilisateur =  (Utilisateur) session.getAttribute("utilisateur");
-			request.setAttribute("sessionUtilisateur", sessionUtilisateur);
-		}
-		//TODO  si connecté
+		
 		String message = "";
 		String titre ="";
 		String from ="";
 		LocalDate now =LocalDate.now();
-		int noArticle = Integer.parseInt(request.getParameter( "article" ));
+		int noArticle = Integer.parseInt(request.getParameter("article"));
 		ArticleVenduManagerInt articleVenduManager = new ArticleVenduManagerImpl();
 		ArticleVendu article = articleVenduManager.getArticleById(noArticle);
 		if(request.getRequestURI().contains("Page-Article")) {
@@ -92,12 +86,7 @@ public class PageArticle extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		Utilisateur sessionUtilisateur = new Utilisateur();
-		if(session!=null) {
-			sessionUtilisateur =  (Utilisateur) session.getAttribute("utilisateur");
-			request.setAttribute("sessionUtilisateur", sessionUtilisateur);
-		}
+
 		ArticleVenduManagerInt articleVenduManager = new ArticleVenduManagerImpl();
 		ArticleVendu article = articleVenduManager.getArticleById(Integer.parseInt(request.getParameter("noArticle")));
 		LocalDate now =LocalDate.now();
