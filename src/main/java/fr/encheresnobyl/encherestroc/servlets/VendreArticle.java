@@ -34,6 +34,7 @@ import fr.encheresnobyl.encherestroc.bo.Categorie;
 import fr.encheresnobyl.encherestroc.bo.Retrait;
 import fr.encheresnobyl.encherestroc.bo.Utilisateur;
 import fr.encheresnobyl.encherestroc.messages.LecteurMessage;
+import fr.encheresnobyl.encherestroc.servlets.utils.ValidateurParse;
 
 /**
  * Servlet implementation class VendreArticle
@@ -90,37 +91,59 @@ public class VendreArticle extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		//TODO recuperation des parametres
-		String article = request.getParameter("article");
-		String description = request.getParameter("description");
-		String categorie = request.getParameter("categorie"); //TODO Numberformatexception
-		int idCategorie = Integer.parseInt(categorie);
-		String miseAPrix = request.getParameter("miseAPrix"); //TODO NumberformatException
-		int miseAPrixInt = Integer.parseInt(miseAPrix);		
-		LocalDate dateDebut = LocalDate.parse(request.getParameter("dateDebut")); //TODO parsedateexception
-		LocalDate dateFinDate = LocalDate.parse(request.getParameter("dateFin")); //TODO parsedateexception
-		String retraitRue = request.getParameter("retraitRue");
-		String retraitCP = request.getParameter("retraitCP");
-		String retraitVille = request.getParameter("retraitVille");
-		
-		Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
-		
-
-
-		
-		Retrait retrait =new Retrait(retraitRue, retraitCP, retraitVille);
-		ArticleVendu articleVendu =new ArticleVendu(article, description, dateDebut, dateFinDate, miseAPrixInt, retrait, idCategorie);
-		
-		ArticleVenduManagerInt articleVenduManager = new ArticleVenduManagerImpl();
-		ArticleVendu artVendu =new ArticleVendu();
 		try {
-			artVendu = articleVenduManager.insertNewArticle(articleVendu, utilisateur.getNumeroUtilisateur(), retrait);
+			ValidateurParse vp = new ValidateurParse();
+			String categorie = request.getParameter("categorie"); 
+			vp.validerInteger(categorie, CodesErreursServlets.PARSE_CATEGORIE);
+			String miseAPrix = request.getParameter("miseAPrix");
+			vp.validerInteger(miseAPrix, CodesErreursServlets.PARSE_PRIX);
+			String dateDebutString = request.getParameter("dateDebut");
+			vp.validerDate(dateDebutString, CodesErreursServlets.PARSE_DATE_DEBUT);
+			String dateFinString = request.getParameter("dateFin");
+			vp.validerDate(dateFinString, CodesErreursServlets.PARSE_DATE_FIN);
+			
+			if (vp.getBe().hasError()) {
+				throw vp.getBe();
+			}
+			
+			int idCategorie = Integer.parseInt(categorie);
+			int miseAPrixInt = Integer.parseInt(miseAPrix);		
+			LocalDate dateDebut = LocalDate.parse(dateDebutString);
+			LocalDate dateFinDate = LocalDate.parse(dateFinString); 
+			
+			
+			String article = request.getParameter("article");
+			String description = request.getParameter("description");
+			String retraitRue = request.getParameter("retraitRue");
+			String retraitCP = request.getParameter("retraitCP");
+			String retraitVille = request.getParameter("retraitVille");
+			
+			Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
+			
+			Retrait retrait =new Retrait(retraitRue, retraitCP, retraitVille);
+			ArticleVendu articleVendu =new ArticleVendu(article, description, dateDebut, dateFinDate, miseAPrixInt, retrait, idCategorie);
+			
+			ArticleVenduManagerInt articleVenduManager = new ArticleVenduManagerImpl();
+
+		
+			ArticleVendu artVendu = articleVenduManager.insertNewArticle(articleVendu, utilisateur.getNumeroUtilisateur(), retrait);
+			
+			request.setAttribute("article", artVendu);
+			request.setAttribute("titre", "article mis en vente");
+			request.setAttribute("message", "vous avez mis cet article en vente");
+			request.setAttribute("from", "miseEnVente");
+			
+			request.setAttribute("sessionUtilisateur", session.getAttribute("utilisateur"));
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/front-office-user/article.jsp");
+			rd.forward(request, response);
+
 		} catch (BusinessException be) {
 			request.setAttribute("errorList", be.getLstErrorCodes());
 			request.setAttribute("messageReader", new LecteurMessage());
 			request.setAttribute("sessionUtilisateur", session.getAttribute("utilisateur"));
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/front-office-user/vendreArticle.jsp");
 			rd.forward(request, response);
+			return;
 		}
 		
 		//TODO upload
@@ -130,14 +153,6 @@ public class VendreArticle extends HttpServlet {
             String fullPath = uploadPath + File.separator + fileName;
             part.write( fullPath );
         }*/
-		request.setAttribute("article", artVendu);
-		request.setAttribute("titre", "article mis en vente");
-		request.setAttribute("message", "vous avez mis cet article en vente");
-		request.setAttribute("from", "miseEnVente");
-		
-		request.setAttribute("sessionUtilisateur", session.getAttribute("utilisateur"));
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/front-office-user/article.jsp");
-		rd.forward(request, response);
 	}
 	
 	/*

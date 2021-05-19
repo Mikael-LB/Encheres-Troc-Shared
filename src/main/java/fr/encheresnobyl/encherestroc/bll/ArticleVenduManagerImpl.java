@@ -3,6 +3,7 @@
  */
 package fr.encheresnobyl.encherestroc.bll;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import fr.encheresnobyl.encherestroc.bo.ArticleVendu;
@@ -49,7 +50,7 @@ public class ArticleVenduManagerImpl implements ArticleVenduManagerInt {
 
 		BusinessException be = new BusinessException();
 
-		if (article.getNomArticle() == null || "".equals(article.getNomArticle())) {
+		if (article.getNomArticle() == null || article.getNomArticle().trim().isEmpty()) {
 			be.addError(CodesErreurBLL.NOM_ARTICLE_EMPTY);
 		}
 		if (article.getDescription() == null || "".equals(article.getDescription())) {
@@ -62,6 +63,10 @@ public class ArticleVenduManagerImpl implements ArticleVenduManagerInt {
 				|| article.getDateDebutEncheres().isEqual(article.getDateFinEncheres())) {
 			be.addError(CodesErreurBLL.DATES_ARTICLE_INCORRECTES);
 		}
+		if(article.getDateDebutEncheres().isBefore(LocalDate.now())) {
+			be.addError(CodesErreurBLL.DATE_DEBUT_ARTICLE_BEFORE_TODAY);
+		}
+		
 		if (article.getPrixArticle() <= 0) {
 			be.addError(CodesErreurBLL.PRIX_ARTICLE_INVALIDE);
 		}
