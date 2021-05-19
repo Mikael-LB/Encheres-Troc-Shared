@@ -23,11 +23,11 @@
 					</ul>
 					</div>
 				</c:if>
-				<c:if test="${!empty sessionUtilisateur }">
+				<c:if test="${!empty utilisateur }">
 				<div class="collapse navbar-collapse" id="collapsibleNavbar" >
 					<ul class="navbar-nav">
       					<li class="nav-item">
-							<a class="nav-link active " href="<c:url value="/Mon-Profil"/>"> ${ sessionUtilisateur.getPseudo() } </a> 
+							<a class="nav-link active " href="<c:url value="/Mon-Profil"/>"> ${ utilisateur.getPseudo() } </a> 
 						</li>
 						<li class="nav-item">
 							<a class="nav-link active" href="<c:url value="/accueil"/>"> Enchère  </a> 
