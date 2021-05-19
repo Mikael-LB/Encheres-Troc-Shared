@@ -49,4 +49,11 @@ public interface UtilisateurDao {
 	 */
 	Utilisateur selectById(int id);
 
+	/**
+	 * Method to insert a Utilisateur in db
+	 * @param user
+	 * @return a Utilisateur complete with his id in db
+	 */
+	Utilisateur insert(Utilisateur user);
+
 }
