@@ -172,5 +172,15 @@ public class UtilisateurDaoJdbcImpl implements UtilisateurDao{
 		
 		return utilisateur;
 	}
+
+	/**
+	 * @author mlebris2021
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Utilisateur insert(Utilisateur user) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }
