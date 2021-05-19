@@ -65,8 +65,9 @@ public interface UtilisateurManagerInt {
 	 * Method to ask DAO to insert a Utilisateur
 	 * @param user
 	 * @return an Utilisateur with his id
+	 * @throws BusinessException 
 	 */
-	public Utilisateur insertUtilisateur(Utilisateur user);
+	public Utilisateur insertUtilisateur(Utilisateur user) throws BusinessException;
 	
 	
 }
