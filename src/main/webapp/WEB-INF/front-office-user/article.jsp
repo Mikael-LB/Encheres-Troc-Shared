@@ -51,7 +51,7 @@
 						${ article.getMiseAPrix() }
 					</td>
 				</tr>
-				<c:if test="${from=='miseEnVente'|| from=='maVente'|| from=='enCour'}">
+				<c:if test="${from=='miseEnVente'|| from=='maVente'|| from=='enCour' || from=='detail'}">
 					<tr>
 						<td>
 							<label>Date de début d'enchère : </label>
@@ -99,7 +99,7 @@
 				</c:if> 		
 			</table>
 			<br>
-			<c:if test="${from=='miseEnVente'}" >
+			<c:if test="${from=='miseEnVente'||from=='detail'}" >
 				<a href="<c:url value="/" />" > <input type="button" value="accueil"> </a>
 			</c:if>
 			<c:if test="${from=='aquisition'}">
@@ -107,6 +107,16 @@
 			</c:if>
 			<c:if test="${from=='maVente'}">
 				<a href="#" > <input type="button" value="Retrait effectué"> </a>
+			</c:if>
+			<c:if test="${from=='enCour'}">
+				<form action="/PageArticle" method="POST">				
+					<input type="hidden" name="noArticle" value="${article.getNoArticle()}"/>
+					<label>Votre Proposition :</label>
+					<input type="number" name="mise" min="${article.getPrixArticle()+1 }" max="${sessionUtilisateur.getCredit() }" value="${article.getPrixArticle()+1 }"> 
+					<input type="submit" name="encherir" value="Encherir">
+				</form>
+				<br>
+				<a href="<c:url value="/" />" > <input type="button" value="Retour a l'accueil"> </a>
 			</c:if>
 		</div>
 	</div>

@@ -44,6 +44,29 @@ public interface UtilisateurManagerInt {
 	
 	public Utilisateur selectById(int id);
 
+	/**
+	 * Method to check the parameters for a Utilisateur
+	 * @param pseudo
+	 * @param userName
+	 * @param firstname
+	 * @param email
+	 * @param phone
+	 * @param street
+	 * @param postalCode
+	 * @param city
+	 * @param passwd
+	 * @param passwdConfirm
+	 * @throws BusinessException 
+	 */
+	public void checkInscriptionParam(String pseudo, String userName, String firstname, String email, String phone,
+			String street, String postalCode, String city, String passwd, String passwdConfirm) throws BusinessException;
+
+	/**
+	 * Method to ask DAO to insert a Utilisateur
+	 * @param user
+	 * @return an Utilisateur with his id
+	 */
+	public Utilisateur insertUtilisateur(Utilisateur user);
 	
 	
 }
