@@ -42,6 +42,9 @@ public class InscriptionServlet extends HttpServlet {
 	private static final String ATT_UTILISATEUR = "utilisateur";
 	private static final String ATT_ERRORS_LIST = "errorList";
 	private static final String ATT_SESSION_ID = "sessionId";
+	private static final String ATT_MESSAGE_READER = "messageReader";
+
+	
 
 	/**
 	 * Method which allow to get the inscription page by the user
@@ -107,7 +110,7 @@ public class InscriptionServlet extends HttpServlet {
 
 		} catch (BusinessException be) {
 			request.setAttribute(ATT_ERRORS_LIST, be.getLstErrorCodes());
-			request.setAttribute("messageReader", new LecteurMessage());
+			request.setAttribute(ATT_MESSAGE_READER, new LecteurMessage());
 			request.getRequestDispatcher(INSCRIPTION_PAGE).forward(request, response);
 		}
 	}

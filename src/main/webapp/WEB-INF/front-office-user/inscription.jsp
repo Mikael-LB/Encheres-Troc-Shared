@@ -64,14 +64,23 @@
 			</div>
 			<div class="col-6">
 				<label for="passwd" class="col-sm-2 col-form-label">Mot de
-					passe</label> <input type="text" class="form-control" id="passwd"
+					passe</label> <input type="password" class="form-control" id="passwd"
 					name="passwd" value="${ param.passwd }">
 			</div>
 			<div class="col-6">
 				<label for="passwdConfirm" class="col-sm-2 col-form-label">Mot
-					de passe</label> <input type="text" class="form-control" id="passwdConfirm"
+					de passe</label> <input type="password" class="form-control" id="passwdConfirm"
 					name="passwdConfirm">
 			</div>
+			<c:if test="${!empty errorList}">
+							<div class="form-group row">
+								<div class="col-sm-12 col-form-label">
+									<c:forEach var="error" items="${errorList }">
+										<p class="text-danger">${messageReader.getMessageErreur(error)}</p>
+									</c:forEach>
+								</div>
+							</div>
+						</c:if>
 			<div class="col-6">
 				<button type="submit" class="btn btn-primary">Créer</button>
 			</div>

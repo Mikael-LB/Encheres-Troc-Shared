@@ -35,6 +35,7 @@ public class ConnexionServlet extends HttpServlet {
 	private static final String ATT_UTILISATEUR = "utilisateur";
 	private static final String ATT_ERRORS_LIST = "errorList";
 	private static final String ATT_SESSION_ID = "sessionId";
+	private static final String ATT_MESSAGE_READER = "messageReader";
 	private static final int COOKIE_MAX_AGE = 60 * 60 * 24 * 365;
 
 	private UtilisateurManagerInt userManager = new UtilisateurManagerImpl();
@@ -89,7 +90,7 @@ public class ConnexionServlet extends HttpServlet {
 		if (be.hasError()) {
 			request.setAttribute(ATT_UTILISATEUR, null);
 			request.setAttribute(ATT_ERRORS_LIST, be.getLstErrorCodes());
-			request.setAttribute("messageReader", new LecteurMessage());
+			request.setAttribute(ATT_MESSAGE_READER, new LecteurMessage());
 			request.getRequestDispatcher(CONNECTION_PAGE).forward(request, response);
 			
 		} else {
