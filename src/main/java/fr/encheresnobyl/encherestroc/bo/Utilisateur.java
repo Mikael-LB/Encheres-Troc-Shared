@@ -106,6 +106,7 @@ public class Utilisateur implements Serializable{
 		setMotDePasse(motDePasse);
 		// credit of 100
 		setCredit(100);
+		setAdministrateur(false);
 	}
 	
 	
