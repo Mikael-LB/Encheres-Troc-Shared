@@ -24,7 +24,7 @@
 					</div>
 				</c:if>
 				<c:if test="${!empty sessionUtilisateur }">
-				<div class="collapse navbar-collapse" id="collapsibleNavbar">
+				<div class="collapse navbar-collapse" id="collapsibleNavbar" >
 					<ul class="navbar-nav">
       					<li class="nav-item">
 							<a class="nav-link active " href="<c:url value="/Mon-Profil"/>"> ${ sessionUtilisateur.getPseudo() } </a> 
