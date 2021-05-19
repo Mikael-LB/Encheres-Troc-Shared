@@ -37,6 +37,7 @@ public interface ArticleVenduDao {
 	List<ArticleVendu> selectVentes(String motCle, int noCategorie, int noUtilisateur, List<String> parametres);
 	
 	ArticleVendu selectArticleById(int id);
+ 
 
 	/**
 	 * Méthode en charge de

@@ -112,11 +112,13 @@ public class VendreArticle extends HttpServlet {
 		ArticleVendu articleVendu =new ArticleVendu(article, description, dateDebut, dateFinDate, miseAPrixInt, retrait, idCategorie);
 		
 		ArticleVenduManagerInt articleVenduManager = new ArticleVenduManagerImpl();
+		ArticleVendu artVendu =new ArticleVendu();
 		try {
-			ArticleVendu artVendu = articleVenduManager.insertNewArticle(articleVendu, utilisateur.getNumeroUtilisateur(), retrait);
+			artVendu = articleVenduManager.insertNewArticle(articleVendu, utilisateur.getNumeroUtilisateur(), retrait);
 		} catch (BusinessException be) {
 			request.setAttribute("errorList", be.getLstErrorCodes());
 			request.setAttribute("messageReader", new LecteurMessage());
+			request.setAttribute("sessionUtilisateur", session.getAttribute("utilisateur"));
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/front-office-user/vendreArticle.jsp");
 			rd.forward(request, response);
 		}
@@ -128,8 +130,13 @@ public class VendreArticle extends HttpServlet {
             String fullPath = uploadPath + File.separator + fileName;
             part.write( fullPath );
         }*/
+		request.setAttribute("article", artVendu);
+		request.setAttribute("titre", "article mis en vente");
+		request.setAttribute("message", "vous avez mis cet article en vente");
+		request.setAttribute("from", "miseEnVente");
+		
 		request.setAttribute("sessionUtilisateur", session.getAttribute("utilisateur"));
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/front-office-user/affichageParam.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/front-office-user/article.jsp");
 		rd.forward(request, response);
 	}
 	

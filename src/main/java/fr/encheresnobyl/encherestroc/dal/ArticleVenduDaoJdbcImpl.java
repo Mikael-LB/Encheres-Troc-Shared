@@ -37,6 +37,7 @@ public class ArticleVenduDaoJdbcImpl implements ArticleVenduDao {
 	private static final String PARAM_VENTE_NON_DEBUTEES = "ventesTerminees";
 	
 	private static final String SELECT_ARTICLE_BY_ID="SELECT * FROM ARTICLES_VENDUS WHERE no_article = ?";
+	private static final String SELECT_ARTICLE_BY_NOM="SELECT * FROM ARTICLES_VENDUS WHERE nom_article = ?";
 	private static final String INSERT_ARTICLE = "INSERT INTO ARTICLES_VENDUS VALUES (?,?,?,?,?, null, ?, ?)";
 	private static final String INSERT_RETRAIT = "INSERT INTO RETRAITS VALUES (?,?,?,?)";
 
@@ -281,7 +282,7 @@ public class ArticleVenduDaoJdbcImpl implements ArticleVenduDao {
 		return articleVendu;
 	}
 
-
+	
 	/**
 	* {@inheritDoc}
 	*/

@@ -43,6 +43,8 @@ public class ArticleVenduManagerImpl implements ArticleVenduManagerInt {
 		return articleVenduDao.selectArticleById(id);
 	}
 
+
+	
 	public ArticleVendu insertNewArticle(ArticleVendu article, int noUtilisateur, Retrait retrait) throws BusinessException {
 
 		BusinessException be = new BusinessException();
