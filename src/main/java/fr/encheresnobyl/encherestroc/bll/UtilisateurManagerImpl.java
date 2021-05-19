@@ -133,4 +133,12 @@ public class UtilisateurManagerImpl implements UtilisateurManagerInt {
 				be.addError(CodesErreurBLL.PSEUDO_EXIST);
 			}
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Utilisateur insertUtilisateur(Utilisateur user) {
+		return DAOFactory.getUtilisateurDAO().insert(user);
+	}
 }
