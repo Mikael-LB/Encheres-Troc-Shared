@@ -3,6 +3,8 @@
  */
 package fr.encheresnobyl.encherestroc.bll;
 
+import java.util.List;
+
 import fr.encheresnobyl.encherestroc.bo.ArticleVendu;
 import fr.encheresnobyl.encherestroc.bo.Enchere;
 import fr.encheresnobyl.encherestroc.bo.Utilisateur;
@@ -21,18 +23,26 @@ public class EnchereManagerImpl implements EnchereManagerInt {
 	* {@inheritDoc}
 	*/
 	@Override
-	public void nouvelleEnchere(ArticleVendu article, Enchere enchere, Utilisateur utilisateur) {
+	public ArticleVendu nouvelleEnchere(Enchere enchere) {
 		
-		if (enchere.getMontantEnchere()<=article.getPrixVente()) {
+		if (enchere.getMontantEnchere()<=enchere.getArticleVendu().getPrixVente()) {
 			//ERREUR PRIX INFERIEUR
 		}
 		
-		if (enchere.getMontantEnchere()>utilisateur.getCredit()) {
+		if (enchere.getMontantEnchere()>enchere.getUtilisateur().getCredit()) {
 			//ERREUR PAS ASSEZ DE CREDIT
 		}
 		
-		enchereDao.nouvelleEnchere(article, enchere, utilisateur);
+		enchereDao.selectEnchere(enchere);
 		
+		enchere.getArticleVendu().setListeEncheres(getListeEncheres(enchere.getArticleVendu()));
+		return enchere.getArticleVendu();
+		
+	}
+	
+	public List<Enchere> getListeEncheres(ArticleVendu article) {
+		
+		return enchereDao.selectListeEncheres(article);
 	}
 	
 

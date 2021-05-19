@@ -25,7 +25,15 @@ public class Enchere implements Serializable {
 	 */	
 	LocalDateTime dateEnchere;
 	int montantEnchere;
+	Utilisateur utilisateur;
+	ArticleVendu articleVendu;
 	
+	public Enchere(LocalDateTime dateEnchere, int montantEnchere, Utilisateur utilisateur, ArticleVendu articleVendu) {
+		this.dateEnchere=dateEnchere;
+		this.montantEnchere=montantEnchere;
+		this.utilisateur=utilisateur;
+		this.articleVendu=articleVendu;
+	}
 	
 	
 	 //--GETTERS--
@@ -35,6 +43,12 @@ public class Enchere implements Serializable {
 	public int getMontantEnchere() {
 		return montantEnchere;
 	}
+	public Utilisateur getUtilisateur() {
+		return utilisateur;
+	}
+	public ArticleVendu getArticleVendu() {
+		return articleVendu;
+	}
 	
 	//--SETTERS--
 	public void setDateEnchere(LocalDateTime dateEnchere) {
@@ -42,6 +56,12 @@ public class Enchere implements Serializable {
 	}
 	public void setMontantEnchere(int montantEnchere) {
 		this.montantEnchere = montantEnchere;
+	}
+	public void setUtilisateur(Utilisateur utilisateur) {
+		this.utilisateur = utilisateur;
+	}
+	public void setArticleVendu(ArticleVendu articleVendu) {
+		this.articleVendu = articleVendu;
 	}
 
 	

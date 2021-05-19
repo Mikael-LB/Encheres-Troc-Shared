@@ -8,6 +8,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.List;
 
 import fr.encheresnobyl.encherestroc.bo.ArticleVendu;
 import fr.encheresnobyl.encherestroc.bo.Enchere;
@@ -25,6 +27,7 @@ public class EnchereDaoJdbcImpl implements EnchereDao {
 	private static final String UPDATE_CREDIT="UPDATE UTILISATEURS SET credit = ? WHERE no_utilisateur=?";
 	private static final String SELECT_DEUXIEME_ENCHERE_AND_UTILISATEUR="SELECT u.no_utilisateur, u.credit, e.montant_enchere FROM UTILISATEURS u INNER JOIN ENCHERES e ON u.no_utilisateur=e.no_utilisateur WHERE e.no_article=? AND montant_enchere IN (SELECT MAX(montant_enchere) FROM ENCHERES WHERE no_article=? AND montant_enchere<?)";
 	private static final String UPDATE_PRIX_ARTICLE="UPDATE ARTICLES_VENDUS SET prix_vente=? WHERE no_article=?";
+	private static final String SELECT = "SELECT * FROM ENCHERES WHERE no_article=?";
 	
 	
 	/**
@@ -32,7 +35,7 @@ public class EnchereDaoJdbcImpl implements EnchereDao {
 	 * @return 
 	*/
 	@Override
-	public void nouvelleEnchere(ArticleVendu article, Enchere enchere, Utilisateur utilisateur) {
+	public void selectEnchere(Enchere enchere) {
 			
 		try(Connection cnx = ConnectionProvider.getConnection()) {
 			
@@ -42,19 +45,19 @@ public class EnchereDaoJdbcImpl implements EnchereDao {
 			PreparedStatement pStmt = cnx.prepareStatement(INSERT);
 			pStmt.setTimestamp(1, Timestamp.valueOf(enchere.getDateEnchere()));
 			pStmt.setInt(2, enchere.getMontantEnchere());
-			pStmt.setInt(3, article.getNoArticle());
-			pStmt.setInt(4, utilisateur.getNumeroUtilisateur());
+			pStmt.setInt(3, enchere.getArticleVendu().getNoArticle());
+			pStmt.setInt(4, enchere.getUtilisateur().getNumeroUtilisateur());
 			pStmt.executeUpdate();
 			
-			utilisateur.setCredit(utilisateur.getCredit()-enchere.getMontantEnchere());
+			enchere.getUtilisateur().setCredit(enchere.getUtilisateur().getCredit()-enchere.getMontantEnchere());
 			PreparedStatement pStmt2 = cnx.prepareStatement(UPDATE_CREDIT);
-			pStmt2.setInt(1, utilisateur.getCredit());
-			pStmt2.setInt(2, utilisateur.getNumeroUtilisateur());
+			pStmt2.setInt(1, enchere.getUtilisateur().getCredit());
+			pStmt2.setInt(2, enchere.getUtilisateur().getNumeroUtilisateur());
 			pStmt2.executeUpdate();
 			
 			PreparedStatement pStmt3 = cnx.prepareStatement(SELECT_DEUXIEME_ENCHERE_AND_UTILISATEUR);
-			pStmt3.setInt(1, article.getNoArticle());
-			pStmt3.setInt(2, article.getNoArticle());
+			pStmt3.setInt(1, enchere.getArticleVendu().getNoArticle());
+			pStmt3.setInt(2, enchere.getArticleVendu().getNoArticle());
 			pStmt3.setInt(3, enchere.getMontantEnchere());
 			
 			ResultSet rs = pStmt3.executeQuery();
@@ -68,7 +71,7 @@ public class EnchereDaoJdbcImpl implements EnchereDao {
 			
 			PreparedStatement pStmt5 = cnx.prepareStatement(UPDATE_PRIX_ARTICLE);
 			pStmt5.setInt(1, enchere.getMontantEnchere());
-			pStmt5.setInt(2, article.getNoArticle());
+			pStmt5.setInt(2, enchere.getArticleVendu().getNoArticle());
 
 			cnx.commit();
 			cnx.setAutoCommit(true);
@@ -87,12 +90,30 @@ public class EnchereDaoJdbcImpl implements EnchereDao {
 
 
 	/**
-	 * Méthode en charge de
-	 * @return
-	 */
-	private Enchere selectAncienneEnchere() {
-		// TODO Auto-generated method stub
-		return null;
+	* {@inheritDoc}
+	*/
+	@Override
+	public List<Enchere> selectListeEncheres(ArticleVendu article) {
+
+		List<Enchere> listeEnchere = null;
+		
+		try(Connection cnx = ConnectionProvider.getConnection()){
+			
+			PreparedStatement pStmt = cnx.prepareStatement(SELECT);
+			pStmt.setInt(1, article.getNoArticle());
+			
+			ResultSet rs = pStmt.executeQuery();
+			
+			while(rs.next()) {
+				Enchere enchere = new Enchere(rs.getTimestamp("date_enchere").toLocalDateTime(), rs.getInt("montant_enchere"), DAOFactory.getUtilisateurDAO().selectById(rs.getInt("no_utilisateur")), article);
+				listeEnchere.add(enchere);
+			}
+			
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return listeEnchere;
 	}
 
 }

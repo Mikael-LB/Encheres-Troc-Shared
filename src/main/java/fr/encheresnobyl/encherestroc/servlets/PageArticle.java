@@ -2,6 +2,7 @@ package fr.encheresnobyl.encherestroc.servlets;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,7 +14,10 @@ import javax.servlet.http.HttpSession;
 
 import fr.encheresnobyl.encherestroc.bll.ArticleVenduManagerImpl;
 import fr.encheresnobyl.encherestroc.bll.ArticleVenduManagerInt;
+import fr.encheresnobyl.encherestroc.bll.EnchereManagerImpl;
+import fr.encheresnobyl.encherestroc.bll.EnchereManagerInt;
 import fr.encheresnobyl.encherestroc.bo.ArticleVendu;
+import fr.encheresnobyl.encherestroc.bo.Enchere;
 import fr.encheresnobyl.encherestroc.bo.Utilisateur;
 
 /**
@@ -100,15 +104,12 @@ public class PageArticle extends HttpServlet {
 		}
 		ArticleVenduManagerInt articleVenduManager = new ArticleVenduManagerImpl();
 		ArticleVendu article = articleVenduManager.getArticleById(Integer.parseInt(request.getParameter("noArticle")));
-		LocalDate now =LocalDate.now();
 		int mise = Integer.parseInt(request.getParameter("mise"));
-			
-			//TODO renvoi vers la dao
-			//TODO si ok
-			//TODO recharger l'article
-			//TODO titre , message, from 
-			//TODO set attribute
-			//TODO renvoi vers la page article 
+		
+		
+		Enchere enchere = new Enchere(LocalDateTime.now(), mise, sessionUtilisateur, article);
+		EnchereManagerInt enchereManager = new EnchereManagerImpl();
+		article=enchereManager.nouvelleEnchere(enchere);
 	}
 
 }

@@ -3,6 +3,8 @@
  */
 package fr.encheresnobyl.encherestroc.dal;
 
+import java.util.List;
+
 import fr.encheresnobyl.encherestroc.bo.ArticleVendu;
 import fr.encheresnobyl.encherestroc.bo.Enchere;
 import fr.encheresnobyl.encherestroc.bo.Utilisateur;
@@ -22,6 +24,13 @@ public interface EnchereDao {
 	 * @param utilisateur
 	 * @return 
 	 */
-	public void nouvelleEnchere(ArticleVendu article, Enchere enchere, Utilisateur utilisateur);
+	public void selectEnchere(Enchere enchere);
+
+	/**
+	 * Méthode en charge de
+	 * @param article
+	 * @return
+	 */
+	public List<Enchere> selectListeEncheres(ArticleVendu article);
 
 }

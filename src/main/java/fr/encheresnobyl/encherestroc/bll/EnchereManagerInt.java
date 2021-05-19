@@ -13,6 +13,6 @@ import fr.encheresnobyl.encherestroc.bo.Utilisateur;
  */
 public interface EnchereManagerInt {
 	
-	public void nouvelleEnchere(ArticleVendu article, Enchere enchere, Utilisateur utilisateur);
+	public ArticleVendu nouvelleEnchere(Enchere enchere);
 
 }
