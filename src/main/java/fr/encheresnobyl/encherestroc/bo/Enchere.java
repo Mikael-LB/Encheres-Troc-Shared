@@ -5,6 +5,7 @@ package fr.encheresnobyl.encherestroc.bo;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * Classe en charge
@@ -22,13 +23,13 @@ public class Enchere implements Serializable {
 	/**
 	 * Attributes
 	 */	
-	LocalDate dateEnchere;
+	LocalDateTime dateEnchere;
 	int montantEnchere;
 	
 	
 	
 	 //--GETTERS--
-	public LocalDate getDateEnchere() {
+	public LocalDateTime getDateEnchere() {
 		return dateEnchere;
 	}
 	public int getMontantEnchere() {
@@ -36,7 +37,7 @@ public class Enchere implements Serializable {
 	}
 	
 	//--SETTERS--
-	public void setDateEnchere(LocalDate dateEnchere) {
+	public void setDateEnchere(LocalDateTime dateEnchere) {
 		this.dateEnchere = dateEnchere;
 	}
 	public void setMontantEnchere(int montantEnchere) {

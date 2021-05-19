@@ -78,6 +78,11 @@ public class Utilisateur implements Serializable{
 		setCredit(credit);
 	}
 	
+	public Utilisateur(int numeroUtilisateur, int credit) {
+		this.numeroUtilisateur=numeroUtilisateur;
+		this.credit=credit;
+	}
+	
 	/**
 	 * @author mlebris2021
 	 * Constructor to allow to create a new Utilisateur from inscription form
@@ -106,6 +111,7 @@ public class Utilisateur implements Serializable{
 		setMotDePasse(motDePasse);
 		// credit of 100
 		setCredit(100);
+		setAdministrateur(false);
 	}
 	
 	
