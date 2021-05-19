@@ -19,5 +19,7 @@ public abstract class CodesErreurBLL {
 	public static final int RUE_RETRAIT_EMPTY = 20006;
 	public static final int CPO_RETRAIT_EMPTY = 20007;
 	public static final int VILLE_RETRAIT_EMPTY = 20008;
+	public static final int DATE_DEBUT_ARTICLE_BEFORE_TODAY = 20009;
+	
 
 }
