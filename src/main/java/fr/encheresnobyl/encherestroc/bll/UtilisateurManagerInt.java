@@ -60,6 +60,13 @@ public interface UtilisateurManagerInt {
 	 */
 	public void checkInscriptionParam(String pseudo, String userName, String firstname, String email, String phone,
 			String street, String postalCode, String city, String passwd, String passwdConfirm) throws BusinessException;
+
+	/**
+	 * Method to ask DAO to insert a Utilisateur
+	 * @param user
+	 * @return an Utilisateur with his id
+	 */
+	public Utilisateur insertUtilisateur(Utilisateur user);
 	
 	
 }
