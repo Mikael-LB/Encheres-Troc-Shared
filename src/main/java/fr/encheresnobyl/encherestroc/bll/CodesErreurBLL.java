@@ -19,7 +19,18 @@ public abstract class CodesErreurBLL {
 	public static final int RUE_RETRAIT_EMPTY = 20006;
 	public static final int CPO_RETRAIT_EMPTY = 20007;
 	public static final int VILLE_RETRAIT_EMPTY = 20008;
+
 	public static final int DATE_DEBUT_ARTICLE_BEFORE_TODAY = 20009;
 	
+	//inscription form
+	public static final int EMPTY_PSEUDO = 20_010;
+	public static final int EMPTY_PARAM = 20_011;
+	public static final int PSEUDO_CHAR_NOT_ALLOWED = 20_012;
+	public static final int PSEUDO_EXIST = 20_013;
+	public static final int EMAIL_INVALID = 20_0014;
+	public static final int EMAIL_ALREADY_EXIST = 20_0015;
+	public static final int PASSWORDS_DONT_MATCH = 20_0016;
+
+
 
 }
