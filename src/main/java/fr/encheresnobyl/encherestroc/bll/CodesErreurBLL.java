@@ -27,9 +27,12 @@ public abstract class CodesErreurBLL {
 	public static final int EMPTY_PARAM = 20_011;
 	public static final int PSEUDO_CHAR_NOT_ALLOWED = 20_012;
 	public static final int PSEUDO_EXIST = 20_013;
-	public static final int EMAIL_INVALID = 20_0014;
-	public static final int EMAIL_ALREADY_EXIST = 20_0015;
-	public static final int PASSWORDS_DONT_MATCH = 20_0016;
+	public static final int EMAIL_INVALID = 20_014;
+	public static final int EMAIL_ALREADY_EXIST = 20_015;
+	public static final int PASSWORDS_DONT_MATCH = 20_016;
+	public static final int PASSWORD_TO_SHORT = 20_017;
+	public static final int PHONE_ONLY_NUMBER = 20_018;
+	public static final int PARAM_TOO_LONG = 20_019;
 
 
 
