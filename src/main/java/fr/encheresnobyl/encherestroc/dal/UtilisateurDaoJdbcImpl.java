@@ -182,12 +182,13 @@ public class UtilisateurDaoJdbcImpl implements UtilisateurDao{
 	/**
 	 * @author mlebris2021
 	 * {@inheritDoc}
+	 * @throws BusinessException 
 	 */
 	@Override
-	public Utilisateur insert(Utilisateur user) {
+	public Utilisateur insert(Utilisateur user) throws BusinessException {
+		BusinessException be = new BusinessException();
 		
-		if (user == null) {
-			BusinessException be = new BusinessException();
+		if (user == null) {			
 			be.addError(CodesErrorDAL.INSERT_OBJECT_NULL);
 			throw be;
 		}
@@ -223,9 +224,13 @@ public class UtilisateurDaoJdbcImpl implements UtilisateurDao{
 			}catch (SQLException e) {
 				conn.rollback();
 				e.printStackTrace();
+				be.addError(CodesErrorDAL.INSERT_OBJECT_ERROR);
+				throw be;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			be.addError(CodesErrorDAL.BDD_ERROR);
+			throw be;
 		}
 		return user;
 	}
