@@ -6,10 +6,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width initial scale=1.0" />
+<meta name="viewport" content="width=device-width initial-scale=1.0" />
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
 	rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="./assets/css/encheres-troc-style.css">
 <title>Inscription</title>
 </head>
 <body>
@@ -17,7 +18,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col">
-				<h1>Mon profil</h1>
+				<h1 class="h1-center">Mon profil</h1>
 			</div>
 		</div>
 		<form class="row g-3" method="post"

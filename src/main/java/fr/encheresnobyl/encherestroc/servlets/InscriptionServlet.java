@@ -92,7 +92,7 @@ public class InscriptionServlet extends HttpServlet {
 					city,
 					passwd,
 					passwdConfirm);
-			user = new Utilisateur(pseudo, firstname, street, email, phone, city, postalCode, passwdConfirm, passwd);
+			user = new Utilisateur(pseudo, userName, firstname, email, phone, street, postalCode, city, passwd);
 
 			user = utilisateurManager.insertUtilisateur(user);
 			//utilisateur ok so session start
