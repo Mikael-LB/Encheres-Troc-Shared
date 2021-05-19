@@ -19,7 +19,7 @@ import fr.encheresnobyl.encherestroc.bo.Utilisateur;
 /**
  * Servlet implementation class PageArticle
  */
-@WebServlet(urlPatterns = {"/Page-Article","/Encherir","/Aquisition","Ma-Vente"})
+@WebServlet(urlPatterns = {"/Page-Article","/Encherir","/Aquisition","/Ma-Vente"})
 public class PageArticle extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
