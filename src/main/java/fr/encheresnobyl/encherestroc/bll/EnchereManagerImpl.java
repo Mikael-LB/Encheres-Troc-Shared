@@ -26,11 +26,11 @@ public class EnchereManagerImpl implements EnchereManagerInt {
 	public ArticleVendu nouvelleEnchere(Enchere enchere) {
 		
 		if (enchere.getMontantEnchere()<=enchere.getArticleVendu().getPrixVente()) {
-			//ERREUR PRIX INFERIEUR
+			//TODO ERREUR PRIX INFERIEUR
 		}
 		
 		if (enchere.getMontantEnchere()>enchere.getUtilisateur().getCredit()) {
-			//ERREUR PAS ASSEZ DE CREDIT
+			//TODO ERREUR PAS ASSEZ DE CREDIT
 		}
 		
 		enchereDao.selectEnchere(enchere);

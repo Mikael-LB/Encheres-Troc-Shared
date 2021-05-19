@@ -109,7 +109,7 @@
 				<a href="#" > <input type="button" value="Retrait effectué"> </a>
 			</c:if>
 			<c:if test="${from=='enCour'}">
-				<form action="/PageArticle" method="POST">				
+				<form action="Page-Article" method="POST">				
 					<input type="hidden" name="noArticle" value="${article.getNoArticle()}"/>
 					<label>Votre Proposition :</label>
 					<input type="number" name="mise" min="${article.getPrixArticle()+1 }" max="${utilisateur.getCredit() }" value="${article.getPrixArticle()+1 }"> 
