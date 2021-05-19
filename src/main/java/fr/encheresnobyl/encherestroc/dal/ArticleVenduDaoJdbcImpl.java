@@ -291,6 +291,7 @@ public class ArticleVenduDaoJdbcImpl implements ArticleVenduDao {
 			
 		try (Connection cnx = ConnectionProvider.getConnection()){
 			
+			try {
 			cnx.setAutoCommit(false);
 			
 			PreparedStatement pStmt = cnx.prepareStatement(INSERT_ARTICLE, PreparedStatement.RETURN_GENERATED_KEYS);
@@ -322,10 +323,13 @@ public class ArticleVenduDaoJdbcImpl implements ArticleVenduDao {
 			
 			cnx.commit();
 			cnx.setAutoCommit(true);
-			
+			} catch (SQLException e) {
+				cnx.rollback();
+				cnx.setAutoCommit(true);
+				throw e;
+			}
 			
 		} catch (Exception e) {
-			
 			e.printStackTrace();
 		}
 		

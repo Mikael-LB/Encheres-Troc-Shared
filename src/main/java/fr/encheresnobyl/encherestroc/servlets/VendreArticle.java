@@ -41,38 +41,38 @@ import fr.encheresnobyl.encherestroc.servlets.utils.ValidateurParse;
  */
 @WebServlet("/VendreArticle")
 @MultipartConfig( fileSizeThreshold = 1024 * 1024, maxFileSize = 1024 * 1024 * 5,
- maxRequestSize = 1024 * 1024 * 5 * 5 )
+maxRequestSize = 1024 * 1024 * 5 * 5 )
 
 public class VendreArticle extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	//TODO upload
-	 //public static final String IMAGES_FOLDER = "/";
-	 //public String uploadPath; 
+	//public static final String IMAGES_FOLDER = "/";
+	//public String uploadPath; 
 
-    /*
-     * Si le dossier de sauvegarde de l'image n'existe pas, on demande sa création.
-     */ 
-    @Override
-    public void init() throws ServletException {
-    	//TODO upload
-        //uploadPath = getServletContext().getRealPath( IMAGES_FOLDER );
-        //File uploadDir = new File( uploadPath );
-        //if ( ! uploadDir.exists() ) uploadDir.mkdir();
-    }
-    
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public VendreArticle() {
-        super();
-      
-    }
+	/*
+	 * Si le dossier de sauvegarde de l'image n'existe pas, on demande sa création.
+	 */ 
+	@Override
+	public void init() throws ServletException {
+		//TODO upload
+		//uploadPath = getServletContext().getRealPath( IMAGES_FOLDER );
+		//File uploadDir = new File( uploadPath );
+		//if ( ! uploadDir.exists() ) uploadDir.mkdir();
+	}
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public VendreArticle() {
+		super();
+
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
 		HttpSession session = request.getSession();
 		Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
 		CategorieManagerInt categorieManager =new CategorieManagerImpl() ;
@@ -81,7 +81,7 @@ public class VendreArticle extends HttpServlet {
 		request.setAttribute("sessionUtilisateur",utilisateur );
 		request.setAttribute("categories", categories);
 		request.setAttribute("utilisateur", utilisateur);
-		
+
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/front-office-user/vendreArticle.jsp");
 		rd.forward(request, response);
 	}
@@ -101,38 +101,38 @@ public class VendreArticle extends HttpServlet {
 			vp.validerDate(dateDebutString, CodesErreursServlets.PARSE_DATE_DEBUT);
 			String dateFinString = request.getParameter("dateFin");
 			vp.validerDate(dateFinString, CodesErreursServlets.PARSE_DATE_FIN);
-			
+
 			if (vp.getBe().hasError()) {
 				throw vp.getBe();
 			}
-			
+
 			int idCategorie = Integer.parseInt(categorie);
 			int miseAPrixInt = Integer.parseInt(miseAPrix);		
 			LocalDate dateDebut = LocalDate.parse(dateDebutString);
 			LocalDate dateFinDate = LocalDate.parse(dateFinString); 
-			
-			
+
+
 			String article = request.getParameter("article");
 			String description = request.getParameter("description");
 			String retraitRue = request.getParameter("retraitRue");
 			String retraitCP = request.getParameter("retraitCP");
 			String retraitVille = request.getParameter("retraitVille");
-			
+
 			Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
-			
+
 			Retrait retrait =new Retrait(retraitRue, retraitCP, retraitVille);
 			ArticleVendu articleVendu =new ArticleVendu(article, description, dateDebut, dateFinDate, miseAPrixInt, retrait, idCategorie);
-			
+
 			ArticleVenduManagerInt articleVenduManager = new ArticleVenduManagerImpl();
 
-		
+
 			ArticleVendu artVendu = articleVenduManager.insertNewArticle(articleVendu, utilisateur.getNumeroUtilisateur(), retrait);
-			
+
 			request.setAttribute("article", artVendu);
 			request.setAttribute("titre", "article mis en vente");
 			request.setAttribute("message", "vous avez mis cet article en vente");
 			request.setAttribute("from", "miseEnVente");
-			
+
 			request.setAttribute("sessionUtilisateur", session.getAttribute("utilisateur"));
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/front-office-user/article.jsp");
 			rd.forward(request, response);
@@ -145,7 +145,7 @@ public class VendreArticle extends HttpServlet {
 			rd.forward(request, response);
 			return;
 		}
-		
+
 		//TODO upload
 		/*
 		for ( Part part : request.getParts() ) {
@@ -154,10 +154,10 @@ public class VendreArticle extends HttpServlet {
             part.write( fullPath );
         }*/
 	}
-	
+
 	/*
-     * Récupération du nom du fichier dans la requête.
-     */
+	 * Récupération du nom du fichier dans la requête.
+	 */
 	//TODO upload
 	/*
     private String getFileName( Part part ) {

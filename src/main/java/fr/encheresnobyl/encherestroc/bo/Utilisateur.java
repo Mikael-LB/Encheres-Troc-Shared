@@ -78,6 +78,11 @@ public class Utilisateur implements Serializable{
 		setCredit(credit);
 	}
 	
+	public Utilisateur(int numeroUtilisateur, int credit) {
+		this.numeroUtilisateur=numeroUtilisateur;
+		this.credit=credit;
+	}
+	
 	
 	
 	/**
