@@ -5,6 +5,7 @@ package fr.encheresnobyl.encherestroc.dal;
 
 import java.util.List;
 
+import fr.encheresnobyl.encherestroc.bll.BusinessException;
 import fr.encheresnobyl.encherestroc.bo.Utilisateur;
 
 /**
@@ -53,7 +54,8 @@ public interface UtilisateurDao {
 	 * Method to insert a Utilisateur in db
 	 * @param user
 	 * @return a Utilisateur complete with his id in db
+	 * @throws BusinessException 
 	 */
-	Utilisateur insert(Utilisateur user);
+	Utilisateur insert(Utilisateur user) throws BusinessException;
 
 }
