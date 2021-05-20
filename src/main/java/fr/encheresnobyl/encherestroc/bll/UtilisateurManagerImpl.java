@@ -192,4 +192,12 @@ public class UtilisateurManagerImpl implements UtilisateurManagerInt {
 	public Utilisateur insertUtilisateur(Utilisateur user) throws BusinessException {
 		return DAOFactory.getUtilisateurDAO().insert(user);
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void deleteUser(Utilisateur user) throws BusinessException {
+		DAOFactory.getUtilisateurDAO().delete(user);		
+	}
 }

@@ -68,6 +68,14 @@ public interface UtilisateurManagerInt {
 	 * @throws BusinessException 
 	 */
 	public Utilisateur insertUtilisateur(Utilisateur user) throws BusinessException;
+
+	/**
+	 * Method to ask the DAO to delete a Utilisateur
+	 * as his request
+	 * @param user
+	 * @throws BusinessException 
+	 */
+	public void deleteUser(Utilisateur user) throws BusinessException;
 	
 	
 }
