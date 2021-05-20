@@ -26,81 +26,81 @@
 		<div class="col-8">
 			<h2 align="center">${ article.getNomArticle() }</h2>
 			<br>
-			<table class="row">
-				<tr>
-					<td class="col-4">
+			<div class="row">
+				<div class="row">
+					<div class="col-4">
 						<label>Description : </label>
-					</td>
-					<td class="col-4">
-						${ article.getDescription() }
-					</td>
-				</tr>
+					</div>
+					<div class="col-8">
+						<p>${ article.getDescription() }</p>
+					</div>
+				</div>
 				<c:if test="${from=='aquisition'||from=='maVente'||from=='enCour'||from=='detail'}">
-					<tr>
-						<td class="col-4">
+					<div class="row">	
+						<div class="col-4">
 							<label>Meilleur offre : </label>
-						</td>
-						<td class="col-4">
-							${ article.getPrixArticle() } par : <a href="<c:url value='/Profil?user=${article.getUtilisateur().getNumeroUtilisateur()}'/>">
-						${ article.getMeilleurEnchere().getUtilisateur().getPseudo() }</a>
-						</td>
-					</tr>
+						</div>
+						<div class="col-8">
+							${ article.getPrixArticle() } * par : <a href="<c:url value='/Profil?user=${article.getUtilisateur().getNumeroUtilisateur()}'/>">
+							${ article.getMeilleurEnchere().getUtilisateur().getPseudo() }</a>
+						</div>
+					</div>
 				</c:if> 
-				<tr>
-					<td class="col-4">
+				<div class="row">
+					<div class="col-4">
 						<label>Mise à prix : </label>
-					</td>
-					<td class="col-4">
-						${ article.getMiseAPrix() }
-					</td>
-				</tr>
+					</div>
+					<div class="col-8">
+						${ article.getMiseAPrix() } *
+					</div>
+				</div>
 				<c:if test="${from=='miseEnVente'|| from=='maVente'|| from=='enCour' || from=='detail'}">
-					<tr>
-						<td class="col-4">
+					<div class="row">
+						<div class="col-4">
 							<label>Date de début d'enchère : </label>
-						</td>
-						<td class="col-4">
+						</div>
+						<div class="col-4">
 							${article.getDateDebutEncheres()}
-						</td>
-					</tr>
-					<tr>
-						<td class="col-4">
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-4">
 							<label>Date de fin d'enchère : </label>
-						</td>
-						<td class="col-4">
+						</div>
+						<div class="col-4">
 							${article.getDateFinEncheres()}							
-						</td>
-					</tr>
-				</c:if>  
-				<tr>
-					<td class="col-4">
+						</div>
+					</div>
+				</c:if>
+				<div class="row">
+					<div class="col-4">
 						<label>Retrait : </label>
-					</td>
-					<td class="col-4">
+					</div>
+					<div class="col-4">
 						${ article.getPointRetrait().getRue() }<br>
 						${ article.getPointRetrait().getCodePostal() } ${ article.getPointRetrait().getVille() }
-					</td>
-				</tr>
-				<tr>
-					<td class="col-4">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-4">
 						<label>Vendeur : </label>
-					</td>
-					<td class="col-4">
+					</div>
+					<div class="col-4">
 						<a href="<c:url value='/Profil?user=${article.getUtilisateur().getNumeroUtilisateur()}'/>">
 						${article.getUtilisateur().getPseudo()}</a>
-					</td>
-				</tr> 
+					</div> 
+				</div>
 				<c:if test="${from=='aquisition'}">
-					<tr>
-						<td class="col-4">
+					<div class="row">
+						<div class="col-4">
 							<label>Téléphone : </label>
-						</td>
-						<td class="col-4">
+						</div>
+						<div class="col-4">
 							${ article.getUtilisateur().getTelephone() }
-						</td>
-					</tr>
+						</div>
+					</div>
 				</c:if> 		
-			</table>
+			</div>
 			<br>
 			<c:if test="${from=='miseEnVente'||from=='detail'}" >
 				<a href="<c:url value="/" />" > <input type="button" value="accueil"> </a>
