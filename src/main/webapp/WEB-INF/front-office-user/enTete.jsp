@@ -2,7 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<div>
+
+<div class="row">
 	<nav class="navbar navbar-expand-md bg-dark navbar-dark">
 	  			
 			<a class="navbar-brand" href="<c:url value="/"/>">			
@@ -14,8 +15,8 @@
     			<span class="navbar-toggler-icon"></span>
   				</button>
 			
-				<c:if test="${empty sessionId}">
 					<div class="collapse navbar-collapse" id="collapsibleNavbar">
+				<c:if test="${empty sessionId}">
 				 	<ul class="navbar-nav">
       					<li class="nav-item">
 							<a class="nav-link active" href="<c:url value="/inscription"/>">Inscription</a>
@@ -24,10 +25,8 @@
 							<a class="nav-link active" href="<c:url value="/connexion"/>">Connexion</a>
 						</li>
 					</ul>
-					</div>
 				</c:if>
 				<c:if test="${!empty utilisateur }">
-				<div class="collapse navbar-collapse" id="collapsibleNavbar" >
 					<ul class="navbar-nav">
       					<li class="nav-item">
 							<a class="nav-link active " href="<c:url value="/Mon-Profil"/>"> ${ utilisateur.getPseudo() } </a> 
@@ -42,8 +41,11 @@
 							<a class="nav-link active " href="<c:url value="/deconnexion"/>"> Déconnexion  </a> 
 						</li>
 					</ul>
-				</div>
+					    <span class="navbar-text">
+					      Navbar text with an inline element
+					    </span>
 				</c:if>
+				</div>
 		
 	</nav>
 </div>
