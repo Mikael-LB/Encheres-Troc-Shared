@@ -5,6 +5,7 @@ package fr.encheresnobyl.encherestroc.dal;
 
 import java.util.List;
 
+import fr.encheresnobyl.encherestroc.bll.BusinessException;
 import fr.encheresnobyl.encherestroc.bo.ArticleVendu;
 import fr.encheresnobyl.encherestroc.bo.Retrait;
 
@@ -44,8 +45,9 @@ public interface ArticleVenduDao {
 	 * @param article
 	 * @param retrait 
 	 * @return 
+	 * @throws BusinessException 
 	 */
-	ArticleVendu insertNewArticle(ArticleVendu article, int noUtilisateur, Retrait retrait);
+	ArticleVendu insertNewArticle(ArticleVendu article, int noUtilisateur, Retrait retrait) throws BusinessException;
 
 
 	
