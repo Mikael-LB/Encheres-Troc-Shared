@@ -67,7 +67,10 @@ public class ModifierProfil extends HttpServlet {
 			try {
 				
 				utilisateurSession=(Utilisateur) session.getAttribute("utilisateur");
-				
+				if(passwd!=null) {
+					passwd=passwdVerif;
+					passwdConfirm=passwdVerif;
+				}
 		
 				utilisateurManager.checkUpdateParam( //THROWS BE
 						utilisateurSession,
