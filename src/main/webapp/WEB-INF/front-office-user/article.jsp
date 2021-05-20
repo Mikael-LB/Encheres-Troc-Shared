@@ -6,15 +6,17 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width initial scale=1.0" />
-<link href="vendor/bootstrap/css/bootstrap.css" rel="stylesheet" >
+<meta name="viewport" content="width=device-width initial-scale=1.0" />
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="<c:url value="assets/css/encheres-troc-style.css"/>">
 <title>${ titre }</title>
 </head>
 <body>
 	<%@ include file="enTete.jsp" %>
+	<div class="container">
 	<br>
-	<h1 align="center">${ message }</h1>
+	<h1 align="center">${ titre }</h1>
+	<p align="center">${message }</p>
 	<br>
 	<br>
 	<div class="row">
@@ -24,80 +26,81 @@
 		<div class="col-8">
 			<h2 align="center">${ article.getNomArticle() }</h2>
 			<br>
-			<table class="row">
-				<tr>
-					<td class="col-4">
+			<div class="row">
+				<div class="row">
+					<div class="col-4">
 						<label>Description : </label>
-					</td>
-					<td class="col-4">
-						${ article.getDescription() }
-					</td>
-				</tr>
-				<c:if test="${from=='aquisition'||from=='maVente'||from=='enCour'}">
-					<tr>
-						<td class="col-4">
+					</div>
+					<div class="col-8">
+						<p>${ article.getDescription() }</p>
+					</div>
+				</div>
+				<c:if test="${from=='aquisition'||from=='maVente'||from=='enCour'||from=='detail'}">
+					<div class="row">	
+						<div class="col-4">
 							<label>Meilleur offre : </label>
-						</td>
-						<td class="col-4">
-							${ article.getPrixArticle() }
-						</td>
-					</tr>
+						</div>
+						<div class="col-8">
+							${ article.getPrixArticle() } <%@ include file="credit.jsp" %> par : <a href="<c:url value='/Profil?user=${article.getMeilleurEnchere().getUtilisateur().getNumeroUtilisateur()}'/>">
+							${ article.getMeilleurEnchere().getUtilisateur().getPseudo() }</a>
+						</div>
+					</div>
 				</c:if> 
-				<tr>
-					<td class="col-4">
+				<div class="row">
+					<div class="col-4">
 						<label>Mise à prix : </label>
-					</td>
-					<td class="col-4">
-						${ article.getMiseAPrix() }
-					</td>
-				</tr>
+					</div>
+					<div class="col-8">
+						${ article.getMiseAPrix() } <%@ include file="credit.jsp" %>
+					</div>
+				</div>
 				<c:if test="${from=='miseEnVente'|| from=='maVente'|| from=='enCour' || from=='detail'}">
-					<tr>
-						<td class="col-4">
+					<div class="row">
+						<div class="col-4">
 							<label>Date de début d'enchère : </label>
-						</td>
-						<td class="col-4">
+						</div>
+						<div class="col-4">
 							${article.getDateDebutEncheres()}
-						</td>
-					</tr>
-					<tr>
-						<td class="col-4">
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-4">
 							<label>Date de fin d'enchère : </label>
-						</td>
-						<td class="col-4">
+						</div>
+						<div class="col-4">
 							${article.getDateFinEncheres()}							
-						</td>
-					</tr>
-				</c:if>  
-				<tr>
-					<td class="col-4">
+						</div>
+					</div>
+				</c:if>
+				<div class="row">
+					<div class="col-4">
 						<label>Retrait : </label>
-					</td>
-					<td class="col-4">
+					</div>
+					<div class="col-4">
 						${ article.getPointRetrait().getRue() }<br>
 						${ article.getPointRetrait().getCodePostal() } ${ article.getPointRetrait().getVille() }
-					</td>
-				</tr>
-				<tr>
-					<td class="col-4">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-4">
 						<label>Vendeur : </label>
-					</td>
-					<td class="col-4">
+					</div>
+					<div class="col-4">
 						<a href="<c:url value='/Profil?user=${article.getUtilisateur().getNumeroUtilisateur()}'/>">
 						${article.getUtilisateur().getPseudo()}</a>
-					</td>
-				</tr> 
+					</div> 
+				</div>
 				<c:if test="${from=='aquisition'}">
-					<tr>
-						<td class="col-4">
+					<div class="row">
+						<div class="col-4">
 							<label>Téléphone : </label>
-						</td>
-						<td class="col-4">
+						</div>
+						<div class="col-4">
 							${ article.getUtilisateur().getTelephone() }
-						</td>
-					</tr>
+						</div>
+					</div>
 				</c:if> 		
-			</table>
+			</div>
 			<br>
 			<c:if test="${from=='miseEnVente'||from=='detail'}" >
 				<a href="<c:url value="/" />" > <input type="button" value="accueil"> </a>
@@ -109,16 +112,29 @@
 				<a href="#" > <input type="button" value="Retrait effectué"> </a>
 			</c:if>
 			<c:if test="${from=='enCour'}">
-				<form action="/PageArticle" method="POST">				
+				<form action="Page-Article" method="POST">				
 					<input type="hidden" name="noArticle" value="${article.getNoArticle()}"/>
 					<label>Votre Proposition :</label>
-					<input type="number" name="mise" min="${article.getPrixArticle()+1 }" max="${utilisateur.getCredit() }" value="${article.getPrixArticle()+1 }"> 
-					<input type="submit" name="encherir" value="Encherir">
+					<input type="number" name="mise" min="${article.getPrixArticle()+1 }" max="${utilisateur.getCredit() }" value="${article.getPrixArticle()+1 }" ${article.getMeilleurEnchere().getUtilisateur().getNumeroUtilisateur()==utilisateur.getNumeroUtilisateur() ? "disabled" : "" }> 
+					<input type="submit" name="encherir" value="Encherir" ${article.getMeilleurEnchere().getUtilisateur().getNumeroUtilisateur()==utilisateur.getNumeroUtilisateur() ? "disabled" : "" }>
 				</form>
 				<br>
 				<a href="<c:url value="/" />" > <input type="button" value="Retour a l'accueil"> </a>
 			</c:if>
+
+			<c:if test="${!empty errorList}">
+				<div class="form-group row">
+					<div class="col-sm-12 col-form-label">
+						<c:forEach var="error" items="${errorList }">
+							<p class="text-danger">${messageReader.getMessageErreur(error)}</p>
+						</c:forEach>
+					</div>
+				</div>
+			</c:if>
+
 		</div>
 	</div>
+	</div>
+	<%@ include file="footer.jsp" %>	
 </body>
 </html>

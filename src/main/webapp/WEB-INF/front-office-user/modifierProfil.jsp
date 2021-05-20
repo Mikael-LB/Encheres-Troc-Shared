@@ -6,11 +6,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width initial scale=1.0" />
+<meta name="viewport" content="width=device-width initial-scale=1.0" />
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
 	rel="stylesheet">
-<title>Inscription</title>
+<link rel="stylesheet" href="<c:url value="assets/css/encheres-troc-style.css"/>">
+<title>Modification du profil</title>
 </head>
 <body>
 	<%@ include file="enTete.jsp"%>
@@ -21,7 +22,12 @@
 			</div>
 		</div>
 		<form class="row g-3" method="post"
-			action="<c:url value="/inscription"/>">
+			action="<c:url value="/ModifierProfil"/>">
+			<div class="col-12">
+				<label for="passwd" class="col-form-label">Verification de l'ancien mot de passe</label>
+				<input type="password" class="form-control" id="passwdVerif"
+					name="passwdVerif" value="">
+			</div>
 			<div class="col-6">
 				<label for="pseudo" class="col-sm-2 col-form-label">Pseudo</label> <input
 					type="text" class="form-control" id="pseudo" name="pseudo"
@@ -63,23 +69,40 @@
 					value="${ utilisateur.getVille() }">
 			</div>
 			<div class="col-6">
-				<label for="passwd" class="col-sm-2 col-form-label">Mot de
+				<label for="passwd" class="col-form-label">Nouveau Mot de
 					passe</label> <input type="password" class="form-control" id="passwd"
-					name="passwd" value="">
+					name="passwd" value="" placeholder="laissez vide pour conserver le mot de passe">
 			</div>
 			<div class="col-6">
-				<label for="passwdConfirm" class="col-sm-2 col-form-label">Mot
-					de passe</label> <input type="password" class="form-control" id="passwdConfirm"
+				<label for="passwdConfirm" class="col-form-label">Confirmez votre nouveau mot de passe</label> <input type="password" class="form-control" id="passwdConfirm"
 					name="passwdConfirm">
 			</div>
-			<div class="col-6">
-				<button type="submit" class="btn btn-primary">Modifier</button>
+
+		
+		<div class="col-12">
+			<c:if test="${!empty errorList}">
+				<div class="form-group row">
+					<div class="col-sm-12 col-form-label">
+						<c:forEach var="error" items="${errorList }">
+							<p class="text-danger">${messageReader.getMessageErreur(error)}</p>
+						</c:forEach>
+					</div>
+				</div>
+			</c:if>
 			</div>
-			<div class="col-6">
-				<a class="btn btn-primary" href="<c:url value="/"/>">Annuler</a>
-			</div>
+			
+
+				<div class="col-6">
+					<button type="submit" class="btn btn-primary">Modifier</button>
+				</div>
+				<div class="col-6">
+					<a class="btn btn-primary" href="<c:url value="/"/>">Annuler</a>
+				</div>
+			
 		</form>
 	</div>
+	<%@ include file="footer.jsp" %>
+	
 	<script src="vendor/jquery/jquery.min.js"></script>
 	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>

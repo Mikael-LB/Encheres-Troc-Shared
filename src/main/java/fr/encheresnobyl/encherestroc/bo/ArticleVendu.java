@@ -84,12 +84,8 @@ public class ArticleVendu implements Serializable{
 		
 		int prixArticle=this.miseAPrix;
 		
-		if (this.listeEncheres!=null) {
-			for (Enchere enchere : this.listeEncheres) {
-				if (enchere.getMontantEnchere()>prixArticle) {
-					prixArticle=enchere.getMontantEnchere();
-				}
-			}
+		if (this.prixVente!=0) {
+			prixArticle=this.prixVente;
 		}	
 		return prixArticle;	
 	}
@@ -140,6 +136,19 @@ public class ArticleVendu implements Serializable{
 	public Categorie getCategorie() {
 		return categorie;
 	}
+	public Enchere getMeilleurEnchere() {
+		Enchere meilleurEnchere=new Enchere();
+		if(listeEncheres!=null) {
+			for (Enchere enchere : listeEncheres) {
+				if(enchere.getMontantEnchere()==this.getPrixVente()) {
+					meilleurEnchere=enchere;
+				}
+			}
+		}
+		return meilleurEnchere;		
+	}
+	
+	
 	
 	// -- SETTERS --
 	

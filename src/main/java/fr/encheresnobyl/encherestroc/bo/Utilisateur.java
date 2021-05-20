@@ -116,6 +116,13 @@ public class Utilisateur implements Serializable{
 	
 	
 	/**
+	 * 
+	 */
+	public Utilisateur(String pseudo) {
+		super();
+	}
+
+	/**
 	 * @return the administrateur
 	 */
 	public boolean isAdministrateur() {

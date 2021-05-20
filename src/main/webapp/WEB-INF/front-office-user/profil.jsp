@@ -7,9 +7,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width initial scale=1.0" />
-<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<meta name="viewport" content="width=device-width initial-scale=1.0" />
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="<c:url value="assets/css/encheres-troc-style.css"/>">
 <title>Profil</title>
 </head>
 <body>
@@ -57,12 +57,12 @@
 	</div>
 	<div align=center >
 		<c:if test="${!empty modifier }" >
-			<form action="Modifier-Profil">
-			<input type="hidden" name="numeroUtilisateur" value="${utilisateur.getNumeroUtilisateur() }">
+			<form action="ModifierProfil">
 			<input type="submit" name="modifier" value="Modifier">
 			</form>
 		</c:if>
 	</div>
+	<%@ include file="footer.jsp" %>
 	
 </body>
 </html>

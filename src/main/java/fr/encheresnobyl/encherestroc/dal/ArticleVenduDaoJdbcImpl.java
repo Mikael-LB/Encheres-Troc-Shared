@@ -11,6 +11,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.taglibs.standard.lang.jstl.test.Bean1;
+
+import fr.encheresnobyl.encherestroc.bll.BusinessException;
 import fr.encheresnobyl.encherestroc.bll.CategorieManagerImpl;
 import fr.encheresnobyl.encherestroc.bll.CategorieManagerInt;
 import fr.encheresnobyl.encherestroc.bll.RetraitManagerImpl;
@@ -33,8 +36,8 @@ public class ArticleVenduDaoJdbcImpl implements ArticleVenduDao {
 	private static final String PARAM_ENCHERES_UTILISATEUR = "encheresUtilisateur";
 	private static final String PARAM_ENCHERES_OUVERTES = "encheresOuvertes";
 	private static final String PARAM_VENTE_EN_COURS = "ventesEnCours";
-	private static final String PARAM_VENTE_TERMINEES = "ventesNonDebutees";
-	private static final String PARAM_VENTE_NON_DEBUTEES = "ventesTerminees";
+	private static final String PARAM_VENTE_TERMINEES = "ventesTerminees";
+	private static final String PARAM_VENTE_NON_DEBUTEES = "ventesNonDebutees";
 	
 	private static final String SELECT_ARTICLE_BY_ID="SELECT * FROM ARTICLES_VENDUS WHERE no_article = ?";
 	private static final String SELECT_ARTICLE_BY_NOM="SELECT * FROM ARTICLES_VENDUS WHERE nom_article = ?";
@@ -285,10 +288,11 @@ public class ArticleVenduDaoJdbcImpl implements ArticleVenduDao {
 	
 	/**
 	* {@inheritDoc}
+	 * @throws BusinessException 
 	*/
 	@Override
-	public ArticleVendu insertNewArticle(ArticleVendu article, int noUtilisateur, Retrait retrait) {
-			
+	public ArticleVendu insertNewArticle(ArticleVendu article, int noUtilisateur, Retrait retrait) throws BusinessException {
+		BusinessException be = new BusinessException();
 		try (Connection cnx = ConnectionProvider.getConnection()){
 			
 			try {
@@ -330,7 +334,8 @@ public class ArticleVenduDaoJdbcImpl implements ArticleVenduDao {
 			}
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			be.addError(CodesErrorDAL.INSERT_OBJECT_ERROR);
+			throw be;
 		}
 		
 		return article;

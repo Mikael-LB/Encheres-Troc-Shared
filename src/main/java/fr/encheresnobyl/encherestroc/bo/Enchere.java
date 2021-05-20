@@ -36,7 +36,14 @@ public class Enchere implements Serializable {
 	}
 	
 	
-	 //--GETTERS--
+	 public Enchere() {
+		
+	}
+	 public Enchere(Utilisateur utilisateur) {
+		 this.utilisateur=utilisateur;	
+	}
+
+	//--GETTERS--
 	public LocalDateTime getDateEnchere() {
 		return dateEnchere;
 	}

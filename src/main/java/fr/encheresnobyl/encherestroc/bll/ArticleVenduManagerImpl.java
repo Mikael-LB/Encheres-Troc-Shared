@@ -41,7 +41,10 @@ public class ArticleVenduManagerImpl implements ArticleVenduManagerInt {
 	}
 
 	public ArticleVendu getArticleById(int id) {
-		return articleVenduDao.selectArticleById(id);
+		ArticleVendu article = articleVenduDao.selectArticleById(id);
+		article.setListeEncheres(DAOFactory.getEnchereDAO().selectListeEncheres(article));
+		return article;
+		
 	}
 
 

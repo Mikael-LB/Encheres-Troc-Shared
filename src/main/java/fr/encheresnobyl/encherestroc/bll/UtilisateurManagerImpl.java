@@ -7,6 +7,8 @@ import java.util.List;
 
 import fr.encheresnobyl.encherestroc.bo.Utilisateur;
 import fr.encheresnobyl.encherestroc.dal.DAOFactory;
+import fr.encheresnobyl.encherestroc.dal.UtilisateurDao;
+import fr.encheresnobyl.encherestroc.dal.UtilisateurDaoJdbcImpl;
 
 /**
  * Classe en charge
@@ -191,5 +193,85 @@ public class UtilisateurManagerImpl implements UtilisateurManagerInt {
 	@Override
 	public Utilisateur insertUtilisateur(Utilisateur user) throws BusinessException {
 		return DAOFactory.getUtilisateurDAO().insert(user);
+	}
+	
+	
+
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void deleteUser(Utilisateur user) throws BusinessException {
+		DAOFactory.getUtilisateurDAO().delete(user);		
+	}
+	
+
+	@Override
+	public void modifierProfil(Utilisateur utilisateurSession, Utilisateur utilisateurModif, String passwdVerif) throws BusinessException {
+		
+		BusinessException be = new BusinessException();
+		
+		System.out.println(utilisateurSession.getMotDePasse());
+		System.out.println(passwdVerif);
+		
+		if(utilisateurSession.getMotDePasse().equals(passwdVerif)) {
+			
+			System.out.println("passage dans managerImpl");
+			utilisateurModif.setNumeroUtilisateur(utilisateurSession.getNumeroUtilisateur());
+			
+			DAOFactory.getUtilisateurDAO().updateProfil(utilisateurModif);
+			
+		}else {
+			be.addError(CodesErreurBLL.PASSWORD_FALSE);
+			throw be;
+		}
+		
+	}
+	
+	
+	
+
+	@Override
+	public void checkUpdateParam(Utilisateur utilisateur, String pseudo, String userName, String firstname, String email,
+			String phone, String street, String postalCode, String city, String passwd, String passwdConfirm)
+			throws BusinessException {
+		BusinessException be = new BusinessException();
+		checkForEmptyParam(pseudo, be);
+		if(!utilisateur.getPseudo().equals(pseudo)) {
+			checkTooLongParam(pseudo, PSEUDO_DB_LENGTH, be);
+			checkPseudoNotExist(pseudo, be);
+			
+		}
+		checkForEmptyParam(userName, be);
+		checkTooLongParam(userName, USERNAME_DB_LENGTH, be);
+		checkForEmptyParam(firstname, be);
+		checkTooLongParam(firstname, FIRSTNAME_DB_LENGTH, be);
+		checkForEmptyParam(email, be);
+		if(!utilisateur.getEmail().equals(email)) {
+			checkTooLongParam(email, EMAIL_DB_LENGTH, be);
+			checkValidEmail(email, be);
+			
+		}
+		checkForEmptyParam(phone, be);
+		checkTooLongParam(phone, PHONE_DB_LENGTH, be);
+		checkForEmptyParam(street, be);
+		checkTooLongParam(street, STREET_DB_LENGTH, be);
+		checkForEmptyParam(postalCode, be);
+		checkTooLongParam(postalCode, POSTAL_CODE_DB_LENGTH, be);
+		checkForEmptyParam(city, be);
+		checkTooLongParam(city, CITY_DB_LENGTH, be);
+		checkForEmptyParam(passwd, be);
+		checkTooLongParam(passwd, PASSWD_DB_LENGTH, be);
+		checkForEmptyParam(passwdConfirm, be);
+
+		
+		
+		checkValidPhone(phone,be);
+		checkPasswordAreEquals(passwd,passwdConfirm,be);
+
+		if (be.hasError()) {
+			throw be;
+		}
 	}
 }
