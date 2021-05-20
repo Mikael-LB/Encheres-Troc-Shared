@@ -195,6 +195,14 @@ public class UtilisateurManagerImpl implements UtilisateurManagerInt {
 		return DAOFactory.getUtilisateurDAO().insert(user);
 	}
 
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void deleteUser(Utilisateur user) throws BusinessException {
+		DAOFactory.getUtilisateurDAO().delete(user);		
+
 	@Override
 	public void modifieProfil(Utilisateur utilisateur, Utilisateur user, String passwdVerif) throws BusinessException {
 		BusinessException be = new BusinessException();
@@ -250,6 +258,5 @@ public class UtilisateurManagerImpl implements UtilisateurManagerInt {
 		if (be.hasError()) {
 			throw be;
 		}
-		
 	}
 }
