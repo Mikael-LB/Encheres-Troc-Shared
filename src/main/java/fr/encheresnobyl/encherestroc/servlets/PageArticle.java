@@ -66,7 +66,7 @@ public class PageArticle extends HttpServlet {
 				from ="aquisition";
 			}else {
 				message = "Detail de l'article";
-				titre ="detail de l'article";
+				titre ="Détails de l'article";
 				from ="detail";
 			}
 			
