@@ -218,7 +218,7 @@ public class UtilisateurManagerImpl implements UtilisateurManagerInt {
 		if(!utilisateur.getPseudo().equals(pseudo)) {
 			checkTooLongParam(pseudo, PSEUDO_DB_LENGTH, be);
 			checkPseudoNotExist(pseudo, be);
-			System.out.println("la!");
+			
 		}
 		checkForEmptyParam(userName, be);
 		checkTooLongParam(userName, USERNAME_DB_LENGTH, be);
@@ -228,7 +228,7 @@ public class UtilisateurManagerImpl implements UtilisateurManagerInt {
 		if(!utilisateur.getEmail().equals(email)) {
 			checkTooLongParam(email, EMAIL_DB_LENGTH, be);
 			checkValidEmail(email, be);
-			System.out.println("lala!");
+			
 		}
 		checkForEmptyParam(phone, be);
 		checkTooLongParam(phone, PHONE_DB_LENGTH, be);

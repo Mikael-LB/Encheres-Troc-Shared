@@ -76,7 +76,7 @@ public class ModifierProfil extends HttpServlet {
 						city,
 						passwd,
 						passwdConfirm);
-					System.out.println("try");
+					
 			} catch (BusinessException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
