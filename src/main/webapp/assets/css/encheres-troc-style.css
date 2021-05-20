@@ -1,6 +1,19 @@
 #css for encheres-troc project
-
 .h1-center {
-		text-align:center;
-		padding:2em;
-	}
+	text-align:center;
+	padding:2em;
+}
+li.nav-item {
+	margin:2px;
+}
+#footer {
+	height:100px;
+	background-color:#212529;
+}
+#copyright {
+	text-align:center;
+	padding-top:35px;
+}
+a.disabled{
+	pointer-events:none;
+}

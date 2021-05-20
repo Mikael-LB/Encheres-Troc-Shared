@@ -10,6 +10,7 @@
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
 	rel="stylesheet">
+<link rel="stylesheet" href="<c:url value="assets/css/encheres-troc-style.css"/>">
 <title>Modification du profil</title>
 </head>
 <body>
@@ -100,6 +101,8 @@
 			
 		</form>
 	</div>
+	<%@ include file="footer.jsp" %>
+	
 	<script src="vendor/jquery/jquery.min.js"></script>
 	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
