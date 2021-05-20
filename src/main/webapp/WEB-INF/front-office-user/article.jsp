@@ -15,7 +15,8 @@
 	<%@ include file="enTete.jsp" %>
 	<div class="container">
 	<br>
-	<h1 align="center">${ message }</h1>
+	<h1 align="center">${ titre }</h1>
+	<p align="center">${message }</p>
 	<br>
 	<br>
 	<div class="row">
@@ -34,13 +35,14 @@
 						${ article.getDescription() }
 					</td>
 				</tr>
-				<c:if test="${from=='aquisition'||from=='maVente'||from=='enCour'}">
+				<c:if test="${from=='aquisition'||from=='maVente'||from=='enCour'||from=='detail'}">
 					<tr>
 						<td class="col-4">
 							<label>Meilleur offre : </label>
 						</td>
 						<td class="col-4">
-							${ article.getPrixArticle() } par :
+							${ article.getPrixArticle() } par : <a href="<c:url value='/Profil?user=${article.getUtilisateur().getNumeroUtilisateur()}'/>">
+						${ article.getMeilleurEnchere().getUtilisateur().getPseudo() }</a>
 						</td>
 					</tr>
 				</c:if> 
