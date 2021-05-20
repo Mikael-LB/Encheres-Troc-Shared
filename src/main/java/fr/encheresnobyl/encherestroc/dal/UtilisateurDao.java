@@ -60,4 +60,12 @@ public interface UtilisateurDao {
 
 	Utilisateur updateProfil(Utilisateur utilisateurModif) throws BusinessException;
 
+
+	/**
+	 * Method to delete a Utilisateur in db
+	 * @param user
+	 * @throws BusinessException 
+	 */
+	void delete(Utilisateur user) throws BusinessException;
+
 }
