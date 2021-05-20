@@ -4,12 +4,14 @@
 package fr.encheresnobyl.encherestroc.dal;
 
 import java.beans.Statement;
+import java.security.SecureRandom;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import fr.encheresnobyl.encherestroc.bll.BusinessException;
 import fr.encheresnobyl.encherestroc.bo.Utilisateur;
@@ -31,7 +33,19 @@ public class UtilisateurDaoJdbcImpl implements UtilisateurDao{
 			"INSERT INTO utilisateurs"
 			+ " (pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur)"
 			+ " VALUES (?,?,?,?,?,?,?,?,?,?,?)";
-	
+	private static final String DELETE_UTILISATEUR=
+			"UPDATE utilisateurs SET "
+			+ "pseudo='utilisateur supprimé', "
+			+ "nom='utilisateur supprimé',"
+			+ "prenom='utilisateur supprimé', "
+			+ "email='inconnu', "
+			+ "telephone='0', "
+			+ "rue='inconnue', "
+			+ "mot_de_passe=?,"
+			+ "credit=0,"
+			+ "administrateur=0 "
+			+ "WHERE no_utilisateur=?";
+	private static final int PASSWD_DB_LENGTH = 30;
 	/**
 	* {@inheritDoc}
 	*/
@@ -189,7 +203,7 @@ public class UtilisateurDaoJdbcImpl implements UtilisateurDao{
 		BusinessException be = new BusinessException();
 		
 		if (user == null) {			
-			be.addError(CodesErrorDAL.INSERT_OBJECT_NULL);
+			be.addError(CodesErrorDAL.OBJECT_NULL);
 			throw be;
 		}
 		
@@ -233,6 +247,46 @@ public class UtilisateurDaoJdbcImpl implements UtilisateurDao{
 			throw be;
 		}
 		return user;
+	}
+
+	/**
+	 * @author mlebris2021
+	 * {@inheritDoc}
+	 * @throws BusinessException 
+	 */
+	@Override
+	public void delete(Utilisateur user) throws BusinessException {
+		BusinessException be = new BusinessException();
+
+		if (user == null) {			
+			be.addError(CodesErrorDAL.OBJECT_NULL);
+			throw be;
+		}
+
+		try(Connection conn = ConnectionProvider.getConnection()) {
+			
+			PreparedStatement state = conn.prepareStatement(DELETE_UTILISATEUR);
+			//mot_de_passe=?
+			SecureRandom ran = new SecureRandom();
+			String randomPasswd = "";
+			for (int i=0; i<PASSWD_DB_LENGTH; i++) {
+				randomPasswd+=ran.nextInt(9);
+			}
+			state.setString(1, randomPasswd);
+			//where id=?
+			state.setInt(2, user.getNumeroUtilisateur());
+			
+			int res = state.executeUpdate();
+			
+			if (res!=1) {
+				be.addError(CodesErrorDAL.DELETE_ERROR);
+				throw be;
+			}
+		}catch (SQLException e) {
+			e.printStackTrace();
+			be.addError(CodesErrorDAL.BDD_ERROR);
+			throw be;
+		}
 	}
 	
 }

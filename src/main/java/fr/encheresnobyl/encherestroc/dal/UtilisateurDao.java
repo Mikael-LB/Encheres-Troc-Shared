@@ -58,4 +58,11 @@ public interface UtilisateurDao {
 	 */
 	Utilisateur insert(Utilisateur user) throws BusinessException;
 
+	/**
+	 * Method to delete a Utilisateur in db
+	 * @param user
+	 * @throws BusinessException 
+	 */
+	void delete(Utilisateur user) throws BusinessException;
+
 }

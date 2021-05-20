@@ -9,9 +9,10 @@ package fr.encheresnobyl.encherestroc.dal;
  */
 public abstract class CodesErrorDAL {
 
-	public static final int INSERT_OBJECT_NULL = 10_000;
+	public static final int OBJECT_NULL = 10_000;
 	public static final int INSERT_OBJECT_ERROR = 10_001;
 	public static final int BDD_ERROR = 10_002;
+	public static final int DELETE_ERROR = 10_003;
 	
 	
 }
