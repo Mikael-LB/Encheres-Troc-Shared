@@ -138,9 +138,11 @@ public class ArticleVendu implements Serializable{
 	}
 	public Enchere getMeilleurEnchere() {
 		Enchere meilleurEnchere=new Enchere();
-		for (Enchere enchere : listeEncheres) {
-			if(enchere.getMontantEnchere()==this.getPrixVente()) {
-				meilleurEnchere=enchere;
+		if(listeEncheres!=null) {
+			for (Enchere enchere : listeEncheres) {
+				if(enchere.getMontantEnchere()==this.getPrixVente()) {
+					meilleurEnchere=enchere;
+				}
 			}
 		}
 		return meilleurEnchere;		
