@@ -5,17 +5,17 @@
 <div>
 	<nav class="navbar navbar-expand-md bg-dark navbar-dark">
 	  			
-			<a class="navbar-brand" href="<c:url value="/"/>">			
+			<a class="navbar-brand " href="<c:url value="/"/>">			
 				<img alt="" src="<c:url value="assets/images/logo/logo-eni-encheres.png"/>" width="300" height="100">
 			ENI Enchères
 			</a>
 			  <!-- Toggler/collapsibe Button -->
-  				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+  				<button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
     			<span class="navbar-toggler-icon"></span>
   				</button>
 			
 				<c:if test="${empty sessionId}">
-					<div class="collapse navbar-collapse" id="collapsibleNavbar">
+					<div class="collapse navbar-collapse " id="collapsibleNavbar">
 				 	<ul class="navbar-nav">
       					<li class="nav-item">
 							<a class="nav-link active" href="<c:url value="/inscription"/>">Inscription</a>
@@ -27,18 +27,18 @@
 					</div>
 				</c:if>
 				<c:if test="${!empty utilisateur }">
-				<div class="collapse navbar-collapse" id="collapsibleNavbar" >
-					<ul class="navbar-nav">
-      					<li class="nav-item">
+				<div class="collapse navbar-collapse ms-auto " id="collapsibleNavbar" >
+					<ul class="navbar-nav ms-auto ">
+      					<li class="nav-item ">
 							<a class="nav-link active " href="<c:url value="/Mon-Profil"/>"> ${ utilisateur.getPseudo() } </a> 
 						</li>
-						<li class="nav-item">
+						<li class="nav-item ">
 							<a class="nav-link active" href="<c:url value="/accueil"/>"> Enchère  </a> 
 						</li>
-						<li class="nav-item">
+						<li class="nav-item ">
 							<a class="nav-link active " href="<c:url value="/VendreArticle"/>"> Vendre un article  </a> 
 						</li>
-						<li class="nav-item">
+						<li class="nav-item ">
 							<a class="nav-link active " href="<c:url value="/deconnexion"/>"> Déconnexion  </a> 
 						</li>
 					</ul>
