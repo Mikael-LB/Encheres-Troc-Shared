@@ -10,7 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import javax.servlet.http.HttpSession;
 
 import fr.encheresnobyl.encherestroc.bll.ArticleVenduManagerImpl;
 import fr.encheresnobyl.encherestroc.bll.ArticleVenduManagerInt;
@@ -29,7 +29,7 @@ import fr.encheresnobyl.encherestroc.servlets.utils.ValidateurParse;
 /**
  * Servlet implementation class PageArticle
  */
-@WebServlet(urlPatterns = {"/Page-Article","/Encherir","/Aquisition","/Ma-Vente"})
+@WebServlet(urlPatterns = {"/Page-Article","/Encherir","/Aquisition","/Ma-Vente","/EnchereEffectue"})
 public class PageArticle extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -45,6 +45,7 @@ public class PageArticle extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session =request.getSession();
 		
 		String message = "";
 		String titre ="";
@@ -54,7 +55,8 @@ public class PageArticle extends HttpServlet {
 		ArticleVenduManagerInt articleVenduManager = new ArticleVenduManagerImpl();
 		ArticleVendu article = articleVenduManager.getArticleById(noArticle);
 		if(request.getRequestURI().contains("Page-Article")) {
-			if(article.getDateDebutEncheres().isBefore(now) && article.getDateFinEncheres().isAfter(now)) {
+			
+			if(article.getDateDebutEncheres().isBefore(now) && article.getDateFinEncheres().isAfter(now)&& !session.equals(null) ) {
 				message = "Vous pouvez encherir sur l'article ";
 				titre ="Enchère";
 				from ="enCour";
@@ -78,6 +80,10 @@ public class PageArticle extends HttpServlet {
 			//message = article.getEnchereMax().getUtilisteur().getPseudo()+" a remporté l'enchere";
 			titre ="Votre article remporté ";;
 			from ="maVente";
+		}else if (request.getRequestURI().contains("EnchereEffectue")) {
+			message = "Vous avez encherir sur l'article ";
+			titre ="Enchère";
+			from ="enCour";
 		}
 
 		request.setAttribute("article", article);
@@ -123,7 +129,7 @@ public class PageArticle extends HttpServlet {
 			utilisateurBDD=utilisateurManager.selectById(utilisateurBDD.getNumeroUtilisateur());
 			request.getSession().setAttribute("utilisateur", utilisateurBDD);
 			
-			response.sendRedirect(request.getContextPath()+"/Page-Article?article="+article.getNoArticle());
+			response.sendRedirect(request.getContextPath()+"/EnchereEffectue?article="+article.getNoArticle());
 			
 			
 		} catch (BusinessException be) {

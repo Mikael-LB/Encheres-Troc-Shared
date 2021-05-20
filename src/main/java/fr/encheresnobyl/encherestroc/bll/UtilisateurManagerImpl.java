@@ -194,6 +194,8 @@ public class UtilisateurManagerImpl implements UtilisateurManagerInt {
 	public Utilisateur insertUtilisateur(Utilisateur user) throws BusinessException {
 		return DAOFactory.getUtilisateurDAO().insert(user);
 	}
+	
+	
 
 
 	/**
@@ -204,19 +206,31 @@ public class UtilisateurManagerImpl implements UtilisateurManagerInt {
 		DAOFactory.getUtilisateurDAO().delete(user);		
 	}
 	
+
 	@Override
-	public void modifieProfil(Utilisateur utilisateur, Utilisateur user, String passwdVerif) throws BusinessException {
+	public void modifierProfil(Utilisateur utilisateurSession, Utilisateur utilisateurModif, String passwdVerif) throws BusinessException {
+		
 		BusinessException be = new BusinessException();
-		if(utilisateur.getMotDePasse().equals(passwdVerif)) {
-			user.setNumeroUtilisateur(utilisateur.getNumeroUtilisateur());
-			UtilisateurDao utilisateurDao =new UtilisateurDaoJdbcImpl();
-			utilisateurDao.updateProfil(user);
+		
+		System.out.println(utilisateurSession.getMotDePasse());
+		System.out.println(passwdVerif);
+		
+		if(utilisateurSession.getMotDePasse().equals(passwdVerif)) {
+			
+			System.out.println("passage dans managerImpl");
+			utilisateurModif.setNumeroUtilisateur(utilisateurSession.getNumeroUtilisateur());
+			
+			DAOFactory.getUtilisateurDAO().updateProfil(utilisateurModif);
 			
 		}else {
 			be.addError(CodesErreurBLL.PASSWORD_FALSE);
+			throw be;
 		}
 		
 	}
+	
+	
+	
 
 	@Override
 	public void checkUpdateParam(Utilisateur utilisateur, String pseudo, String userName, String firstname, String email,

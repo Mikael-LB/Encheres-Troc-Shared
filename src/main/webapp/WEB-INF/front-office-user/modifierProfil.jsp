@@ -63,26 +63,40 @@
 					value="${ utilisateur.getVille() }">
 			</div>
 			<div class="col-6">
-				<label for="passwd" class="col-sm-2 col-form-label">Nouveau Mot de
+				<label for="passwd" class="col-form-label">Nouveau Mot de
 					passe</label> <input type="password" class="form-control" id="passwd"
-					name="passwd" value="">
+					name="passwd" value="" placeholder="laissez vide pour conserver le mot de passe">
 			</div>
 			<div class="col-6">
-				<label for="passwdConfirm" class="col-sm-2 col-form-label">Mot
-					de passe</label> <input type="password" class="form-control" id="passwdConfirm"
+				<label for="passwdConfirm" class="col-form-label">Confirmez votre nouveau mot de passe</label> <input type="password" class="form-control" id="passwdConfirm"
 					name="passwdConfirm">
 			</div>
-			<div class="col-12">
-				<label for="passwd" class="col-sm-2 col-form-label">verification du mot de passe</label>
+			<div class="col-6">
+				<label for="passwd" class="col-form-label">Verification de l'ancien mot de passe</label>
 				<input type="password" class="form-control" id="passwdVerif"
-					name="passwd" value="">
+					name="passwdVerif" value="">
 			</div>
-			<div class="col-6">
-				<button type="submit" class="btn btn-primary">Modifier</button>
+		
+		<div class="col-12">
+			<c:if test="${!empty errorList}">
+				<div class="form-group row">
+					<div class="col-sm-12 col-form-label">
+						<c:forEach var="error" items="${errorList }">
+							<p class="text-danger">${messageReader.getMessageErreur(error)}</p>
+						</c:forEach>
+					</div>
+				</div>
+			</c:if>
 			</div>
-			<div class="col-6">
-				<a class="btn btn-primary" href="<c:url value="/"/>">Annuler</a>
-			</div>
+			
+
+				<div class="col-6">
+					<button type="submit" class="btn btn-primary">Modifier</button>
+				</div>
+				<div class="col-6">
+					<a class="btn btn-primary" href="<c:url value="/"/>">Annuler</a>
+				</div>
+			
 		</form>
 	</div>
 	<script src="vendor/jquery/jquery.min.js"></script>
