@@ -40,7 +40,7 @@
 							<label>Meilleur offre : </label>
 						</td>
 						<td class="col-4">
-							${ article.getPrixArticle() }
+							${ article.getPrixArticle() } par :
 						</td>
 					</tr>
 				</c:if> 

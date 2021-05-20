@@ -22,6 +22,11 @@
 		</div>
 		<form class="row g-3" method="post"
 			action="<c:url value="/ModifierProfil"/>">
+			<div class="col-12">
+				<label for="passwd" class="col-form-label">Verification de l'ancien mot de passe</label>
+				<input type="password" class="form-control" id="passwdVerif"
+					name="passwdVerif" value="">
+			</div>
 			<div class="col-6">
 				<label for="pseudo" class="col-sm-2 col-form-label">Pseudo</label> <input
 					type="text" class="form-control" id="pseudo" name="pseudo"
@@ -71,11 +76,7 @@
 				<label for="passwdConfirm" class="col-form-label">Confirmez votre nouveau mot de passe</label> <input type="password" class="form-control" id="passwdConfirm"
 					name="passwdConfirm">
 			</div>
-			<div class="col-6">
-				<label for="passwd" class="col-form-label">Verification de l'ancien mot de passe</label>
-				<input type="password" class="form-control" id="passwdVerif"
-					name="passwdVerif" value="">
-			</div>
+
 		
 		<div class="col-12">
 			<c:if test="${!empty errorList}">

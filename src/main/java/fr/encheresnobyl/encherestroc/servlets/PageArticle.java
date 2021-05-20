@@ -46,7 +46,7 @@ public class PageArticle extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session =request.getSession();
-		
+		Utilisateur utilisateur= (Utilisateur) session.getAttribute("utilisateur");
 		String message = "";
 		String titre ="";
 		String from ="";
@@ -56,10 +56,14 @@ public class PageArticle extends HttpServlet {
 		ArticleVendu article = articleVenduManager.getArticleById(noArticle);
 		if(request.getRequestURI().contains("Page-Article")) {
 			
-			if(article.getDateDebutEncheres().isBefore(now) && article.getDateFinEncheres().isAfter(now)&& !session.equals(null) ) {
+			if(article.getDateDebutEncheres().isBefore(now) && article.getDateFinEncheres().isAfter(now)&& utilisateur!=null)  {
 				message = "Vous pouvez encherir sur l'article ";
 				titre ="Enchère";
 				from ="enCour";
+			}else if(article.getDateFinEncheres().isEqual(now)&& article.getMeilleurEnchere().getUtilisateur().getPseudo().equals(utilisateur.getPseudo())){
+				message = "Vous avez remporté l'article ";
+				titre ="Aquisition";
+				from ="aquisition";
 			}else {
 				message = "Detail de l'article";
 				titre ="detail de l'article";
