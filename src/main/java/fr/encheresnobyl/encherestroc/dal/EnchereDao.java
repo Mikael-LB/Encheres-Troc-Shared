@@ -24,7 +24,7 @@ public interface EnchereDao {
 	 * @param utilisateur
 	 * @return 
 	 */
-	public void selectEnchere(Enchere enchere);
+	public void insertEnchere(Enchere enchere);
 
 	/**
 	 * Méthode en charge de

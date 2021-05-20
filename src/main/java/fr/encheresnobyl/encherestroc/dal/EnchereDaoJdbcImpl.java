@@ -36,7 +36,7 @@ public class EnchereDaoJdbcImpl implements EnchereDao {
 	 * @return 
 	*/
 	@Override
-	public void selectEnchere(Enchere enchere) {
+	public void insertEnchere(Enchere enchere) {
 			
 		try(Connection cnx = ConnectionProvider.getConnection()) {
 			
@@ -78,6 +78,7 @@ public class EnchereDaoJdbcImpl implements EnchereDao {
 			PreparedStatement pStmt5 = cnx.prepareStatement(UPDATE_PRIX_ARTICLE);
 			pStmt5.setInt(1, enchere.getMontantEnchere());
 			pStmt5.setInt(2, enchere.getArticleVendu().getNoArticle());
+			pStmt5.executeUpdate();
 
 			cnx.commit();
 			cnx.setAutoCommit(true);

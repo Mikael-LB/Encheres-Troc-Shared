@@ -21,19 +21,26 @@ public class EnchereManagerImpl implements EnchereManagerInt {
 	
 	/**
 	* {@inheritDoc}
+	 * @throws BusinessException 
 	*/
 	@Override
-	public ArticleVendu nouvelleEnchere(Enchere enchere) {
+	public ArticleVendu nouvelleEnchere(Enchere enchere) throws BusinessException {
+		
+		BusinessException be = new BusinessException();
 		
 		if (enchere.getMontantEnchere()<=enchere.getArticleVendu().getPrixVente()) {
-			//TODO ERREUR PRIX INFERIEUR
+			be.addError(CodesErreurBLL.ENCHERE_INFERIEURE);
 		}
 		
 		if (enchere.getMontantEnchere()>enchere.getUtilisateur().getCredit()) {
-			//TODO ERREUR PAS ASSEZ DE CREDIT
+			be.addError(CodesErreurBLL.CREDITS_INSUFFISANTS);
 		}
 		
-		enchereDao.selectEnchere(enchere);
+		if (be.hasError()) {
+			throw be;
+		}
+		
+		enchereDao.insertEnchere(enchere);
 		
 		enchere.getArticleVendu().setListeEncheres(getListeEncheres(enchere.getArticleVendu()));
 		return enchere.getArticleVendu();

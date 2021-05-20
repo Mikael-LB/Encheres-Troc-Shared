@@ -118,6 +118,17 @@
 				<br>
 				<a href="<c:url value="/" />" > <input type="button" value="Retour a l'accueil"> </a>
 			</c:if>
+
+			<c:if test="${!empty errorList}">
+				<div class="form-group row">
+					<div class="col-sm-12 col-form-label">
+						<c:forEach var="error" items="${errorList }">
+							<p class="text-danger">${messageReader.getMessageErreur(error)}</p>
+						</c:forEach>
+					</div>
+				</div>
+			</c:if>
+
 		</div>
 	</div>
 </body>

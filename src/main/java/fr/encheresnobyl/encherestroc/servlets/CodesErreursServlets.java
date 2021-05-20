@@ -22,5 +22,7 @@ public abstract class CodesErreursServlets {
 	public static final int PARSE_DATE_FIN=30006;
 	public static final int PARSE_DATE_DEBUT=30007;
 
+	//Verif form Nouvelle Enchere
+	public static final int PARSE_ENCHERE=30008;
 
 }

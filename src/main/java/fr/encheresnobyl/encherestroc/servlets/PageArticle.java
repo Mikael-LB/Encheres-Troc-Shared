@@ -14,11 +14,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import fr.encheresnobyl.encherestroc.bll.ArticleVenduManagerImpl;
 import fr.encheresnobyl.encherestroc.bll.ArticleVenduManagerInt;
+import fr.encheresnobyl.encherestroc.bll.BusinessException;
 import fr.encheresnobyl.encherestroc.bll.EnchereManagerImpl;
 import fr.encheresnobyl.encherestroc.bll.EnchereManagerInt;
 import fr.encheresnobyl.encherestroc.bo.ArticleVendu;
 import fr.encheresnobyl.encherestroc.bo.Enchere;
 import fr.encheresnobyl.encherestroc.bo.Utilisateur;
+import fr.encheresnobyl.encherestroc.messages.LecteurMessage;
+import fr.encheresnobyl.encherestroc.servlets.utils.ValidateurParse;
 
 
 /**
@@ -92,15 +95,35 @@ public class PageArticle extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		ArticleVenduManagerInt articleVenduManager = new ArticleVenduManagerImpl();
-		ArticleVendu article = articleVenduManager.getArticleById(Integer.parseInt(request.getParameter("noArticle")));
-		int mise = Integer.parseInt(request.getParameter("mise"));
-		Utilisateur sessionUtilisateur = ((Utilisateur) request.getSession().getAttribute("utilisateur"));
-		
-		
-		Enchere enchere = new Enchere(LocalDateTime.now(), mise, sessionUtilisateur, article);
-		EnchereManagerInt enchereManager = new EnchereManagerImpl();
-		article=enchereManager.nouvelleEnchere(enchere);
+		try {
+			ValidateurParse vp = new ValidateurParse();
+			vp.validerInteger(request.getParameter("noArticle"), CodesErreursServlets.PARSE_ENCHERE);
+			
+			if (vp.getBe().hasError()) {
+				throw vp.getBe();
+			}
+			
+			ArticleVenduManagerInt articleVenduManager = new ArticleVenduManagerImpl();
+			ArticleVendu article = articleVenduManager.getArticleById(Integer.parseInt(request.getParameter("noArticle")));
+			int mise = Integer.parseInt(request.getParameter("mise"));
+			Utilisateur sessionUtilisateur = ((Utilisateur) request.getSession().getAttribute("utilisateur"));
+			
+			
+			Enchere enchere = new Enchere(LocalDateTime.now(), mise, sessionUtilisateur, article);
+			EnchereManagerInt enchereManager = new EnchereManagerImpl();
+			
+			
+			article=enchereManager.nouvelleEnchere(enchere);
+			
+			//TODO RENOUVELLER L'UTILISATEUR EN SESSION POUR RECUPERER NOUVEAU SOLDE CREDITS;
+			
+		} catch (BusinessException be) {
+			request.setAttribute("errorList", be.getLstErrorCodes());
+			request.setAttribute("messageReader", new LecteurMessage());
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/front-office-user/article.jsp");
+			rd.forward(request, response);
+			return;
+		}
 	}
 
 }

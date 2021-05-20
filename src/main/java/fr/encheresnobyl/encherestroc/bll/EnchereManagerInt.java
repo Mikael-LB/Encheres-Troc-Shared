@@ -13,6 +13,6 @@ import fr.encheresnobyl.encherestroc.bo.Utilisateur;
  */
 public interface EnchereManagerInt {
 	
-	public ArticleVendu nouvelleEnchere(Enchere enchere);
+	public ArticleVendu nouvelleEnchere(Enchere enchere) throws BusinessException;
 
 }
