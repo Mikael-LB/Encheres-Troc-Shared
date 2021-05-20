@@ -44,7 +44,6 @@ public class InscriptionServlet extends HttpServlet {
 	private static final String ATT_SESSION_ID = "sessionId";
 	private static final String ATT_MESSAGE_READER = "messageReader";
 
-	
 
 	/**
 	 * Method which allow to get the inscription page by the user
