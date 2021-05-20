@@ -124,6 +124,7 @@ public class AccueilServlet extends HttpServlet {
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/front-office-user/accueil.jsp");
 		rd.forward(request, response);
+		//TEST
 		
 	}
 
