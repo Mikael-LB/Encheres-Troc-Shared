@@ -13,6 +13,7 @@
 </head>
 <body>
 	<%@ include file="enTete.jsp" %>
+	<div class="container">
 	<br>
 	<h1 align="center">${ message }</h1>
 	<br>
@@ -109,7 +110,7 @@
 				<a href="#" > <input type="button" value="Retrait effectué"> </a>
 			</c:if>
 			<c:if test="${from=='enCour'}">
-				<form action="/PageArticle" method="POST">				
+				<form action="Page-Article" method="POST">				
 					<input type="hidden" name="noArticle" value="${article.getNoArticle()}"/>
 					<label>Votre Proposition :</label>
 					<input type="number" name="mise" min="${article.getPrixArticle()+1 }" max="${utilisateur.getCredit() }" value="${article.getPrixArticle()+1 }"> 
@@ -118,7 +119,19 @@
 				<br>
 				<a href="<c:url value="/" />" > <input type="button" value="Retour a l'accueil"> </a>
 			</c:if>
+
+			<c:if test="${!empty errorList}">
+				<div class="form-group row">
+					<div class="col-sm-12 col-form-label">
+						<c:forEach var="error" items="${errorList }">
+							<p class="text-danger">${messageReader.getMessageErreur(error)}</p>
+						</c:forEach>
+					</div>
+				</div>
+			</c:if>
+
 		</div>
+	</div>
 	</div>
 </body>
 </html>

@@ -57,8 +57,7 @@
 	</div>
 	<div align=center >
 		<c:if test="${!empty modifier }" >
-			<form action="Modifier-Profil">
-			<input type="hidden" name="numeroUtilisateur" value="${utilisateur.getNumeroUtilisateur() }">
+			<form action="ModifierProfil">
 			<input type="submit" name="modifier" value="Modifier">
 			</form>
 		</c:if>

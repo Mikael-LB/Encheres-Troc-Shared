@@ -69,7 +69,12 @@ public interface UtilisateurManagerInt {
 	 */
 	public Utilisateur insertUtilisateur(Utilisateur user) throws BusinessException;
 
-	/**
+	public void modifieProfil(Utilisateur utilisateur, Utilisateur user, String passwdVerif) throws BusinessException ;
+
+	public void checkUpdateParam(Utilisateur attribute, String pseudo, String userName, String firstname, String email,
+			String phone, String street, String postalCode, String city, String passwd, String passwdConfirm)throws BusinessException;
+
+  	/**
 	 * Method to ask the DAO to delete a Utilisateur
 	 * as his request
 	 * @param user

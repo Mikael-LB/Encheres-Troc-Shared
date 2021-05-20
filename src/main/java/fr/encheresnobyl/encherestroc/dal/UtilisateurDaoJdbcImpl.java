@@ -33,6 +33,8 @@ public class UtilisateurDaoJdbcImpl implements UtilisateurDao{
 			"INSERT INTO utilisateurs"
 			+ " (pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur)"
 			+ " VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+  private static final String UPDATE_PROFIL="UPDATE UTILISATEUR SET pseudo=?,nom=?,prenom=?,email=?,"
+			+ "telephone=?,rue=?,code_postal=?,ville=?,mot_de_passe=? WHERE no_utilisateur=?";
 	private static final String DELETE_UTILISATEUR=
 			"UPDATE utilisateurs SET "
 			+ "pseudo='utilisateur supprimé', "
@@ -46,6 +48,7 @@ public class UtilisateurDaoJdbcImpl implements UtilisateurDao{
 			+ "administrateur=0 "
 			+ "WHERE no_utilisateur=?";
 	private static final int PASSWD_DB_LENGTH = 30;
+
 	/**
 	* {@inheritDoc}
 	*/
@@ -288,5 +291,50 @@ public class UtilisateurDaoJdbcImpl implements UtilisateurDao{
 			throw be;
 		}
 	}
+
+	@Override
+	public Utilisateur updateProfil(Utilisateur user) throws BusinessException {
+		BusinessException be = new BusinessException();
+		if (user == null) {			
+			be.addError(CodesErrorDAL.INSERT_OBJECT_NULL);
+			throw be;
+		}
+		
+		try(Connection conn = ConnectionProvider.getConnection()) {
+			conn.setAutoCommit(false);
+			
+			try {
+				PreparedStatement state = conn.prepareStatement(
+						UPDATE_PROFIL);
+				//(pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur)
+				state.setString(1, user.getPseudo());
+				state.setString(2, user.getNom());
+				state.setString(3, user.getPrenom());
+				state.setString(4, user.getEmail());
+				state.setString(5, user.getTelephone());
+				state.setString(6, user.getRue());
+				state.setString(7, user.getCodePostal());
+				state.setString(8, user.getVille());
+				state.setString(9, user.getMotDePasse());
+				state.setInt(10, user.getNumeroUtilisateur());
 	
+				state.executeUpdate();
+				conn.commit();
+			}catch (SQLException e) {
+				conn.rollback();
+				e.printStackTrace();
+				be.addError(CodesErrorDAL.UPDATE_OBJECT_ERROR);
+				throw be;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			be.addError(CodesErrorDAL.BDD_ERROR);
+			throw be;
+		}
+		return user;
+	}
+
+		
 }
+	
+

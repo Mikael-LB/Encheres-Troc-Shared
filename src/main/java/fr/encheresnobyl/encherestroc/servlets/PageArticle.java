@@ -14,11 +14,16 @@ import javax.servlet.http.HttpServletResponse;
 
 import fr.encheresnobyl.encherestroc.bll.ArticleVenduManagerImpl;
 import fr.encheresnobyl.encherestroc.bll.ArticleVenduManagerInt;
+import fr.encheresnobyl.encherestroc.bll.BusinessException;
 import fr.encheresnobyl.encherestroc.bll.EnchereManagerImpl;
 import fr.encheresnobyl.encherestroc.bll.EnchereManagerInt;
+import fr.encheresnobyl.encherestroc.bll.UtilisateurManagerImpl;
+import fr.encheresnobyl.encherestroc.bll.UtilisateurManagerInt;
 import fr.encheresnobyl.encherestroc.bo.ArticleVendu;
 import fr.encheresnobyl.encherestroc.bo.Enchere;
 import fr.encheresnobyl.encherestroc.bo.Utilisateur;
+import fr.encheresnobyl.encherestroc.messages.LecteurMessage;
+import fr.encheresnobyl.encherestroc.servlets.utils.ValidateurParse;
 
 
 /**
@@ -92,15 +97,42 @@ public class PageArticle extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		ArticleVenduManagerInt articleVenduManager = new ArticleVenduManagerImpl();
-		ArticleVendu article = articleVenduManager.getArticleById(Integer.parseInt(request.getParameter("noArticle")));
-		int mise = Integer.parseInt(request.getParameter("mise"));
-		Utilisateur sessionUtilisateur = ((Utilisateur) request.getSession().getAttribute("utilisateur"));
-		
-		
-		Enchere enchere = new Enchere(LocalDateTime.now(), mise, sessionUtilisateur, article);
-		EnchereManagerInt enchereManager = new EnchereManagerImpl();
-		article=enchereManager.nouvelleEnchere(enchere);
+		try {
+			ValidateurParse vp = new ValidateurParse();
+			vp.validerInteger(request.getParameter("mise"), CodesErreursServlets.PARSE_ENCHERE);
+			
+			if (vp.getBe().hasError()) {
+				throw vp.getBe();
+			}
+			
+			ArticleVenduManagerInt articleVenduManager = new ArticleVenduManagerImpl();
+			ArticleVendu article = articleVenduManager.getArticleById(Integer.parseInt(request.getParameter("noArticle")));
+			int mise = Integer.parseInt(request.getParameter("mise"));
+			UtilisateurManagerInt utilisateurManager = new UtilisateurManagerImpl();
+			Utilisateur sessionUtilisateur = ((Utilisateur) request.getSession().getAttribute("utilisateur"));
+			//Récupération des données réelles de l'utilisateur en session.
+			Utilisateur utilisateurBDD=utilisateurManager.selectById(sessionUtilisateur.getNumeroUtilisateur());
+					
+			
+			Enchere enchere = new Enchere(LocalDateTime.now(), mise, utilisateurBDD, article);
+			
+			EnchereManagerInt enchereManager = new EnchereManagerImpl();		
+			article=enchereManager.nouvelleEnchere(enchere);
+			
+			//MAJ de l'utilisateur en session après l'enchère.
+			utilisateurBDD=utilisateurManager.selectById(utilisateurBDD.getNumeroUtilisateur());
+			request.getSession().setAttribute("utilisateur", utilisateurBDD);
+			
+			response.sendRedirect(request.getContextPath()+"/Page-Article?article="+article.getNoArticle());
+			
+			
+		} catch (BusinessException be) {
+			request.setAttribute("errorList", be.getLstErrorCodes());
+			request.setAttribute("messageReader", new LecteurMessage());
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/front-office-user/article.jsp");
+			rd.forward(request, response);
+			return;
+		}
 	}
 
 }
