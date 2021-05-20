@@ -93,7 +93,6 @@
 		</div>
 	</c:if>
 
-
 </body>
 <script type="text/javascript">
 	photoArticle.onchange = evt => {
