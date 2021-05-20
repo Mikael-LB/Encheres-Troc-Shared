@@ -6,13 +6,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width initial scale=1.0" />
-<link href="vendor/bootstrap/css/bootstrap.css" rel="stylesheet" >
+<meta name="viewport" content="width=device-width initial-scale=1.0" />
+<link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css"  >
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
 <title>Accueil</title>
 </head>
 <body>
 	<%@ include file="enTete.jsp" %>
+
 	<div class="container">
 	
 	<h1 class="my-4 text-center" >Liste des enchères</h1>
@@ -72,7 +73,7 @@
 	    	<input class="btn btn-primary" type="submit" value="rechercher">
 	    </div>
 	</form>
-	
+
 	<br>
  
   	<div class="card-deck d-flex justify-content-center flex-wrap">

@@ -5,7 +5,10 @@
 <div>
 	<nav class="navbar navbar-expand-md bg-dark navbar-dark">
 	  			
-			<div class="navbar-brand"> ENI Enchères</div>
+			<a class="navbar-brand" href="<c:url value="/"/>">			
+				<img alt="" src="<c:url value="assets/images/logo/logo-eni-encheres.png"/>" width="300" height="100">
+			ENI Enchères
+			</a>
 			  <!-- Toggler/collapsibe Button -->
   				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
     			<span class="navbar-toggler-icon"></span>
