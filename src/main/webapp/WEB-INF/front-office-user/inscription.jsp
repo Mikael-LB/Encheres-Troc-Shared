@@ -10,7 +10,6 @@
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
 	rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="./assets/css/encheres-troc-style.css">
 <title>Inscription</title>
 </head>
 <body>

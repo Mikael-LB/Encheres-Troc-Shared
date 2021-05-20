@@ -6,16 +6,16 @@
 <div class="row">
 	<nav class="navbar navbar-expand-md bg-dark navbar-dark">
 	  			
-			<a class="navbar-brand " href="<c:url value="/"/>">			
-				<img alt="" src="<c:url value="assets/images/logo/logo-eni-encheres.png"/>" width="150" height="50">
-			Enchères Nobyl
+			<a class="navbar-brand" style="font-weight: bold" href="<c:url value="/"/>">			
+				<img src="${pageContext.request.contextPath}/assets/images/logo/radioactif.svg" alt="" width="70" height="70" class="mx-2">
+				<span>ENCHERES NOBYL</span>
 			</a>
 			  <!-- Toggler/collapsibe Button -->
   				<button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
     			<span class="navbar-toggler-icon"></span>
   				</button>
 			
-				<div class="collapse navbar-collapse " id="collapsibleNavbar">
+				<div class="collapse navbar-collapse mx-4" id="collapsibleNavbar">
 				<c:if test="${empty sessionId}">
 				 	<ul class="navbar-nav ms-auto">
       					<li class="nav-item">
@@ -34,7 +34,7 @@
 							<a class="nav-link active " href="<c:url value="/Mon-Profil"/>"> ${ utilisateur.getPseudo() } [${utilisateur.getCredit() } <%@ include file="credit.jsp" %>] </a> 
 						</li>
 						<li class="nav-item ">
-							<a class="nav-link active" href="<c:url value="/accueil"/>"> Enchère  </a> 
+							<a class="nav-link active" href="<c:url value="/AccueilServlet"/>"> Enchère  </a> 
 						</li>
 						<li class="nav-item ">
 							<a class="nav-link active " href="<c:url value="/VendreArticle"/>"> Vendre un article  </a> 

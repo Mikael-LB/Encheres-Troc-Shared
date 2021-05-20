@@ -7,7 +7,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width initial-scale=1.0" />
-<link href="vendor/bootstrap/css/bootstrap.css" rel="stylesheet" >
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
 <title>${ titre }</title>
 </head>
@@ -41,7 +40,7 @@
 							<label>Meilleur offre : </label>
 						</div>
 						<div class="col-8">
-							${ article.getPrixArticle() } <%@ include file="credit.jsp" %> par : <a href="<c:url value='/Profil?user=${article.getUtilisateur().getNumeroUtilisateur()}'/>">
+							${ article.getPrixArticle() } <%@ include file="credit.jsp" %> par : <a href="<c:url value='/Profil?user=${article.getMeilleurEnchere().getUtilisateur().getNumeroUtilisateur()}'/>">
 							${ article.getMeilleurEnchere().getUtilisateur().getPseudo() }</a>
 						</div>
 					</div>
@@ -115,8 +114,8 @@
 				<form action="Page-Article" method="POST">				
 					<input type="hidden" name="noArticle" value="${article.getNoArticle()}"/>
 					<label>Votre Proposition :</label>
-					<input type="number" name="mise" min="${article.getPrixArticle()+1 }" max="${utilisateur.getCredit() }" value="${article.getPrixArticle()+1 }"> 
-					<input type="submit" name="encherir" value="Encherir">
+					<input type="number" name="mise" min="${article.getPrixArticle()+1 }" max="${utilisateur.getCredit() }" value="${article.getPrixArticle()+1 }" ${article.getMeilleurEnchere().getUtilisateur().getNumeroUtilisateur()==utilisateur.getNumeroUtilisateur() ? "disabled" : "" }> 
+					<input type="submit" name="encherir" value="Encherir" ${article.getMeilleurEnchere().getUtilisateur().getNumeroUtilisateur()==utilisateur.getNumeroUtilisateur() ? "disabled" : "" }>
 				</form>
 				<br>
 				<a href="<c:url value="/" />" > <input type="button" value="Retour a l'accueil"> </a>
