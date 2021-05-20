@@ -5,9 +5,8 @@
 <div class="container-fluid">
   <div class="row">
 	  <nav class="navbar navbar-expand-md bg-dark navbar-dark">
-		  <a class="navbar-brand" href="<c:url value="/"/>">
+		  <a class="navbar-brand <c:if test="${empty utilisateur}">disabled</c:if>" href="<c:url value="/"/>">
         <img alt=""	src="<c:url value="assets/images/logo/logo-eni-encheres.png"/>"	width="300" height="100">
-        ENI Enchères
         <img src="${pageContext.request.contextPath}/assets/images/logo/radioactif.svg" alt="" width="70" height="70" class="mx-2">
 				<span>ENCHERES NOBYL</span>
 	  	</a>
@@ -19,23 +18,23 @@
       <div class="collapse navbar-collapse justify-content-end" id="collapsibleNavbar">
 		  <c:if test="${empty sessionId}">
 				<ul class="navbar-nav">
-					<li class="nav-item"><a class="nav-link active"
+					<li class="nav-item"><a class="nav-link active btn btn-warning text-dark"
 						href="<c:url value="/inscription"/>">Inscription</a></li>
-					<li class="nav-item"><a class="nav-link active"
+					<li class="nav-item"><a class="nav-link active btn btn-secondary"
 						href="<c:url value="/connexion"/>">Connexion</a></li>
 				</ul>
 	  	</c:if>
 	  	<c:if test="${!empty utilisateur }">			
 				<ul class="navbar-nav">
-					<li class="nav-item"><a class="nav-link active" 
+					<li class="nav-item"><a class="nav-link active btn btn-warning text-dark" 
 						href="<c:url value="/Mon-Profil"/>"> ${ utilisateur.getPseudo() }
 					</a></li>
-					<li class="nav-item"><a class="nav-link active"
+					<li class="nav-item"><a class="nav-link active btn btn-secondary"
 						href="<c:url value="/accueil"/>"> Enchère </a></li>
-					<li class="nav-item"><a class="nav-link active"
+					<li class="nav-item"><a class="nav-link active btn btn-secondary"
 						href="<c:url value="/VendreArticle"/>"> Vendre un article </a></li>
 					<li class="nav-item"><a
-						class="nav-link active btn btn-outline-secondary"
+						class="nav-link active btn btn-secondary"
 						href="<c:url value="/deconnexion"/>"> Déconnexion </a></li>
 				</ul>		
 		  </c:if>

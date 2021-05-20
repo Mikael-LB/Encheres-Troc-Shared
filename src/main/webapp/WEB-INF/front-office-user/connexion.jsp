@@ -25,17 +25,17 @@
 				<div class="col-6 col-sm-6 align-self-center">
 					<form method="post" action="<c:url value="/connexion"/>">
 						<div class="form-group row">
-							<label for="login" class="col-sm-2 col-form-label">Identifiant
+							<label for="login" class="col-sm-3 col-form-label">Identifiant
 								:</label>
-							<div class="col-sm-10">
+							<div class="col-sm-9">
 								<input type="text" class="form-control" id="login" name="login"
 									value="${ param.login }">
 							</div>
 						</div>
 						<div class="form-group row">
-							<label for="password" class="col-sm-2 col-form-label">Mot
+							<label for="password" class="col-sm-3 col-form-label">Mot
 								de passe :</label>
-							<div class="col-sm-10">
+							<div class="col-sm-9">
 								<input type="password" class="form-control" id="password"
 									name="password">
 							</div>
@@ -72,6 +72,8 @@
 			</div>
 		</div>
 	</div>
+	<%@ include file="footer.jsp" %>
+	
 	<script src="vendor/jquery/jquery.min.js"></script>
 	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
