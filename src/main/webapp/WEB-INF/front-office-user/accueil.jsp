@@ -41,14 +41,14 @@
 		    	
 
 		    	<div class="col-lg-2 col-sm-2 text-align-left" >	    	
-		    		<input type="radio" name="achatVente" value="achats" id="achats" onchange="achat();" ${param.achatVente== "achats" ? "checked" : "" }>
+		    		<input type="radio" name="achatVente" value="achats" id="achats" onchange="achat();" ${param.achatVente== "achats" ? "checked" : "" } ${empty param.achatVente ? "checked" : ""} >
 		    		<label>Mes achats</label>
 		    		<div>
-		    			<input  type="checkbox" name="encheresOuvertes" id="encheresOuvertes" value="encheresOuvertes" ${param.achatVente== "achats" ? "" : "disabled" } ${!empty param.encheresOuvertes ? "checked" : "" }>
+		    			<input  type="checkbox" name="encheresOuvertes" id="encheresOuvertes" value="encheresOuvertes" ${param.achatVente!= "ventes" ? "" : "disabled" } ${!empty param.encheresOuvertes ? "checked" : "" } ${empty param.achatVente ? "checked" : ""} >
 		    			<label>Enchères ouvertes</label><br>
-		    			<input  type="checkbox" name="encheresUtilisateur" id="encheresUtilisateur" value="encheresUtilisateur" ${param.achatVente== "achats" ? "" : "disabled" } ${!empty param.encheresUtilisateur ? "checked" : "" }>
+		    			<input  type="checkbox" name="encheresUtilisateur" id="encheresUtilisateur" value="encheresUtilisateur" ${param.achatVente!= "ventes" ? "" : "disabled" } ${!empty param.encheresUtilisateur ? "checked" : "" }>
 		    			<label>Mes enchères</label><br>
-		    			<input  type="checkbox" name="encheresRemportees" id="encheresRemportees" value="encheresRemportees" ${param.achatVente== "achats" ? "" : "disabled" } ${!empty param.encheresRemportees ? "checked" : "" }>
+		    			<input  type="checkbox" name="encheresRemportees" id="encheresRemportees" value="encheresRemportees" ${param.achatVente!= "ventes" ? "" : "disabled" } ${!empty param.encheresRemportees ? "checked" : "" }>
 		    			<label>Enchères remportées</label><br>
 		    		</div>
 		    	</div >
@@ -117,6 +117,7 @@
 		    	document.getElementById("ventesTerminees").disabled = false;}
 	    
 	}
+	
 	function vente(){
 		var ven = document.getElementById("ventes");
 		

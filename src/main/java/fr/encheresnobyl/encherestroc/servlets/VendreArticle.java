@@ -118,8 +118,8 @@ public class VendreArticle extends HttpServlet {
 			ArticleVendu artVendu = articleVenduManager.insertNewArticle(articleVendu, ((Utilisateur) request.getSession().getAttribute("utilisateur")).getNumeroUtilisateur(), retrait);
 
 			request.setAttribute("article", artVendu);
-			request.setAttribute("titre", "article mis en vente");
-			request.setAttribute("message", "vous avez mis cet article en vente");
+			request.setAttribute("titre", "Article mis en vente");
+			request.setAttribute("message", "Vous avez mis cet article en vente");
 			request.setAttribute("from", "miseEnVente");
 
 
