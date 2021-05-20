@@ -35,7 +35,7 @@
 						${ article.getDescription() }
 					</td>
 				</tr>
-				<c:if test="${from=='aquisition'||from=='maVente'||from=='enCour'}">
+				<c:if test="${from=='aquisition'||from=='maVente'||from=='enCour'||from=='detail'}">
 					<tr>
 						<td class="col-4">
 							<label>Meilleur offre : </label>
