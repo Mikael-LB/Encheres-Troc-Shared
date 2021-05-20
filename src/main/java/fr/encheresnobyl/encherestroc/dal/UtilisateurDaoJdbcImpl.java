@@ -296,7 +296,7 @@ public class UtilisateurDaoJdbcImpl implements UtilisateurDao{
 	public Utilisateur updateProfil(Utilisateur user) throws BusinessException {
 		BusinessException be = new BusinessException();
 		if (user == null) {			
-			be.addError(CodesErrorDAL.INSERT_OBJECT_NULL);
+			be.addError(CodesErrorDAL.OBJECT_NULL);
 			throw be;
 		}
 		
