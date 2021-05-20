@@ -136,6 +136,17 @@ public class ArticleVendu implements Serializable{
 	public Categorie getCategorie() {
 		return categorie;
 	}
+	public Enchere getMeilleurEnchere() {
+		Enchere meilleurEnchere=new Enchere();
+		for (Enchere enchere : listeEncheres) {
+			if(enchere.getMontantEnchere()==this.getPrixVente()) {
+				meilleurEnchere=enchere;
+			}
+		}
+		return meilleurEnchere;		
+	}
+	
+	
 	
 	// -- SETTERS --
 	

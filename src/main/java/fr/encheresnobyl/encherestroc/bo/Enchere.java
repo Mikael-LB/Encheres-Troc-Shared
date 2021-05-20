@@ -36,7 +36,12 @@ public class Enchere implements Serializable {
 	}
 	
 	
-	 //--GETTERS--
+	 public Enchere() {
+		
+	}
+
+
+	//--GETTERS--
 	public LocalDateTime getDateEnchere() {
 		return dateEnchere;
 	}

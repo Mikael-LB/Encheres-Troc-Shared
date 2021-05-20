@@ -203,8 +203,9 @@ public class UtilisateurManagerImpl implements UtilisateurManagerInt {
 	 */
 	@Override
 	public void deleteUser(Utilisateur user) throws BusinessException {
-		DAOFactory.getUtilisateurDAO().delete(user);
-	}		
+		DAOFactory.getUtilisateurDAO().delete(user);		
+	}
+	
 
 	@Override
 	public void modifierProfil(Utilisateur utilisateurSession, Utilisateur utilisateurModif, String passwdVerif) throws BusinessException {
