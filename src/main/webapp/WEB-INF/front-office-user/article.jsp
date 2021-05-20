@@ -32,7 +32,7 @@
 						<label>Description : </label>
 					</td>
 					<td class="col-4">
-						${ article.getDescription() }
+						<p>${ article.getDescription() }</p>
 					</td>
 				</tr>
 				<c:if test="${from=='aquisition'||from=='maVente'||from=='enCour'||from=='detail'}">
