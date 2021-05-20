@@ -65,7 +65,7 @@
 			<div class="col-6">
 				<label for="passwd" class="col-form-label">Nouveau Mot de
 					passe</label> <input type="password" class="form-control" id="passwd"
-					name="passwd" value="">
+					name="passwd" value="" placeholder="laissez vide pour conserver le mot de passe">
 			</div>
 			<div class="col-6">
 				<label for="passwdConfirm" class="col-form-label">Confirmez votre nouveau mot de passe</label> <input type="password" class="form-control" id="passwdConfirm"
