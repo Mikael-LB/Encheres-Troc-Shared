@@ -15,7 +15,8 @@
 	<%@ include file="enTete.jsp" %>
 	<div class="container">
 	<br>
-	<h1 align="center">${ message }</h1>
+	<h1 align="center">${ titre }</h1>
+	<p align="center">${message }</p>
 	<br>
 	<br>
 	<div class="row">

@@ -13,11 +13,12 @@
 </head>
 <body>
 	<%@ include file="enTete.jsp" %>
-	<h1 align="center" >Liste des enchères</h1>
-	<div class="contnair-fluid" >
+	<div class="container" >
+	
+	<h1 class="my-4 text-center" >Liste des enchères</h1>
 		<form action="" method="POST">
-			<div  align="center">
-				<input type="search" name="recherche" placeholder="le nom de l'article contient " size=50 spellcheck=false >
+			<div  class="text-center mb-4">
+				<input class ="mb-2" type="search" name="recherche" placeholder="le nom de l'article contient" value="${param.recherche }" size=50 spellcheck=false >
 				<br>
 				<label>Catégorie :</label>
 			    <select name="categorie" id="categorie">
@@ -35,45 +36,49 @@
 					</c:forEach>
 			    </select>
 		    </div >
-		    <div class="row" align="center">
+		    <div class="row mb-2 justify-content-center">
 			    <c:if test="${!empty sessionId}">
-			    	<div class="col " align="right" >
-			    		<input type="radio" name="achatVente" value="achats" id="achats" onchange="achat();">
+			    	
+
+			    	<div class="col-lg-2 col-sm-2 text-align-left" >	    	
+			    		<input type="radio" name="achatVente" value="achats" id="achats" onchange="achat();" ${param.achatVente== "achats" ? "checked" : "" }>
 			    		<label>Mes achats</label>
 			    		<div>
-			    			<input  type="checkbox" name="encheresOuvertes" id="encheresOuvertes" value="encheresOuvertes" disabled="disabled">
+			    			<input  type="checkbox" name="encheresOuvertes" id="encheresOuvertes" value="encheresOuvertes" ${param.achatVente== "achats" ? "" : "disabled" } ${!empty param.encheresOuvertes ? "checked" : "" }>
 			    			<label>Enchères ouvertes</label><br>
-			    			<input  type="checkbox" name="encheresUtilisateur" id="encheresUtilisateur" value="encheresUtilisateur" disabled="disabled">
+			    			<input  type="checkbox" name="encheresUtilisateur" id="encheresUtilisateur" value="encheresUtilisateur" ${param.achatVente== "achats" ? "" : "disabled" } ${!empty param.encheresUtilisateur ? "checked" : "" }>
 			    			<label>Mes enchères</label><br>
-			    			<input  type="checkbox" name="encheresRemportees" id="encheresRemportees" value="encheresRemportees" disabled="disabled">
+			    			<input  type="checkbox" name="encheresRemportees" id="encheresRemportees" value="encheresRemportees" ${param.achatVente== "achats" ? "" : "disabled" } ${!empty param.encheresRemportees ? "checked" : "" }>
 			    			<label>Enchères remportées</label><br>
 			    		</div>
 			    	</div >
-			    	<div class="col" align="left">
-			    		<input type="radio" name="achatVente" value="ventes" id="ventes" onchange="vente();">
+			    	
+			    	<div class="col-lg-2 col-sm-2 text-align-left">
+			    		<input type="radio" name="achatVente" value="ventes" id="ventes" onchange="vente();" ${param.achatVente== "ventes" ? "checked" : "" }>
 			    		<label>Mes ventes</label><br>
 			    		<div >
-				    		<input class="vente" type="checkbox" name="ventesEnCours" id="ventesEnCours" value="ventesEnCours" disabled="disabled" >
+				    		<input class="vente" type="checkbox" name="ventesEnCours" id="ventesEnCours" value="ventesEnCours" ${param.achatVente== "ventes" ? "" : "disabled" } ${!empty param.ventesEnCours ? "checked" : "" }>
 			    			<label>Mes ventes en cours</label><br>
-			    			<input class="vente" type="checkbox" name="ventesNonDebutees" id="ventesNonDebutees" value="ventesNonDebutees" disabled="disabled">
+			    			<input class="vente" type="checkbox" name="ventesNonDebutees" id="ventesNonDebutees" value="ventesNonDebutees" ${param.achatVente== "ventes" ? "" : "disabled" } ${!empty param.ventesNonDebutees ? "checked" : "" } >
 			    			<label>Ventes non debuté</label><br>
-			    			<input class="vente" type="checkbox" name="ventesTerminees" id="ventesTerminees" value="ventesTerminees" disabled="disabled">
+			    			<input class="vente" type="checkbox" name="ventesTerminees" id="ventesTerminees" value="ventesTerminees" ${param.achatVente== "ventes" ? "" : "disabled" } ${!empty param.ventesTerminees ? "checked" : "" } >
 			    			<label>Ventes terminé</label>
 		    			</div>
 			    	</div>
+			    	
 			    </c:if>
 		    </div>
 		    <div align="center">
-		    	<input type="submit" value="rechercher">
+		    	<input class="btn btn-primary" type="submit" value="rechercher">
 		    </div>
 		</form>
-	</div>
+	
 	<br>
  
-  	<div class="d-flex justify-content-between container mt-3 flex-wrap mb-5">
+  	<div class="card-deck d-flex justify-content-center flex-wrap">
 
 			<c:forEach items="${ articles }" var="article" varStatus="status">
-					<div class="card d-flex mt-4">
+					<div class="card d-flex m-2">
 						<div class="card-header border-0">
 							<img class="card-img-left" src="https://via.placeholder.com/150">
 						</div>
@@ -88,31 +93,8 @@
 					</div>
 			</c:forEach>
 	</div> 
-
-
-<!--	
-	<div class="card-group mb-4 container-fluid">
-		<div class="row d-flex flex-wrap">
-			<c:forEach items="${ articles }" var="article" varStatus="status">
-				<div class="col-3">
-					<div class="card flex-row flex-wrap"	>
-						<div  class="card-header border-0">					
-							<img class="card-img-left" src="https://via.placeholder.com/150">
-						</div>
-						<div class="card-block px-2">
-							<a class="card-title" href="#">${article.getNomArticle()}</a><br>
-							<p class="card-body">	
-									Prix : ${article.getPrixArticle()}<br>
-									Fin de l'enchère : ${article.getDateFinEncheres()}<br>
-									Vendeur : <a href="<c:url value="/Profil?user=${article.getUtilisateur().getNumeroUtilisateur()}"/>">${article.getUtilisateur().getPseudo()}</a>
-							</p>
-						</div>			
-					</div>
-				</div>    	
-			</c:forEach>
-		</div>
 	</div>
--->
+
 
 	<script>
 	function achat(){
