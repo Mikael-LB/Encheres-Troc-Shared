@@ -7,13 +7,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width initial-scale=1.0" />
-<link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css"  >
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
 <title>Accueil</title>
 </head>
 <body>
 	<%@ include file="enTete.jsp" %>
-
+ 
 	<div class="container">
 	
 	<h1 class="my-4 text-center" >Liste des enchères</h1>
@@ -42,14 +41,14 @@
 		    	
 
 		    	<div class="col-lg-2 col-sm-2 text-align-left" >	    	
-		    		<input type="radio" name="achatVente" value="achats" id="achats" onchange="achat();" ${param.achatVente== "achats" ? "checked" : "" }>
+		    		<input type="radio" name="achatVente" value="achats" id="achats" onchange="achat();" ${param.achatVente== "achats" ? "checked" : "" } ${empty param.achatVente ? "checked" : ""} >
 		    		<label>Mes achats</label>
 		    		<div>
-		    			<input  type="checkbox" name="encheresOuvertes" id="encheresOuvertes" value="encheresOuvertes" ${param.achatVente== "achats" ? "" : "disabled" } ${!empty param.encheresOuvertes ? "checked" : "" }>
+		    			<input  type="checkbox" name="encheresOuvertes" id="encheresOuvertes" value="encheresOuvertes" ${param.achatVente!= "ventes" ? "" : "disabled" } ${!empty param.encheresOuvertes ? "checked" : "" } ${empty param.achatVente ? "checked" : ""} >
 		    			<label>Enchères ouvertes</label><br>
-		    			<input  type="checkbox" name="encheresUtilisateur" id="encheresUtilisateur" value="encheresUtilisateur" ${param.achatVente== "achats" ? "" : "disabled" } ${!empty param.encheresUtilisateur ? "checked" : "" }>
+		    			<input  type="checkbox" name="encheresUtilisateur" id="encheresUtilisateur" value="encheresUtilisateur" ${param.achatVente!= "ventes" ? "" : "disabled" } ${!empty param.encheresUtilisateur ? "checked" : "" }>
 		    			<label>Mes enchères</label><br>
-		    			<input  type="checkbox" name="encheresRemportees" id="encheresRemportees" value="encheresRemportees" ${param.achatVente== "achats" ? "" : "disabled" } ${!empty param.encheresRemportees ? "checked" : "" }>
+		    			<input  type="checkbox" name="encheresRemportees" id="encheresRemportees" value="encheresRemportees" ${param.achatVente!= "ventes" ? "" : "disabled" } ${!empty param.encheresRemportees ? "checked" : "" }>
 		    			<label>Enchères remportées</label><br>
 		    		</div>
 		    	</div >
@@ -86,7 +85,7 @@
 						<div class="card-block px-2">
 							<a class="card-title" href="<c:url value='/Page-Article?article=${article.getNoArticle()}'/>">${article.getNomArticle()}</a><br>
 							<p class="card-body">
-								Prix : ${article.getPrixArticle()}<br> Fin de l'enchère :
+								Prix : ${article.getPrixArticle()} <%@ include file="credit.jsp" %> <br> Fin de l'enchère :
 								${article.getDateFinEncheres()}<br> Vendeur : <a
 									href="<c:url value='/Profil?user=${article.getUtilisateur().getNumeroUtilisateur()}'/>">${article.getUtilisateur().getPseudo()}</a>
 							</p>
@@ -118,6 +117,7 @@
 		    	document.getElementById("ventesTerminees").disabled = false;}
 	    
 	}
+	
 	function vente(){
 		var ven = document.getElementById("ventes");
 		

@@ -26,7 +26,7 @@ import fr.encheresnobyl.encherestroc.bo.Utilisateur;
  * @author rkerhir2021
  *
  */
-@WebServlet(urlPatterns = {"/AccueilServlet","/"})
+@WebServlet(urlPatterns = {"/AccueilServlet"})
 public class AccueilServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -124,6 +124,7 @@ public class AccueilServlet extends HttpServlet {
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/front-office-user/accueil.jsp");
 		rd.forward(request, response);
+		//TEST
 		
 	}
 

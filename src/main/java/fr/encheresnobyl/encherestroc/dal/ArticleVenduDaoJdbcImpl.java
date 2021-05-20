@@ -11,6 +11,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.taglibs.standard.lang.jstl.test.Bean1;
+
+import fr.encheresnobyl.encherestroc.bll.BusinessException;
 import fr.encheresnobyl.encherestroc.bll.CategorieManagerImpl;
 import fr.encheresnobyl.encherestroc.bll.CategorieManagerInt;
 import fr.encheresnobyl.encherestroc.bll.RetraitManagerImpl;
@@ -285,10 +288,11 @@ public class ArticleVenduDaoJdbcImpl implements ArticleVenduDao {
 	
 	/**
 	* {@inheritDoc}
+	 * @throws BusinessException 
 	*/
 	@Override
-	public ArticleVendu insertNewArticle(ArticleVendu article, int noUtilisateur, Retrait retrait) {
-			
+	public ArticleVendu insertNewArticle(ArticleVendu article, int noUtilisateur, Retrait retrait) throws BusinessException {
+		BusinessException be = new BusinessException();
 		try (Connection cnx = ConnectionProvider.getConnection()){
 			
 			try {
@@ -330,7 +334,8 @@ public class ArticleVenduDaoJdbcImpl implements ArticleVenduDao {
 			}
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			be.addError(CodesErrorDAL.INSERT_OBJECT_ERROR);
+			throw be;
 		}
 		
 		return article;
