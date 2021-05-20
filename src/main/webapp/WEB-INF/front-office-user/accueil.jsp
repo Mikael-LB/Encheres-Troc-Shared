@@ -60,9 +60,9 @@
 			    		<input class="vente" type="checkbox" name="ventesEnCours" id="ventesEnCours" value="ventesEnCours" ${param.achatVente== "ventes" ? "" : "disabled" } ${!empty param.ventesEnCours ? "checked" : "" }>
 		    			<label>Mes ventes en cours</label><br>
 		    			<input class="vente" type="checkbox" name="ventesNonDebutees" id="ventesNonDebutees" value="ventesNonDebutees" ${param.achatVente== "ventes" ? "" : "disabled" } ${!empty param.ventesNonDebutees ? "checked" : "" } >
-		    			<label>Ventes non debuté</label><br>
+		    			<label>Ventes non debutées</label><br>
 		    			<input class="vente" type="checkbox" name="ventesTerminees" id="ventesTerminees" value="ventesTerminees" ${param.achatVente== "ventes" ? "" : "disabled" } ${!empty param.ventesTerminees ? "checked" : "" } >
-		    			<label>Ventes terminé</label>
+		    			<label>Ventes terminées</label>
 	    			</div>
 		    	</div>
 		    	

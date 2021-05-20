@@ -41,7 +41,8 @@
 							<label>Meilleur offre : </label>
 						</td>
 						<td class="col-4">
-							${ article.getPrixArticle() } par : ${ article.getMeilleurEnchere().getUtilisateur().getPseudo() }
+							${ article.getPrixArticle() } par : <a href="<c:url value='/Profil?user=${article.getUtilisateur().getNumeroUtilisateur()}'/>">
+						${ article.getMeilleurEnchere().getUtilisateur().getPseudo() }</a>
 						</td>
 					</tr>
 				</c:if> 

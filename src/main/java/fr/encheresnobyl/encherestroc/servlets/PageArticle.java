@@ -55,21 +55,32 @@ public class PageArticle extends HttpServlet {
 		ArticleVenduManagerInt articleVenduManager = new ArticleVenduManagerImpl();
 		ArticleVendu article = articleVenduManager.getArticleById(noArticle);
 		if(request.getRequestURI().contains("Page-Article")) {
-			
-			if(article.getDateDebutEncheres().isBefore(now) && article.getDateFinEncheres().isAfter(now)&& utilisateur!=null)  {
-				message = "Vous pouvez encherir sur l'article ";
-				titre ="Enchère";
-				from ="enCour";
-			}else if(article.getDateFinEncheres().isEqual(now)&& article.getMeilleurEnchere().getUtilisateur().getPseudo().equals(utilisateur.getPseudo())){
-				message = "Vous avez remporté l'article ";
-				titre ="Aquisition";
-				from ="aquisition";
+			if(article.getMeilleurEnchere().getUtilisateur()!=null) {
+				if(article.getDateDebutEncheres().isBefore(now) && article.getDateFinEncheres().isAfter(now)&& utilisateur!=null)  {
+					message = "Vous pouvez encherir sur l'article ";
+					titre ="Enchère";
+					from ="enCour";
+				}else if((article.getDateFinEncheres().isEqual(now)||article.getDateFinEncheres().isBefore(now))&& article.getMeilleurEnchere().getUtilisateur().getPseudo().equals(utilisateur.getPseudo())){
+					message = "Vous avez remporté l'article ";
+					titre ="Aquisition";
+					from ="aquisition";
+				}else {
+					message = "Detail de l'article";
+					titre ="Détails de l'article";
+					from ="detail";
+				}
 			}else {
-				message = "Detail de l'article";
-				titre ="Détails de l'article";
-				from ="detail";
+
+				if(article.getDateDebutEncheres().isBefore(now) && article.getDateFinEncheres().isAfter(now)&& utilisateur!=null)  {
+					message = "Vous pouvez encherir sur l'article ";
+					titre ="Enchère";
+					from ="enCour";
+				}else {
+					message = "Detail de l'article";
+					titre ="Détails de l'article";
+					from ="detail";
+				}
 			}
-			
 		}else if (request.getRequestURI().contains("Encherir")) {
 			message = "Vous pouvez encherir sur l'article ";
 			titre ="Enchère";
