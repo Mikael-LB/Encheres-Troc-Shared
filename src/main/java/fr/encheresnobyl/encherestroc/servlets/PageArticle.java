@@ -137,6 +137,8 @@ public class PageArticle extends HttpServlet {
 			
 			
 		} catch (BusinessException be) {
+			
+//			request.setAttribute("article", article);
 			request.setAttribute("errorList", be.getLstErrorCodes());
 			request.setAttribute("messageReader", new LecteurMessage());
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/front-office-user/article.jsp");
