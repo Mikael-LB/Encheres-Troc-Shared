@@ -13,6 +13,7 @@
 </head>
 <body>
 	<%@ include file="enTete.jsp" %>
+	<div class="container">
 	<br>
 	<h1 align="center">${ message }</h1>
 	<br>
@@ -130,6 +131,7 @@
 			</c:if>
 
 		</div>
+	</div>
 	</div>
 </body>
 </html>

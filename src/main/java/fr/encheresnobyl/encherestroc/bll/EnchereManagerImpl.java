@@ -28,6 +28,11 @@ public class EnchereManagerImpl implements EnchereManagerInt {
 		
 		BusinessException be = new BusinessException();
 		
+		if (enchere.getUtilisateur()==null) {
+			be.addError(CodesErreurBLL.NON_CONNECTE);
+			throw be;
+		}
+		
 		if (enchere.getMontantEnchere()<=enchere.getArticleVendu().getPrixVente()) {
 			be.addError(CodesErreurBLL.ENCHERE_INFERIEURE);
 		}

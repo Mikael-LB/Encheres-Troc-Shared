@@ -36,7 +36,8 @@ public abstract class CodesErreurBLL {
 	
 	//Nouvelle enchere form
 	public static final int ENCHERE_INFERIEURE=20020; 
-	public static final int CREDITS_INSUFFISANTS=20021; 
+	public static final int CREDITS_INSUFFISANTS=20021;
+	public static final int NON_CONNECTE = 20022; 
 
 
 

@@ -17,6 +17,8 @@ import fr.encheresnobyl.encherestroc.bll.ArticleVenduManagerInt;
 import fr.encheresnobyl.encherestroc.bll.BusinessException;
 import fr.encheresnobyl.encherestroc.bll.EnchereManagerImpl;
 import fr.encheresnobyl.encherestroc.bll.EnchereManagerInt;
+import fr.encheresnobyl.encherestroc.bll.UtilisateurManagerImpl;
+import fr.encheresnobyl.encherestroc.bll.UtilisateurManagerInt;
 import fr.encheresnobyl.encherestroc.bo.ArticleVendu;
 import fr.encheresnobyl.encherestroc.bo.Enchere;
 import fr.encheresnobyl.encherestroc.bo.Utilisateur;
@@ -97,7 +99,7 @@ public class PageArticle extends HttpServlet {
 
 		try {
 			ValidateurParse vp = new ValidateurParse();
-			vp.validerInteger(request.getParameter("noArticle"), CodesErreursServlets.PARSE_ENCHERE);
+			vp.validerInteger(request.getParameter("mise"), CodesErreursServlets.PARSE_ENCHERE);
 			
 			if (vp.getBe().hasError()) {
 				throw vp.getBe();
@@ -106,16 +108,23 @@ public class PageArticle extends HttpServlet {
 			ArticleVenduManagerInt articleVenduManager = new ArticleVenduManagerImpl();
 			ArticleVendu article = articleVenduManager.getArticleById(Integer.parseInt(request.getParameter("noArticle")));
 			int mise = Integer.parseInt(request.getParameter("mise"));
+			UtilisateurManagerInt utilisateurManager = new UtilisateurManagerImpl();
 			Utilisateur sessionUtilisateur = ((Utilisateur) request.getSession().getAttribute("utilisateur"));
+			//Récupération des données réelles de l'utilisateur en session.
+			Utilisateur utilisateurBDD=utilisateurManager.selectById(sessionUtilisateur.getNumeroUtilisateur());
+					
 			
+			Enchere enchere = new Enchere(LocalDateTime.now(), mise, utilisateurBDD, article);
 			
-			Enchere enchere = new Enchere(LocalDateTime.now(), mise, sessionUtilisateur, article);
-			EnchereManagerInt enchereManager = new EnchereManagerImpl();
-			
-			
+			EnchereManagerInt enchereManager = new EnchereManagerImpl();		
 			article=enchereManager.nouvelleEnchere(enchere);
 			
-			//TODO RENOUVELLER L'UTILISATEUR EN SESSION POUR RECUPERER NOUVEAU SOLDE CREDITS;
+			//MAJ de l'utilisateur en session après l'enchère.
+			utilisateurBDD=utilisateurManager.selectById(utilisateurBDD.getNumeroUtilisateur());
+			request.getSession().setAttribute("utilisateur", utilisateurBDD);
+			
+			response.sendRedirect(request.getContextPath()+"/Page-Article?article="+article.getNoArticle());
+			
 			
 		} catch (BusinessException be) {
 			request.setAttribute("errorList", be.getLstErrorCodes());
