@@ -31,7 +31,7 @@ public class UtilisateurDaoJdbcImpl implements UtilisateurDao{
 			"INSERT INTO utilisateurs"
 			+ " (pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur)"
 			+ " VALUES (?,?,?,?,?,?,?,?,?,?,?)";
-	private static final String UPDATE_PROFIL="UPDATE UTILISATEUR SET pseudo=?,nom=?,prenom=?,email=?,"
+	private static final String UPDATE_PROFIL="UPDATE UTILISATEURS SET pseudo=?,nom=?,prenom=?,email=?,"
 			+ "telephone=?,rue=?,code_postal=?,ville=?,mot_de_passe=? WHERE no_utilisateur=?";
 	/**
 	* {@inheritDoc}
@@ -237,9 +237,12 @@ public class UtilisateurDaoJdbcImpl implements UtilisateurDao{
 	}
 
 	@Override
-	public Utilisateur updateProfil(Utilisateur user) throws BusinessException {
+	public Utilisateur updateProfil(Utilisateur utilisateurModif) throws BusinessException {
 		BusinessException be = new BusinessException();
-		if (user == null) {			
+		
+		System.out.println("passage dans DAO");
+		
+		if (utilisateurModif == null) {			
 			be.addError(CodesErrorDAL.INSERT_OBJECT_NULL);
 			throw be;
 		}
@@ -251,32 +254,35 @@ public class UtilisateurDaoJdbcImpl implements UtilisateurDao{
 				PreparedStatement state = conn.prepareStatement(
 						UPDATE_PROFIL);
 				//(pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur)
-				state.setString(1, user.getPseudo());
-				state.setString(2, user.getNom());
-				state.setString(3, user.getPrenom());
-				state.setString(4, user.getEmail());
-				state.setString(5, user.getTelephone());
-				state.setString(6, user.getRue());
-				state.setString(7, user.getCodePostal());
-				state.setString(8, user.getVille());
-				state.setString(9, user.getMotDePasse());
-				state.setInt(10, user.getNumeroUtilisateur());
+				state.setString(1, utilisateurModif.getPseudo());
+				state.setString(2, utilisateurModif.getNom());
+				state.setString(3, utilisateurModif.getPrenom());
+				state.setString(4, utilisateurModif.getEmail());
+				state.setString(5, utilisateurModif.getTelephone());
+				state.setString(6, utilisateurModif.getRue());
+				state.setString(7, utilisateurModif.getCodePostal());
+				state.setString(8, utilisateurModif.getVille());
+				state.setString(9, utilisateurModif.getMotDePasse());
+				state.setInt(10, utilisateurModif.getNumeroUtilisateur());
 				
-	
-				state.executeUpdate();
+				int nb_lignes_modif=state.executeUpdate();
+				
 				conn.commit();
+				
 			}catch (SQLException e) {
 				conn.rollback();
 				e.printStackTrace();
 				be.addError(CodesErrorDAL.UPDATE_OBJECT_ERROR);
 				throw be;
 			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 			be.addError(CodesErrorDAL.BDD_ERROR);
 			throw be;
 		}
-		return user;
+		
+		return utilisateurModif;
 	}
 
 		

@@ -15,6 +15,7 @@ import fr.encheresnobyl.encherestroc.bll.BusinessException;
 import fr.encheresnobyl.encherestroc.bll.UtilisateurManagerImpl;
 import fr.encheresnobyl.encherestroc.bll.UtilisateurManagerInt;
 import fr.encheresnobyl.encherestroc.bo.Utilisateur;
+import fr.encheresnobyl.encherestroc.messages.LecteurMessage;
 
 /**
  * Servlet implementation class ModifieProfil
@@ -44,7 +45,8 @@ public class ModifierProfil extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		UtilisateurManagerInt utilisateurManager = new UtilisateurManagerImpl();
-		Utilisateur user;
+		Utilisateur utilisateurModif;
+		Utilisateur utilisateurSession;
 		HttpSession session=request.getSession() ;
 		String pseudo = request.getParameter("pseudo");
 		String userName = request.getParameter("userName");
@@ -62,10 +64,13 @@ public class ModifierProfil extends HttpServlet {
 		//TODO to replace the method with long parameter list
 		//Map<String, String[]> parameterMap = request.getParameterMap();
 
-	
 			try {
-				utilisateurManager.checkUpdateParam(
-						(Utilisateur) session.getAttribute("utilisateur"),
+				
+				utilisateurSession=(Utilisateur) session.getAttribute("utilisateur");
+				
+		
+				utilisateurManager.checkUpdateParam( //THROWS BE
+						utilisateurSession,
 						pseudo,
 						userName,
 						firstname,
@@ -75,24 +80,27 @@ public class ModifierProfil extends HttpServlet {
 						postalCode,
 						city,
 						passwd,
-						passwdConfirm);
-					System.out.println("try");
-			} catch (BusinessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			user = new Utilisateur(pseudo, userName, firstname, email, phone, street, postalCode, city, passwd);
-			try {
-				utilisateurManager.modifieProfil((Utilisateur) session.getAttribute("utilisateur"),user,passwdVerif);
-			} catch (BusinessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+						passwdConfirm);				
+					
 			
-			user=utilisateurManager.selectById(((Utilisateur) session.getAttribute("utilisateur")).getNumeroUtilisateur());
-			session.setAttribute("utilisateur", user);
+			utilisateurModif = new Utilisateur(pseudo, userName, firstname, email, phone, street, postalCode, city, passwd);
+			System.out.println(utilisateurModif);
+
+			System.out.println("passage dans Post Servlet");
+			utilisateurManager.modifierProfil(utilisateurSession,utilisateurModif,passwdVerif);
+			
+			utilisateurModif=utilisateurManager.selectById(utilisateurSession.getNumeroUtilisateur());
+			
+			session.setAttribute("utilisateur", utilisateurModif);
+			
 			response.sendRedirect(request.getContextPath()+"/Mon-Profil");
-	
+			
+			} catch (BusinessException be) {
+				request.setAttribute("errorList", be.getLstErrorCodes());
+				request.setAttribute("messageReader", new LecteurMessage());
+				request.getRequestDispatcher("/WEB-INF/front-office-user/modifierProfil.jsp").forward(request, response);
+			}
+
 	}
 
 }
