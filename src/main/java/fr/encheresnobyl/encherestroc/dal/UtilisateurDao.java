@@ -58,4 +58,6 @@ public interface UtilisateurDao {
 	 */
 	Utilisateur insert(Utilisateur user) throws BusinessException;
 
+	Utilisateur updateProfil(Utilisateur user) throws BusinessException;
+
 }

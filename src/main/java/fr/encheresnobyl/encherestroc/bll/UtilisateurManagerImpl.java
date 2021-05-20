@@ -7,6 +7,8 @@ import java.util.List;
 
 import fr.encheresnobyl.encherestroc.bo.Utilisateur;
 import fr.encheresnobyl.encherestroc.dal.DAOFactory;
+import fr.encheresnobyl.encherestroc.dal.UtilisateurDao;
+import fr.encheresnobyl.encherestroc.dal.UtilisateurDaoJdbcImpl;
 
 /**
  * Classe en charge
@@ -191,5 +193,63 @@ public class UtilisateurManagerImpl implements UtilisateurManagerInt {
 	@Override
 	public Utilisateur insertUtilisateur(Utilisateur user) throws BusinessException {
 		return DAOFactory.getUtilisateurDAO().insert(user);
+	}
+
+	@Override
+	public void modifieProfil(Utilisateur utilisateur, Utilisateur user, String passwdVerif) throws BusinessException {
+		BusinessException be = new BusinessException();
+		if(utilisateur.getMotDePasse().equals(passwdVerif)) {
+			user.setNumeroUtilisateur(utilisateur.getNumeroUtilisateur());
+			UtilisateurDao utilisateurDao =new UtilisateurDaoJdbcImpl();
+			utilisateurDao.updateProfil(user);
+			
+		}else {
+			be.addError(CodesErreurBLL.PASSWORD_FALSE);
+		}
+		
+	}
+
+	@Override
+	public void checkUpdateParam(Utilisateur utilisateur, String pseudo, String userName, String firstname, String email,
+			String phone, String street, String postalCode, String city, String passwd, String passwdConfirm)
+			throws BusinessException {
+		BusinessException be = new BusinessException();
+		checkForEmptyParam(pseudo, be);
+		if(!utilisateur.getPseudo().equals(pseudo)) {
+			checkTooLongParam(pseudo, PSEUDO_DB_LENGTH, be);
+			checkPseudoNotExist(pseudo, be);
+			System.out.println("la!");
+		}
+		checkForEmptyParam(userName, be);
+		checkTooLongParam(userName, USERNAME_DB_LENGTH, be);
+		checkForEmptyParam(firstname, be);
+		checkTooLongParam(firstname, FIRSTNAME_DB_LENGTH, be);
+		checkForEmptyParam(email, be);
+		if(!utilisateur.getEmail().equals(email)) {
+			checkTooLongParam(email, EMAIL_DB_LENGTH, be);
+			checkValidEmail(email, be);
+			System.out.println("lala!");
+		}
+		checkForEmptyParam(phone, be);
+		checkTooLongParam(phone, PHONE_DB_LENGTH, be);
+		checkForEmptyParam(street, be);
+		checkTooLongParam(street, STREET_DB_LENGTH, be);
+		checkForEmptyParam(postalCode, be);
+		checkTooLongParam(postalCode, POSTAL_CODE_DB_LENGTH, be);
+		checkForEmptyParam(city, be);
+		checkTooLongParam(city, CITY_DB_LENGTH, be);
+		checkForEmptyParam(passwd, be);
+		checkTooLongParam(passwd, PASSWD_DB_LENGTH, be);
+		checkForEmptyParam(passwdConfirm, be);
+
+		
+		
+		checkValidPhone(phone,be);
+		checkPasswordAreEquals(passwd,passwdConfirm,be);
+
+		if (be.hasError()) {
+			throw be;
+		}
+		
 	}
 }
