@@ -85,7 +85,7 @@ public class PageArticle extends HttpServlet {
 			titre ="Votre article remporté ";;
 			from ="maVente";
 		}else if (request.getRequestURI().contains("EnchereEffectue")) {
-			message = "Vous avez encherir sur l'article ";
+			message = "Votre enchère a été effectuée";
 			titre ="Enchère";
 			from ="enCour";
 		}
