@@ -6,15 +6,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width initial scale=1.0" />
-<link href="vendor/bootstrap/css/bootstrap.css" rel="stylesheet" >
+<meta name="viewport" content="width=device-width initial-scale=1.0" />
+<link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css"  >
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
 <title>Accueil</title>
 </head>
 <body>
 	<%@ include file="enTete.jsp" %>
-	<h1 align="center" >Liste des enchères</h1>
-	<div class="contnair-fluid" >
+	<h1 align="center" >Liste des enchères</h1>	
+	<div class="container-fluid" >
 		<form action="" method="POST">
 			<div  align="center">
 				<input type="search" name="recherche" placeholder="le nom de l'article contient " size=50 spellcheck=false >
