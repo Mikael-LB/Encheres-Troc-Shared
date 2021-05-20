@@ -86,7 +86,7 @@
 						<div class="card-block px-2">
 							<a class="card-title" href="<c:url value='/Page-Article?article=${article.getNoArticle()}'/>">${article.getNomArticle()}</a><br>
 							<p class="card-body">
-								Prix : ${article.getPrixArticle()}<br> Fin de l'enchère :
+								Prix : ${article.getPrixArticle()} <%@ include file="credit.jsp" %> <br> Fin de l'enchère :
 								${article.getDateFinEncheres()}<br> Vendeur : <a
 									href="<c:url value='/Profil?user=${article.getUtilisateur().getNumeroUtilisateur()}'/>">${article.getUtilisateur().getPseudo()}</a>
 							</p>

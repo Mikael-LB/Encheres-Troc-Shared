@@ -41,7 +41,7 @@
 							<label>Meilleur offre : </label>
 						</div>
 						<div class="col-8">
-							${ article.getPrixArticle() } * par : <a href="<c:url value='/Profil?user=${article.getUtilisateur().getNumeroUtilisateur()}'/>">
+							${ article.getPrixArticle() } <%@ include file="credit.jsp" %> par : <a href="<c:url value='/Profil?user=${article.getUtilisateur().getNumeroUtilisateur()}'/>">
 							${ article.getMeilleurEnchere().getUtilisateur().getPseudo() }</a>
 						</div>
 					</div>
@@ -51,7 +51,7 @@
 						<label>Mise à prix : </label>
 					</div>
 					<div class="col-8">
-						${ article.getMiseAPrix() } *
+						${ article.getMiseAPrix() } <%@ include file="credit.jsp" %>
 					</div>
 				</div>
 				<c:if test="${from=='miseEnVente'|| from=='maVente'|| from=='enCour' || from=='detail'}">
