@@ -39,7 +39,7 @@ import javax.servlet.http.HttpSession;
 		})
 public class UtilisateurNonConnecte implements Filter {
 
-	private static final String INSCRIPTION_PAGE = "/inscription";
+	private static final String CONNEXION_PAGE = "/connexion";
 
 	/**
 	 * Default constructor. 
@@ -68,7 +68,7 @@ public class UtilisateurNonConnecte implements Filter {
 			chain.doFilter(request, response);
 		}else {
 			httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-			httpResponse.sendRedirect(httpRequest.getContextPath()+INSCRIPTION_PAGE);
+			httpResponse.sendRedirect(httpRequest.getContextPath()+CONNEXION_PAGE);
 		}
 	}
 
