@@ -27,7 +27,7 @@
 	  	<c:if test="${!empty utilisateur }">			
 				<ul class="navbar-nav">
 					<li class="nav-item"><a class="nav-link active btn btn-warning text-dark" 
-						href="<c:url value="/Mon-Profil"/>"> ${ utilisateur.getPseudo() }
+						href="<c:url value="/Mon-Profil"/>"> ${ utilisateur.getPseudo()} [${utilisateur.getCredit() } <%@ include file="credit.jsp" %>]
 					</a></li>
 					<li class="nav-item"><a class="nav-link active btn btn-secondary"
 						href="<c:url value="/accueil"/>"> Enchère </a></li>
