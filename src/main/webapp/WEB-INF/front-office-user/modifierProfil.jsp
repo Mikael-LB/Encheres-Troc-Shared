@@ -93,10 +93,10 @@
 			
 
 				<div class="col-6">
-					<button type="submit" class="btn btn-primary">Modifier</button>
+					<button type="submit" class="btn btn-warning">Modifier</button>
 				</div>
 				<div class="col-6">
-					<a class="btn btn-primary" href="<c:url value="/"/>">Annuler</a>
+					<a class="btn btn-secondary" href="<c:url value="/"/>">Annuler</a>
 				</div>
 			
 		</form>
