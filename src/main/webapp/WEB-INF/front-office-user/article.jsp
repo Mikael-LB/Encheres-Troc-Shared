@@ -103,23 +103,23 @@
 			</div>
 			<br>
 			<c:if test="${from=='miseEnVente'||from=='detail'}" >
-				<a href="<c:url value="/" />" > <input type="button" value="accueil"> </a>
+				<a href="<c:url value="/" />" > <input type="button" class="btn btn-warning" value="accueil"> </a>
 			</c:if>
 			<c:if test="${from=='aquisition'}">
-				<a href="#" > <input type="button" value="retour"> </a>
+				<a href="#" > <input type="button" class="btn btn-warning" value="retour"> </a>
 			</c:if>
 			<c:if test="${from=='maVente'}">
-				<a href="#" > <input type="button" value="Retrait effectué"> </a>
+				<a href="#" > <input type="button" class="btn btn-warning" value="Retrait effectué"> </a>
 			</c:if>
 			<c:if test="${from=='enCour'}">
 				<form action="Page-Article" method="POST">				
 					<input type="hidden" name="noArticle" value="${article.getNoArticle()}"/>
 					<label>Votre Proposition :</label>
 					<input type="number" name="mise" min="${article.getPrixArticle()+1 }" max="${utilisateur.getCredit() }" value="${article.getPrixArticle()+1 }" ${article.getMeilleurEnchere().getUtilisateur().getNumeroUtilisateur()==utilisateur.getNumeroUtilisateur() ? "disabled" : "" }> 
-					<input type="submit" name="encherir" value="Encherir" ${article.getMeilleurEnchere().getUtilisateur().getNumeroUtilisateur()==utilisateur.getNumeroUtilisateur() ? "disabled" : "" }>
+					<input type="submit" class="btn btn-warning" name="encherir" value="Encherir" ${article.getMeilleurEnchere().getUtilisateur().getNumeroUtilisateur()==utilisateur.getNumeroUtilisateur() ? "disabled" : "" }>
 				</form>
 				<br>
-				<a href="<c:url value="/" />" > <input type="button" value="Retour a l'accueil"> </a>
+				<a href="<c:url value="/" />" > <input type="button" class="btn btn-secondary" value="Retour a l'accueil"> </a>
 			</c:if>
 
 			<c:if test="${!empty errorList}">

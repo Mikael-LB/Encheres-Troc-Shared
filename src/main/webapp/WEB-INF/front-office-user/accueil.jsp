@@ -70,7 +70,7 @@
 		    </c:if>
 	    </div>
 	    <div align="center">
-	    	<input class="btn btn-primary" type="submit" value="rechercher">
+	    	<input class="btn btn-warning" type="submit" value="rechercher">
 	    </div>
 	</form>
 

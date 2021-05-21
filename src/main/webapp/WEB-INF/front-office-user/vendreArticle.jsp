@@ -93,8 +93,8 @@
 				<input class="form-control" type="text" id="retraitVille" name="retraitVille" value="${utilisateur.getVille() }" />
 				</div>
 
-				<input class="btn btn-primary" type="submit" name="submit" value="envoyer">
-				<input class="btn btn-primary" type="reset" name="reset" value="annuler">
+				<input class="btn btn-warning" type="submit" name="submit" value="envoyer">
+				<input class="btn btn-secondary" type="reset" name="reset" value="annuler">
 			</form>
 		
 		</div>
