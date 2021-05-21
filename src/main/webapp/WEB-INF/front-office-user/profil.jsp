@@ -58,7 +58,7 @@
 	<div align=center >
 		<c:if test="${!empty modifier }" >
 			<form action="ModifierProfil">
-			<input type="submit" name="modifier" value="Modifier">
+			<input type="submit" class=" btn btn-warning" name="modifier" value="Modifier">
 			</form>
 		</c:if>
 	</div>

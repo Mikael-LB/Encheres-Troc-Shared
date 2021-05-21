@@ -51,7 +51,7 @@
 						</c:if>
 						<div class="form-group row">
 							<div class="col-sm-3">
-								<button type="submit" class="btn btn-primary">Connexion</button>
+								<button type="submit" class="btn btn-warning">Connexion</button>
 							</div>
 							<div class="col-sm-7">
 								<div class="form-check">
@@ -66,7 +66,7 @@
 							</div>
 						</div>
 					</form>
-					<a class="btn btn-primary" href="<c:url value="/inscription"/>">Créer
+					<a class="btn btn-secondary"" href="<c:url value="/inscription"/>">Créer
 						un compte</a>
 				</div>
 			</div>
