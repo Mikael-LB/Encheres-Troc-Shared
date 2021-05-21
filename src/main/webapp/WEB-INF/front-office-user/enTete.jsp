@@ -6,9 +6,8 @@
   <div class="row">
 	  <nav class="navbar navbar-expand-md bg-dark navbar-dark">
 		  <a class="navbar-brand <c:if test="${empty utilisateur}">disabled</c:if>" href="<c:url value="/"/>">
-        <img alt=""	src="<c:url value="assets/images/logo/logo-eni-encheres.png"/>"	width="300" height="100">
+        <img alt=""	src="<c:url value="assets/images/logo/logo-encheres-nobyl-2.png"/>"	width="300" height="100">
         <img src="${pageContext.request.contextPath}/assets/images/logo/radioactif.svg" alt="" width="70" height="70" class="mx-2">
-				<span>ENCHERES NOBYL</span>
 	  	</a>
   		<!-- Toggler/collapsibe Button -->
 	  	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -26,7 +25,7 @@
 	  	</c:if>
 	  	<c:if test="${!empty utilisateur }">			
 				<ul class="navbar-nav">
-					<li class="nav-item"><a class="nav-link active btn btn-warning text-dark" 
+					<li class="nav-item"><a class="nav-link active btn btn-warning text-dark coin" 
 						href="<c:url value="/Mon-Profil"/>"> ${ utilisateur.getPseudo()} [${utilisateur.getCredit() } <%@ include file="credit.jsp" %>]
 					</a></li>
 					<li class="nav-item"><a class="nav-link active btn btn-secondary"
