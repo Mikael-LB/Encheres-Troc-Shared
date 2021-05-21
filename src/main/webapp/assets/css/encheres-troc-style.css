@@ -17,3 +17,6 @@ li.nav-item {
 a.disabled{
 	pointer-events:none;
 }
+.coin #svg-coin {
+	fill:#212529;
+}
