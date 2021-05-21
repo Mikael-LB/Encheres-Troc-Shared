@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<div class="container-fluid">
+<div class="container-fluid mb-5">
   <div class="row">
 	  <nav class="navbar navbar-expand-md bg-dark navbar-dark">
 		  <a class="navbar-brand <c:if test="${empty utilisateur}">disabled</c:if>" href="<c:url value="/"/>">
@@ -30,7 +30,7 @@
 						href="<c:url value="/Mon-Profil"/>"> ${ utilisateur.getPseudo()} [${utilisateur.getCredit() } <%@ include file="credit.jsp" %>]
 					</a></li>
 					<li class="nav-item"><a class="nav-link active btn btn-secondary"
-						href="<c:url value="/accueil"/>"> Enchère </a></li>
+						href="<c:url value="/AccueilServlet"/>"> Enchères </a></li>
 					<li class="nav-item"><a class="nav-link active btn btn-secondary"
 						href="<c:url value="/VendreArticle"/>"> Vendre un article </a></li>
 					<li class="nav-item"><a
@@ -40,4 +40,5 @@
 		  </c:if>
 	  </div>
 	</nav>
+</div>
 </div>
